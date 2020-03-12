@@ -65,50 +65,52 @@ if (isset($_SESSION["staff_id"])) {
     $(document).ready(function () {
         $("#loadingwheel").hide();
         $("#error_msg").hide();
+        $("#submit").click(function () {
+            $("#loadingwheel").show();
+            let email = $("#email").val();
+            let password = $("#password").val();
+            let serviceURL = "http://127.0.0.1:8001/staff/login/" + email;
+            setTimeout(3000);
+            // anonymous async function
+            // - using await requires the function that calls it to be async
+            $(async () => {
+                try {
+                    const response =
+                        await fetch(
+                            serviceURL, {
+                                method: 'POST',
+                                headers: {"Content-Type": "application/json"},
+                                body: JSON.stringify({password: password})
+                            }
+                        );
+                    const data = await response.json();
+                    if (data.result == true) {
+                        $.post("session_staff.php", {
+                            "staff_id": data.staff_id,
+                            "first_name": data.first_name,
+                            "last_name": data.last_name,
+                            "prefix": data.prefix,
+                            "middle_name": data.middle_name,
+                            "suffix": data.suffix
+                        });
 
-    });
-
-    $("#submit").click(function () {
-        $("#loadingwheel").show();
-        let email = $("#email").val();
-        let password = $("#password").val();
-        let serviceURL = "http://127.0.0.1:8001/staff/login/" + email;
-        // anonymous async function
-        // - using await requires the function that calls it to be async
-        $(async () => {
-            try {
-                const response =
-                    await fetch(
-                        serviceURL, {
-                            method: 'POST',
-                            headers: {"Content-Type": "application/json"},
-                            body: JSON.stringify({password: password})
-                        }
-                    );
-                const data = await response.json();
-                if (data.result == true) {
-                    $.post("session_staff.php", {
-                        "staff_id": data.staff_id,
-                        "first_name": data.first_name,
-                        "last_name": data.last_name,
-                        "prefix": data.prefix,
-                        "middle_name": data.middle_name,
-                        "suffix": data.suffix
-                    });
-                    setTimeout(3000);
-                    location.reload();
-                } else {
+                        location.reload();
+                    } else {
+                        $("#loadingwheel").hide();
+                        $("#error_msg").show();
+                    }
+                } catch (e) {
                     $("#loadingwheel").hide();
                     $("#error_msg").show();
                 }
-            } catch (e) {
-                $("#loadingwheel").hide();
-                $("#error_msg").show();
-            }
+
+            });
 
         });
 
     });
+
+
 </script>
 <body>
 
