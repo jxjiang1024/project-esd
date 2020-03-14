@@ -3,7 +3,7 @@
 <?php
 session_start();
 if (isset($_SESSION["staff_id"])) {
-    header("location:staff/admin.php");
+    header("location:staff/dashboard.php");
 }
 ?>
 <head>
@@ -70,7 +70,7 @@ if (isset($_SESSION["staff_id"])) {
             let email = $("#email").val();
             let password = $("#password").val();
             let serviceURL = "http://127.0.0.1:8001/staff/login/" + email;
-            setTimeout(3000);
+            setTimeout(5000);
             // anonymous async function
             // - using await requires the function that calls it to be async
             $(async () => {
@@ -91,7 +91,8 @@ if (isset($_SESSION["staff_id"])) {
                             "last_name": data.last_name,
                             "prefix": data.prefix,
                             "middle_name": data.middle_name,
-                            "suffix": data.suffix
+                            "suffix": data.suffix,
+                            "roles":data.roles
                         });
 
                         location.reload();
