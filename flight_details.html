@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Details</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" 
+    crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script 
+    src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
+    <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+    integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+    crossorigin="anonymous"></script>
+    
+    <script 
+    src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+    integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+    crossorigin="anonymous"></script>
+</head>
+<body>
+    <h1>ENTER FLIGHT DETAILS</h1>
+    <form id='route-details'>
+
+      <div class="form-group">
+        <label for="flight_no">Flight Number</label>
+        <select name="flight_no" id="flight_no">
+            <option value="#">Link to DB</option>
+            <option value="#">Link</option>
+            <option value="#">to be linked</option>
+        </select>
+        <br/><br/>
+        Flight Departure Date
+        <input type="date" id="flight_departure" name="flight_departure">
+        <br/><br/>
+        Flight Arrival Date
+        <input type="date" id="flight_arrival" name="flight_arrival">
+        <br/><br/>
+        Aircraft Tail Number
+        <input type="text" id="aircraft_tail_no" name="aircraft_tail_no">
+        <br/><br/>
+        <div class="form-row">
+        <div class="col-2">
+        Pricing (Economic Saver)
+        </div>
+        <div class="col">
+        <input type="number" id="econ_sv_price" name="econ_sv_price"  min="0.00" step="any">
+        </div>
+        <div class="col-2">
+        Available Seats
+        </div>
+        <div class="col">
+        <input type="number" id="econ_sv_seat" name="econ_sv_seat"  min="0">
+        </div></div></br>
+        <div class="form-row">
+        <div class="col-2">
+        Pricing (Economic Standard)
+        </div>
+        <div class="col">
+        <input type="number" id="econ_stnd_price" name="econ_stnd_price"  min="0.00" step="any">
+        </div>
+        <div class="col-2">
+        Available Seats
+        </div>
+        <div class="col">
+        <input type="number" id="econ_stnd_seat" name="econ_stnd_seat"  min="0">
+        </div></div></br>
+        <div class="form-row">
+        <div class="col-2">
+        Pricing (Economic Plus)
+        </div>
+        <div class="col">
+        <input type="number" id="econ_plus_price" name="econ_stnd_price"  min="0.00" step="any">
+        </div>
+        <div class="col-2">
+        Available Seats
+        </div>
+        <div class="col">
+        <input type="number" id="econ_plus_seat" name="econ_stnd_seat"  min="0">
+        </div></div></br>
+        <div class="form-row">
+        <div class="col-2">
+        Pricing (Prem Economy)
+        </div>
+        <div class="col">
+        <input type="number" id="pr_econ_price" name="pr_econ_price"  min="0.00" step="any">
+        </div>
+        <div class="col-2">
+        Available Seats
+        </div>
+        <div class="col">
+        <input type="number" id="pr_econ_seat" name="pr_econ_seat"  min="0">
+        </div></div></br>
+
+        <input id="submit-flightdetails"class="btn btn-primary" type="submit" value="Submit">
+      </div>
+
+    </form>
+
+
+</body>
+
+</html>
