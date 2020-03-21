@@ -123,13 +123,14 @@ class Route(db.Model):
 
 # # TEST FUNCTION: returns JSON list of all flights
 # @app.route("/flight")
-# def get_all():
+# def get_flights():
 #     return jsonify({"flights": [flight.json() for flight in Flight.query.all()]})
 
 # # TEST FUNCTION: returns JSON list of all routes
 # @app.route("/route")
-# def get_all():
+# def get_routes():
 #     return jsonify({"routes": [route.json() for route in Route.query.all()]})
+
 
 
 if __name__ == "__main__":
