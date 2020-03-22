@@ -66,11 +66,33 @@ if (!isset($_SESSION['staff_id'])) {
         }
         try {
             const response = await fetch(serviceURL, requestParam);
-            data = await response.json();
-            console.log(data);
+            const data = await response.json();
+            let route = data.route;
+            let newDeparture = "";
+            let newArrival = "";
+
+            if (data.result == true) {
+                var rows = "";
+                for (const listRoute of route) {
+                    eachRow =
+                        "<td>" + listRoute.flight_no + "</td>" +
+                        "<td>" + listRoute.departure_airport_id + "</td>" +
+                        "<td>" + listRoute.arrival_airport_id + "</td>" +
+                        "<td>" + listRoute.departure_time + "</td>" +
+                        "<td>" + listRoute.arrival_time + "</td>";
+                    rows += "<tbody><tr>" + eachRow + "</tr></tbody>";
+
+                }
+                // add all the rows to the table
+                $('#routeListTable').append(rows);
+            } else {
+                $("#tableError").show();
+                $("#routeListTable").hide();
+            }
         } catch (e) {
             console.error(e)
             $("#tableError").show();
+            $("#routeListTable").hide();
         }
 
     }
@@ -106,8 +128,8 @@ if (!isset($_SESSION['staff_id'])) {
                     </b>
                     <!--End Logo icon -->
                     <!-- Logo text --><span>
-                         
-                         <!-- Light Logo text -->    
+
+                         <!-- Light Logo text -->
                          <img src="../assets/images/logo-light-text.png" class="light-logo" alt="homepage"/></span> </a>
             </div>
             <!-- ============================================================== -->
@@ -235,7 +257,7 @@ if (!isset($_SESSION['staff_id'])) {
                             <h4 class="card-title">Current Routes</h4>
                             <div class="table-responsive" id="tableError"><p>No Records Found</p></div>
                             <div class="table-responsive">
-                                <table class="table">
+                                <table class="table" id="routeListTable">
                                     <thead>
                                     <tr>
                                         <th>Flight No.</th>
@@ -245,45 +267,7 @@ if (!isset($_SESSION['staff_id'])) {
                                         <th>Arrival Time</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Deshmukh</td>
-                                        <td>Prohaska</td>
-                                        <td>@Genelia</td>
-                                        <td>@Genelia</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Deshmukh</td>
-                                        <td>Gaylord</td>
-                                        <td>@Ritesh</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Sanghani</td>
-                                        <td>Gusikowski</td>
-                                        <td>@Govinda</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>Roshan</td>
-                                        <td>Rogahn</td>
-                                        <td>@Hritik</td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td>Joshi</td>
-                                        <td>Hickle</td>
-                                        <td>@Maruti</td>
-                                    </tr>
-                                    <tr>
-                                        <td>6</td>
-                                        <td>Nigam</td>
-                                        <td>Eichmann</td>
-                                        <td>@Sonu</td>
-                                    </tr>
-                                    </tbody>
+
                                 </table>
                             </div>
                         </div>

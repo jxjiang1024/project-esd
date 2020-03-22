@@ -116,22 +116,21 @@ class Route(db.Model):
     def json(self):
         return {"flight_no": self.flight_no, "departure_airport_id": self.departure_airport_id, "arrival_airport_id": self.arrival_airport_id, "departure_time": jsonTimeConverter(self.departure_time), "arrival_time": jsonTimeConverter(self.arrival_time), "next_day": self.next_day}
 
-    class iataCode(db.Model):
-        __tablename__ = "iata_code"
+class iataCode(db.Model):
+    __tablename__ = "iata_code"
+    IATA_CODE = db.Column(db.String(10), primary_key=True)
+    airportName = db.Column(db.String(255), nullable=False)
+    COUNTRY_CODE = db.Column(db.String(2), nullable=False)
+    CONTINENT_CODE = db.Column(db.String(5), nullable=False)
 
-        IATA_CODE = db.Column(db.String(10), primary_key=True)
-        airportName = db.Column(db.String(255), nullable=False)
-        COUNTRY_CODE = db.Column(db.String(2), nullable=False)
-        CONTINENT_CODE = db.Column(db.String(5), nullable=False)
+    def __init__(self,IATA_CODE,airportName,COUNTRY_CODE,CONTINENT_CODE):
+        self.IATA_CODE = IATA_CODE
+        self.airportName = airportName
+        self.COUNTRY_CODE = COUNTRY_CODE
+        self.CONTINENT_CODE = CONTINENT_CODE
 
-        def __init__(self,IATA_CODE,airportName,COUNTRY_CODE,CONTINENT_CODE):
-            self.IATA_CODE = IATA_CODE
-            self.airportName = airportName
-            self.COUNTRY_CODE = COUNTRY_CODE
-            self.CONTINENT_CODE = CONTINENT_CODE
-
-        def jsonify(self):
-            return{"IATA_CODE": self.IATA_CODE,"airportName":self.airportName,"COUNTRY_CODE":self.COUNTRY_CODE,"CONTINENT_CODE":self.CONTINENT_CODE}
+    def jsonify(self):
+        return{"IATA_CODE": self.IATA_CODE,"airportName":self.airportName,"COUNTRY_CODE":self.COUNTRY_CODE,"CONTINENT_CODE":self.CONTINENT_CODE}
 
 # # TEST FUNCTION: returns JSON list of all flights
 # @app.route("/flight")
