@@ -1,15 +1,12 @@
 from flask import Flask,request,jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from os import environ
-
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 CORS(app)
-
 
 class Staff(db.Model):
     __tablename__ = 'staff'
@@ -66,6 +63,7 @@ def check_user(emails):
     password = request.get_json()
     try:
         records = Staff.query.filter(Staff.email == email).first()
+        print(records)
         if(records.password == password['password']):
             return jsonify({"result":True,"staff_id":records.staff_id,"prefix":records.prefix,"first_name":records.first_name,"last_name":records.last_name,"middle_name":records.middle_name,"suffix":records.suffix,"roles":records.roles})
         else:
@@ -75,4 +73,4 @@ def check_user(emails):
 
 
 if __name__ == "__main__":
-     app.run(host='0.0.0.0', port=8001, debug=True)
+     app.run( port=8001, debug=True)

@@ -34,11 +34,47 @@ if (!isset($_SESSION['staff_id'])) {
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-</head>
-<script> $(document).ready(function () {
-    
 
-    });</script>
+    <!-- Latest compiled and minified JavaScript -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+            integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+            crossorigin="anonymous"></script>
+
+    <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+            crossorigin="anonymous"></script>
+</head>
+<script>
+    $(document).ready(function () {
+        $("#tableError").hide();
+        let serviceURL = "http://127.0.0.1:8002/flight/route";
+        getRoutesData(serviceURL);
+    });
+
+    async function getRoutesData(serviceURL) {
+        let requestParam = {
+            headers: {"content-type": "charset=UTF-8"},
+            mode: 'cors', // allow cross-origin resource sharing
+            method: 'GET',
+
+        }
+        try {
+            const response = await fetch(serviceURL, requestParam);
+            data = await response.json();
+            console.log(data);
+        } catch (e) {
+            console.error(e)
+            $("#tableError").show();
+        }
+
+    }
+</script>
 <body class="fix-header fix-sidebar card-no-border">
 <!-- ============================================================== -->
 <!-- Preloader - style you can find in spinners.css -->
@@ -192,10 +228,12 @@ if (!isset($_SESSION['staff_id'])) {
             <!-- Row -->
             <div class="row">
                 <!-- Column -->
+
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-block">
                             <h4 class="card-title">Current Routes</h4>
+                            <div class="table-responsive" id="tableError"><p>No Records Found</p></div>
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>
@@ -251,6 +289,7 @@ if (!isset($_SESSION['staff_id'])) {
                         </div>
                     </div>
                 </div>
+
             </div>
 
         </div>

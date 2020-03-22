@@ -4,9 +4,8 @@ from flask_cors import CORS
 from os import environ
 import datetime
 
-
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 CORS(app)
@@ -18,9 +17,7 @@ def jsonTimeConverter(o):
 
 # Flight class
 class Flight(db.Model):
-    
     __tablename__ = 'flight_details'
-
     flight_details_id = db.Column(db.Integer, primary_key=True)
     flight_no = db.Column(db.String(45), nullable=False)
     flight_departure = db.Column(db.Date, nullable=False)
@@ -34,8 +31,8 @@ class Flight(db.Model):
     econ_plus_seat = db.Column(db.Integer, nullable=False)
     pr_econ_sv_price = db.Column(db.Float(precision=2), nullable=False)
     pr_econ_sv_seat = db.Column(db.Integer, nullable=False)
-    pr_econ_stnd_price = db.Column(db.Float(precision=2), nullable=False)
     pr_econ_stnd_seat = db.Column(db.Integer, nullable=False)
+    pr_econ_stnd_price = db.Column(db.Float(precision=2), nullable=False)
     pr_econ_plus_price = db.Column(db.Float(precision=2), nullable=False)
     pr_econ_plus_seat = db.Column(db.Integer, nullable=False)
     bus_sv_price = db.Column(db.Float(precision=2), nullable=False)
@@ -96,7 +93,6 @@ class Flight(db.Model):
         "bus_plus_seat": self.bus_plus_seat, "first_stnd_price": self.first_stnd_price,
         "first_stnd_seat": self.first_stnd_seat, "status_code": self.status_code}
 
-
 # Route class
 class Route(db.Model):
     __tablename__ = 'routes'
@@ -120,18 +116,46 @@ class Route(db.Model):
     def json(self):
         return {"flight_no": self.flight_no, "departure_airport_id": self.departure_airport_id, "arrival_airport_id": self.arrival_airport_id, "departure_time": jsonTimeConverter(self.departure_time), "arrival_time": jsonTimeConverter(self.arrival_time), "next_day": self.next_day}
 
+    class iataCode(db.Model):
+        __tablename__ = "iata_code"
+
+        IATA_CODE = db.Column(db.String(10), primary_key=True)
+        airportName = db.Column(db.String(255), nullable=False)
+        COUNTRY_CODE = db.Column(db.String(2), nullable=False)
+        CONTINENT_CODE = db.Column(db.String(5), nullable=False)
+
+        def __init__(self,IATA_CODE,airportName,COUNTRY_CODE,CONTINENT_CODE):
+            self.IATA_CODE = IATA_CODE
+            self.airportName = airportName
+            self.COUNTRY_CODE = COUNTRY_CODE
+            self.CONTINENT_CODE = CONTINENT_CODE
+
+        def jsonify(self):
+            return{"IATA_CODE": self.IATA_CODE,"airportName":self.airportName,"COUNTRY_CODE":self.COUNTRY_CODE,"CONTINENT_CODE":self.CONTINENT_CODE}
 
 # # TEST FUNCTION: returns JSON list of all flights
 # @app.route("/flight")
-# def get_flights():
+# def get_all():
 #     return jsonify({"flights": [flight.json() for flight in Flight.query.all()]})
 
 # # TEST FUNCTION: returns JSON list of all routes
 # @app.route("/route")
-# def get_routes():
+# def get_all():
 #     return jsonify({"routes": [route.json() for route in Route.query.all()]})
 
+## Retrieve All Flights Routes Listing
+@app.route("/flight/route")
+def get_all_routes():
+    try:
+        route_record = Route.query.all()
+        return jsonify({"route":[route_record.json()for route_record in route_record ],"result":True})
+    except:
+        return jsonify({"result":False,"message":"Database Error"})
 
+@app.route("/flight/airport/<string:iata_code>")
+def get_airport(iata_code):
+    airports = iataCode.query.filter(iataCode.IATA_CODE == iata_code).first()
+    return jsonify({"result":True,"IATA_CODE":airports.IATA_CODE,"airportName":airports.airportName,"COUNTRY_CODE":airports.COUNTRY_CODE,"CONTINENT_CODE":airports.CONTINENT_CODE })
 
 if __name__ == "__main__":
-     app.run(host='0.0.0.0', port=8001, debug=True)
+     app.run( port=8002, debug=True)
