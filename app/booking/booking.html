@@ -24,17 +24,33 @@
     src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
     integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
     crossorigin="anonymous"></script>
+    <script>
+    
+      $(document).ready(function(){   
+        $("#return").click(function(){
+          alert("Another test");
+        });
+      });
+
+    
+    </script>
 </head>
+
 <body>
     
+      
     <div id='trip-type' class="btn-group btn-group-toggle" data-toggle="buttons">
         <label class="btn btn-secondary active">
-          <input type="radio" name="return" id="return" checked>Return
+          <input type="radio" name="return" id="return" value='return' checked>Return
         </label>
         <label class="btn btn-secondary">
-          <input type="radio" name="one-way" id="one-way">One-way
+          <input type="radio" name="one-way" id="one-way" value='one-way'>One-way
         </label>
     </div>
+
+
+
+
     <form id='return-form'>
 
       <div class="form-group">
@@ -62,10 +78,15 @@
         <label for="return-date">Return</label>
         <input type="date" class="form-control" id="return-date" >
 
-        <input id="return-form-submit"class="btn btn-primary" type="submit" value="Submit">
+        <a id="two-way-trip" class="btn btn-primary" href="selectFlight.html">submit</a>
       </div>
 
     </form>
+
+
+
+
+
     <form id='one-way-form'>
 
       <div class="form-group">
@@ -90,17 +111,13 @@
         <label for="depart-date">Depart</label>
         <input type="date" class="form-control" id="depart-date">
 
-        <input id="return-form-submit"class="btn btn-primary" type="submit" value="Submit">
+        <a id="two-way-trip" class="btn btn-primary" href="selectFlight.html">submit</a>
       </div>
 
     </form>
 
-
+    
 </body>
-<script>
-  $('.one-way-form').click(function(){
-    $('return-form'.hide());
-  })
-</script>
 
-</html>
+
+</html>  
