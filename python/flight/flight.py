@@ -115,6 +115,10 @@ class Route(db.Model):
     
     def json(self):
         return {"flight_no": self.flight_no, "departure_airport_id": self.departure_airport_id, "arrival_airport_id": self.arrival_airport_id, "departure_time": jsonTimeConverter(self.departure_time), "arrival_time": jsonTimeConverter(self.arrival_time), "next_day": self.next_day}
+    def json_set(self,iataCode):
+        depAirports = iataCode.query.filter(iataCode.IATA_CODE == self.departure_airport_id).first()
+        arrAirports = iataCode.query.filter(iataCode.IATA_CODE == self.arrival_airport_id).first()
+        return {"flight_no": self.flight_no, "departure_airport_id": depAirports.airportName+" ("+ self.departure_airport_id+")" , "arrival_airport_id":arrAirports.airportName+" ("+ self.arrival_airport_id+")", "departure_time": jsonTimeConverter(self.departure_time), "arrival_time": jsonTimeConverter(self.arrival_time), "next_day": self.next_day}
 
 class iataCode(db.Model):
     __tablename__ = "iata_code"
@@ -132,22 +136,12 @@ class iataCode(db.Model):
     def jsonify(self):
         return{"IATA_CODE": self.IATA_CODE,"airportName":self.airportName,"COUNTRY_CODE":self.COUNTRY_CODE,"CONTINENT_CODE":self.CONTINENT_CODE}
 
-# # TEST FUNCTION: returns JSON list of all flights
-# @app.route("/flight")
-# def get_all():
-#     return jsonify({"flights": [flight.json() for flight in Flight.query.all()]})
-
-# # TEST FUNCTION: returns JSON list of all routes
-# @app.route("/route")
-# def get_all():
-#     return jsonify({"routes": [route.json() for route in Route.query.all()]})
-
 ## Retrieve All Flights Routes Listing
 @app.route("/flight/route")
 def get_all_routes():
     try:
         route_record = Route.query.all()
-        return jsonify({"route":[route_record.json()for route_record in route_record ],"result":True})
+        return jsonify({"route":[route_record.json_set(iataCode)for route_record in route_record ],"result":True})
     except:
         return jsonify({"result":False,"message":"Database Error"})
 

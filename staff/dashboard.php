@@ -68,8 +68,6 @@ if (!isset($_SESSION['staff_id'])) {
             const response = await fetch(serviceURL, requestParam);
             const data = await response.json();
             let route = data.route;
-            let newDeparture = "";
-            let newArrival = "";
 
             if (data.result == true) {
                 var rows = "";
@@ -85,6 +83,7 @@ if (!isset($_SESSION['staff_id'])) {
                 }
                 // add all the rows to the table
                 $('#routeListTable').append(rows);
+                return  Promise.resolve(data);
             } else {
                 $("#tableError").show();
                 $("#routeListTable").hide();
@@ -94,6 +93,7 @@ if (!isset($_SESSION['staff_id'])) {
             $("#tableError").show();
             $("#routeListTable").hide();
         }
+
 
     }
 </script>
