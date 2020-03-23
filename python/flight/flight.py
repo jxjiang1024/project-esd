@@ -45,7 +45,7 @@ class Flight(db.Model):
     first_stnd_seat = db.Column(db.Integer, nullable=False)
     status_code = db.Column(db.String(3), nullable=False)
 
-    def __init__(flight_details_id, flight_no, flight_departure, flight_arrival,
+    def __init__(self,flight_details_id, flight_no, flight_departure, flight_arrival,
     aircraft_tail_no, econ_sv_price, econ_sv_seat, econ_stnd_price, econ_stnd_seat,
     econ_plus_price, econ_plus_seat, pr_econ_sv_price, pr_econ_sv_seat,
     pr_econ_stnd_price, pr_econ_stnd_seat, pr_econ_plus_price, pr_econ_plus_seat,
@@ -92,6 +92,11 @@ class Flight(db.Model):
         "bus_stnd_seat": self.bus_stnd_seat, "bus_plus_price": self.bus_plus_price,
         "bus_plus_seat": self.bus_plus_seat, "first_stnd_price": self.first_stnd_price,
         "first_stnd_seat": self.first_stnd_seat, "status_code": self.status_code}
+    def json_get_flights(self,Status):
+        stat = Status.query.filter(Status.status_code ==  self.status_code).first()
+        return {"flight_details_id": self.flight_details_id , "flight_no": self.flight_no,
+        "flight_departure": self.flight_departure, "flight_arrival": self.flight_arrival,
+        "aircraft_tail_no": self.aircraft_tail_no,"economy_seats":self.econ_sv_seat+self.econ_stnd_seat+self.econ_plus_seat,"premium_economy_seats":self.pr_econ_sv_seat+self.pr_econ_stnd_seat+self.pr_econ_plus_seat,"business_seats": self.bus_sv_seat+self.bus_stnd_seat+self.bus_plus_seat,"first_class_seats":self.first_stnd_seat,"status": stat.status }
 
 # Route class
 class Route(db.Model):
@@ -104,7 +109,7 @@ class Route(db.Model):
     arrival_time = db.Column(db.TIME, nullable=False)
     next_day = db.Column(db.SMALLINT, nullable=False)
 
-    def __init__(flight_no, departure_airport_id, arrival_airport_id, departure_time, arrival_time, next_day):
+    def __init__(self,flight_no, departure_airport_id, arrival_airport_id, departure_time, arrival_time, next_day):
         self.flight_no = flight_no
         self.departure_airport_id = departure_airport_id
         self.arrival_airport_id = arrival_airport_id
@@ -114,7 +119,7 @@ class Route(db.Model):
 
     
     def json(self):
-        return {"flight_no": self.flight_no, "departure_airport_id": self.departure_airport_id, "arrival_airport_id": self.arrival_airport_id, "departure_time": jsonTimeConverter(self.departure_time), "arrival_time": jsonTimeConverter(self.arrival_time), "next_day": self.next_day}
+        return {"flight_no": self.flight_no, "departure_airport_id": self.departure_airport_id, "arrival_airport_id": self.arrival_airport_id, "departure_time": self.departure_time, "arrival_time":self.arrival_time, "next_day": self.next_day}
     def json_set(self,iataCode):
         depAirports = iataCode.query.filter(iataCode.IATA_CODE == self.departure_airport_id).first()
         arrAirports = iataCode.query.filter(iataCode.IATA_CODE == self.arrival_airport_id).first()
@@ -133,8 +138,21 @@ class iataCode(db.Model):
         self.COUNTRY_CODE = COUNTRY_CODE
         self.CONTINENT_CODE = CONTINENT_CODE
 
-    def jsonify(self):
+    def json(self):
         return{"IATA_CODE": self.IATA_CODE,"airportName":self.airportName,"COUNTRY_CODE":self.COUNTRY_CODE,"CONTINENT_CODE":self.CONTINENT_CODE}
+
+class Status(db.Model):
+     __tablename__ = 'status'
+     status_code = db.Column(db.String(3), primary_key=True)
+     status = db.Column(db.String(255),  nullable=False)
+
+     def __init__(self,status_code,status):
+         self.status = status
+         self.status_code = status_code
+     def json(self):
+         return{"status_code":self.status_code,"status":self.status}
+
+
 
 ## Retrieve All Flights Routes Listing
 @app.route("/flight/route")
@@ -145,10 +163,14 @@ def get_all_routes():
     except:
         return jsonify({"result":False,"message":"Database Error"})
 
-@app.route("/flight/airport/<string:iata_code>")
-def get_airport(iata_code):
-    airports = iataCode.query.filter(iataCode.IATA_CODE == iata_code).first()
-    return jsonify({"result":True,"IATA_CODE":airports.IATA_CODE,"airportName":airports.airportName,"COUNTRY_CODE":airports.COUNTRY_CODE,"CONTINENT_CODE":airports.CONTINENT_CODE })
+@app.route("/flight/details")
+def get_all_details():
+    try:
+        flight_record = Flight.query.all()
+        return jsonify({"flight":[flight_record.json_get_flights(Status) for flight_record in flight_record], "result": True})
+    except:
+        return jsonify({"result":False,"message":"Database Error"})
+
 
 if __name__ == "__main__":
      app.run( port=8002, debug=True)

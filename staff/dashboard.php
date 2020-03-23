@@ -55,6 +55,8 @@ if (!isset($_SESSION['staff_id'])) {
         $("#tableError").hide();
         let serviceURL = "http://127.0.0.1:8002/flight/route";
         getRoutesData(serviceURL);
+        serviceURL = "http://127.0.0.1:8002/flight/details";
+        getFlights(serviceURL);
     });
 
     async function getRoutesData(serviceURL) {
@@ -83,7 +85,7 @@ if (!isset($_SESSION['staff_id'])) {
                 }
                 // add all the rows to the table
                 $('#routeListTable').append(rows);
-                return  Promise.resolve(data);
+                return Promise.resolve(data);
             } else {
                 $("#tableError").show();
                 $("#routeListTable").hide();
@@ -94,6 +96,10 @@ if (!isset($_SESSION['staff_id'])) {
             $("#routeListTable").hide();
         }
 
+
+    }
+
+    async function getFlights(serviceURL) {
 
     }
 </script>
@@ -269,12 +275,47 @@ if (!isset($_SESSION['staff_id'])) {
                                     </thead>
 
                                 </table>
+                                <a style="float: right;" href="#" class="btn btn-success">
+                                    Add More Routes</a>
                             </div>
                         </div>
                     </div>
                 </div>
 
             </div>
+            <!-- Row -->
+            <div class="row">
+                <!-- Column -->
+
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-block">
+                            <h4 class="card-title">Current Flights</h4>
+                            <div class="table-responsive"><p>No Records Found</p></div>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Aircraft Assigned</th>
+                                        <th>Economy Seats</th>
+                                        <th>Premium Economy Seats</th>
+                                        <th>Business Class Seats</th>
+                                        <th>Arrival Date</th>
+                                        <th>Departure Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    </thead>
+
+                                </table>
+                                <a style="float: right;" href="#" class="btn btn-success">
+                                    Add More Routes</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
 
         </div>
         <!-- Row -->
