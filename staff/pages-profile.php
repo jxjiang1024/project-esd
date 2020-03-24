@@ -44,9 +44,22 @@ if (!isset($_SESSION['staff_id'])) {
     <script>
         $(async () => {
             try {
-
+                let serviceURL = "http://127.0.0.1:8001/staff/roles/" +<?php echo $_SESSION['roles']?>;
+                const response = await fetch(serviceURL, {
+                    headers: {"Content-Type": "application/json"},
+                    method: 'GET',
+                    mode: 'cors'
+                });
+                const data = await response.json();
+                console.log(data);
+                if (data.result == true) {
+                    $("#role").text(data.type);
+                } else {
+                    $("#role").text("Error Retrieving your Account Details");
+                }
             } catch (e) {
                 console.error(e);
+                $("#role").text("Error Retrieving your Account Details");
 
             }
 
@@ -172,7 +185,8 @@ if (!isset($_SESSION['staff_id'])) {
         <div class="sidebar-footer">
             <!-- item--><a href="" class="link" data-toggle="tooltip" title="Settings"><i class="ti-settings"></i></a>
             <!-- item--><a href="" class="link" data-toggle="tooltip" title="Email"><i class="mdi mdi-gmail"></i></a>
-            <!-- item--><a href="" class="link" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a>
+            <!-- item--><a href="../logout.php" class="link" data-toggle="tooltip" title="Logout"><i
+                        class="mdi mdi-power"></i></a>
         </div>
         <!-- End Bottom points-->
     </aside>
@@ -215,7 +229,7 @@ if (!isset($_SESSION['staff_id'])) {
                             <center class="m-t-30"><img src="../assets/images/users/5.jpg" class="img-circle"
                                                         width="150"/>
                                 <h4 class="card-title m-t-10"><?php echo $_SESSION['prefix'], " ", $_SESSION['first_name'], ", ", $_SESSION['last_name'] ?></h4>
-                                <h6 class="card-subtitle">Accoubts Manager Amix corp</h6>
+                                <h6 class="card-subtitle" id="role"></h6>
                             </center>
                         </div>
                     </div>
@@ -229,16 +243,17 @@ if (!isset($_SESSION['staff_id'])) {
                                 <div class="form-group">
                                     <label class="col-md-12">Full Name</label>
                                     <div class="col-md-12">
-                                        <input type="text" placeholder="Johnathan Doe"
-                                               class="form-control form-control-line">
+                                        <input type="text"
+                                               placeholder="<?php echo $_SESSION['first_name'], " ", $_SESSION['last_name'] ?> "
+                                               class="form-control form-control-line" disabled>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="example-email" class="col-md-12">Email</label>
                                     <div class="col-md-12">
-                                        <input type="email" placeholder="johnathan@admin.com"
+                                        <input type="email" placeholder="<?php echo $_SESSION['email'] ?>"
                                                class="form-control form-control-line" name="example-email"
-                                               id="example-email">
+                                               id="example-email" disabled>
                                     </div>
                                 </div>
                                 <div class="form-group">
