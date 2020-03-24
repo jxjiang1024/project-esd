@@ -1,6 +1,7 @@
 from flask import Flask,request,jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+import roles
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
@@ -71,6 +72,10 @@ def check_user(emails):
     except:
         return jsonify({"result":"Database Error"})
 
-
+@app.route("/staff/roles/<string:role>" ,methods=['GET'])
+def getUserRoleName(role):
+    role_out = roles.userRoles(role)
+    return role_out
+    
 if __name__ == "__main__":
      app.run( port=8001, debug=True)

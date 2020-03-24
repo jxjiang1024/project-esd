@@ -28,6 +28,30 @@ if (!isset($_SESSION['staff_id'])) {
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+            integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+            crossorigin="anonymous"></script>
+
+    <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+            crossorigin="anonymous"></script>
+    <script>
+        $(async () => {
+            try {
+
+            } catch (e) {
+                console.error(e);
+
+            }
+
+        });
+    </script>
 </head>
 
 <body class="fix-header fix-sidebar card-no-border">
@@ -190,16 +214,8 @@ if (!isset($_SESSION['staff_id'])) {
                         <div class="card-block">
                             <center class="m-t-30"><img src="../assets/images/users/5.jpg" class="img-circle"
                                                         width="150"/>
-                                <h4 class="card-title m-t-10">Hanna Gover</h4>
+                                <h4 class="card-title m-t-10"><?php echo $_SESSION['prefix'], " ", $_SESSION['first_name'], ", ", $_SESSION['last_name'] ?></h4>
                                 <h6 class="card-subtitle">Accoubts Manager Amix corp</h6>
-                                <div class="row text-center justify-content-md-center">
-                                    <div class="col-4"><a href="javascript:void(0)" class="link"><i
-                                                    class="icon-people"></i> <font class="font-medium">254</font></a>
-                                    </div>
-                                    <div class="col-4"><a href="javascript:void(0)" class="link"><i
-                                                    class="icon-picture"></i> <font class="font-medium">54</font></a>
-                                    </div>
-                                </div>
                             </center>
                         </div>
                     </div>
