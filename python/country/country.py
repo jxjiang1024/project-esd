@@ -20,7 +20,7 @@ class Country(db.Model):
     NAME = db.Column(db.String(255), nullable=False)
 
 
-    def __init__(COUNTRY_CODE, CONTINENT_CODE, NAME):
+    def __init__(self,COUNTRY_CODE, CONTINENT_CODE, NAME):
         self.COUNTRY_CODE = COUNTRY_CODE
         self.CONTINENT_CODE = CONTINENT_CODE
         self.NAME = NAME
@@ -35,4 +35,4 @@ def get_all_names():
     return jsonify({"country names": [country.json()['NAME'] for country in Country.query.all()]})
 
 if __name__ == "__main__":
-     app.run(host='0.0.0.0', port=8001, debug=True)
+     app.run(host='0.0.0.0', port=8005, debug=True)

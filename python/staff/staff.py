@@ -65,7 +65,7 @@ def check_user(emails):
     try:
         records = Staff.query.filter(Staff.email == email).first()
         print(records)
-        if(records.password == password['password']):
+        if(str(records.password) == password['password']):
             return jsonify({"result":True,"staff_id":records.staff_id,"prefix":records.prefix,"first_name":records.first_name,"last_name":records.last_name,"middle_name":records.middle_name,"suffix":records.suffix,"roles":records.roles})
         else:
             return jsonify({"result":False})
