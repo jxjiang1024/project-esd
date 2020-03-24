@@ -24,5 +24,5 @@ def userRoles(role_id):
         return jsonify({"result":False})
 
 if __name__ == "__main__":
-     app.run( port=8003, debug=True)
+     app.run( port=8002, debug=True)
 

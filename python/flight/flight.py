@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from os import environ
 import datetime
+import aircraft
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
@@ -171,6 +172,10 @@ def get_all_details():
     except:
         return jsonify({"result":False,"message":"Database Error"})
 
+@app.route("/flight/aircrafts",methods=['POST'])
+def get_all_aircrafts():
+    aircrafts =  aircraft.getAircrafts()
+    return aircrafts
 
 if __name__ == "__main__":
-     app.run( port=8002, debug=True)
+     app.run( port=8003, debug=True)
