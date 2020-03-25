@@ -263,8 +263,16 @@ class Status(db.Model):
      status = db.Column(db.String(255),  nullable=False)
 
      def __init__(self,status_code,status):
-         self.status = status
-         self.status_code = status_code
+         self._status = status
+         self._status_code = status_code
+     def getstatus_code(self):
+         return self._status_code 
+     def setstatus_code(self,status_code):
+         self._status_code = status_code
+     def getstatus(self):
+         return self._status
+     def setstatus(self,status):
+         self._status =status
      def json(self):
          return{"status_code":self.status_code,"status":self.status}
 
