@@ -6,7 +6,8 @@ $arrival_airport_id = $_GET["arrival_airport_id"];
 $departure_time = $_GET["departure_time"];
 $arrival_time = $_GET["arrival_time"];
 
-//var_dump($_GET);
+echo "Posted: ";
+var_dump($_GET);
 
 $new_route = array(
 	"flight_no" => $flight_no,
@@ -19,7 +20,7 @@ $new_route = array(
 $payload = json_encode($new_route);
 
 // Prepare new cURL resource
-$ch = curl_init("localhost/esd/python/route");
+$ch = curl_init("localhost:8001/route")	;
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLINFO_HEADER_OUT, true);
 curl_setopt($ch, CURLOPT_POST, true);

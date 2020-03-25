@@ -49,16 +49,17 @@ def get_all():
     return jsonify({"routes": [route.json() for route in Route.query.all()]})
 
 
-@app.route("/route/add", methods=['POST'])
+@app.route("/route", methods=['POST'])
 def add_route():
     try:
+        #print("try")
         if request.is_json():
             print("is json")
             new_route = request.get_json()
-   
-#
-#
-
-
+            return jsonify({"result":"Success"})
+    except:
+        #print("except")
+        return jsonify({"result":"Error"})
+#more
 if __name__ == "__main__":
-     app.run(host='0.0.0.0', port=8001, debug=True)
+    app.run(host='0.0.0.0', port=8001, debug=True)
