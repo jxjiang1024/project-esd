@@ -54,9 +54,9 @@ if (!isset($_SESSION['staff_id'])) {
     $(document).ready(function () {
         $("#tableError").hide();
         $("#errorFlight").hide();
-        let serviceURL = "http://127.0.0.1:8002/flight/route";
+        let serviceURL = "http://127.0.0.1:8003/flight/route";
         getRoutesData(serviceURL);
-        serviceURL = "http://127.0.0.1:8002/flight/details";
+        serviceURL = "http://127.0.0.1:8003/flight/details";
         getFlights(serviceURL);
     });
 
@@ -114,16 +114,18 @@ if (!isset($_SESSION['staff_id'])) {
 
                 let rows = "";
                 for (const listFlight of flight) {
-                    var departureDate = new Date(listFlight.flight_departure);
-                    var arrivalDate =  new Date(listFlight.flight_arrival);
+                    let departureDate = new Date(listFlight.flight_departure);
+                    let arrivalDate =  new Date(listFlight.flight_arrival);
+                    let departureMonth = departureDate.getMonth()+1;
+                    let arrivalMonth = arrivalDate.getMonth()+1;
                     eachRow =
                         "<td>" + listFlight.aircraft_tail_no + "</td>" +
                         "<td>" + listFlight.economy_seats + "</td>" +
                         "<td>" + listFlight.premium_economy_seats + "</td>" +
                         "<td>" + listFlight.business_seats + "</td>" +
                         "<td>" + listFlight.first_class_seats + "</td>" +
-                        "<td>" + departureDate.getDate().toString() + "/" + departureDate.getMonth().toString()  + "/" + departureDate.getFullYear().toString() + "</td>" +
-                        "<td>" + arrivalDate.getDate().toString() + "/" + arrivalDate.getMonth().toString()  + "/" + arrivalDate.getFullYear().toString() + "</td>" +
+                        "<td>" + departureDate.getDate().toString() + "/" + departureMonth.toString()  + "/" + departureDate.getFullYear().toString() + "</td>" +
+                        "<td>" + arrivalDate.getDate().toString() + "/" + arrivalMonth.toString()  + "/" + arrivalDate.getFullYear().toString() + "</td>" +
                         "<td>" + listFlight.status + "</td>";
                     rows += "<tbody><tr>" + eachRow + "</tr></tbody>";
                 }
