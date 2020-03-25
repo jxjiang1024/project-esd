@@ -186,7 +186,9 @@ def addFlightDetails():
     result = json.loads(r.text.lower())
     if(result['result'] == True):
         if(result['role'] == 999 or result['role'] == 2):
-            message = {"result":"Sufficient Rights"}
+            print(json_1['tail_no'])
+            aircraftData = aircraft.getSpecificAircraft(json_1['tail_no'])
+            message = aircraftData
         else:
             message = {"result":"insufficient Rights"}
     else:
