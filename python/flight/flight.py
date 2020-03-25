@@ -4,6 +4,8 @@ from flask_cors import CORS
 from os import environ
 import datetime
 import aircraft
+import requests
+import json
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
@@ -176,6 +178,20 @@ def get_all_details():
 def get_all_aircrafts():
     aircrafts =  aircraft.getAircrafts()
     return aircrafts
+@app.route("/flight/add/flights",methods=['POST'])
+def addFlightDetails():
+    json_1 = request.get_json()
+    shippingURL = "http://localhost:8001/staff/check/"+json_1['email']
+    r = requests.post(shippingURL, json = json_1)
+    result = json.loads(r.text.lower())
+    if(result['result'] == True):
+        if(result['role'] == 999 or result['role'] == 2):
+            message = {"result":"Sufficient Rights"}
+        else:
+            message = {"result":"insufficient Rights"}
+    else:
+        message = {"result": "incorrect"}
+    return message
 
 if __name__ == "__main__":
      app.run( port=8003, debug=True)
