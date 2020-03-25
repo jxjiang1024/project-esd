@@ -6,6 +6,7 @@ import datetime
 import aircraft
 import requests
 import json
+import traceback
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
@@ -21,7 +22,7 @@ def jsonTimeConverter(o):
 # Flight class
 class Flight(db.Model):
     __tablename__ = 'flight_details'
-    flight_details_id = db.Column(db.Integer, primary_key=True)
+    flight_details_id = db.Column(db.Integer, primary_key=True , autoincrement=True)
     flight_no = db.Column(db.String(45), nullable=False)
     flight_departure = db.Column(db.Date, nullable=False)
     flight_arrival = db.Column(db.Date, nullable=False)
@@ -181,14 +182,30 @@ def get_all_aircrafts():
 @app.route("/flight/add/flights",methods=['POST'])
 def addFlightDetails():
     json_1 = request.get_json()
-    shippingURL = "http://localhost:8001/staff/check/"+json_1['email']
-    r = requests.post(shippingURL, json = json_1)
+    staffURL = "http://localhost:8001/staff/check/"+json_1['email']
+    r = requests.post(staffURL, json = json_1)
     result = json.loads(r.text.lower())
     if(result['result'] == True):
+        ## Check if User is valid
         if(result['role'] == 999 or result['role'] == 2):
-            print(json_1['tail_no'])
-            aircraftData = aircraft.getSpecificAircraft(json_1['tail_no'])
-            message = aircraftData
+            try:
+                aircraftData = aircraft.getSpecificAircraft(json_1['tail_no'])
+                economy = int(json_1['econ_sv_seat']) + int(json_1['econ_stnd_seat'])+int(json_1['econ_plus_seat'])
+                pr_economy = int(json_1['pr_econ_sv_seat']) + int(json_1['pr_econ_stnd_seat']) + int(json_1['pr_econ_plus_seat'])
+                business = int(json_1['bus_sv_seat'])+int(json_1['bus_stnd_seat'])+int(json_1['bus_plus_seat'])
+                if(economy> int(aircraftData['econ']) or int(business) > int(aircraftData['business']) or int(pr_economy) > int(aircraftData['pre_econ']) or int(json_1['first'])>int(aircraftData['first'])):
+                    message = {"result": False, "message":"Seat amount entered Exceeded"}
+                elif (int(economy) < 0 or int(business) < 0 or int(pr_economy) < 0 or int(json_1['first']) < 0):
+                    message = {"result": False, "message":"Seat amount cannot be lower than 0"}
+                else:
+                    route =  Route.query.filter(Route.flight_no == str(json_1['route'])).first()
+                    if(str(json_1['route']) == str(route.flight_no)):
+                        message = {"result": True,"message":"Data Created"}
+                    else:
+                        message = {"result": False, "message":"invalid Flight Number"}
+            except Exception:
+                traceback.print_exc()
+                message = {"result": False, "message":"Database Error"}
         else:
             message = {"result":"insufficient Rights"}
     else:
