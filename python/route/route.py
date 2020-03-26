@@ -49,17 +49,31 @@ def get_all():
     return jsonify({"routes": [route.json() for route in Route.query.all()]})
 
 
-@app.route("/route", methods=['POST'])
+@app.route("/route/add", methods=['POST'])
 def add_route():
     try:
-        #print("try")
-        if request.is_json():
-            print("is json")
+        #print(request.get_json())
+        #print(type(request.get_json()))
+        if request.get_json()!=None:
+            #print("is json")
             new_route = request.get_json()
-            return jsonify({"result":"Success"})
+            new_route_array = [
+                Route(flight_no = new_route["flight_no"]),
+                Route(departure_airport_id = new_route["departure_airport_id"]),
+                Route(arrival_airport_id = new_route["arrival_airport_id"]),
+                Route(departure_time = new_route["departure_time"]),
+                Route(arrival_time = new_route["arrival_time"]),
+                Route(next_day = 0)
+            ]
+            
+            db.session.add_all(new_route_array)
+            db.session.commit()
+        else:
+            print("not json")
+        return {"result":"Success"}
     except:
-        #print("except")
-        return jsonify({"result":"Error"})
+        print("except")
+        return {"result":"Error"}
 #more
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8001, debug=True)
