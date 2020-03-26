@@ -15,15 +15,9 @@ if (!isset($_SESSION['staff_id'])) {
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
-    <title>Staff Dashboard</title>
+    <title>Material Pro Admin Template - The Most Complete & Trusted Bootstrap 4 Admin Template</title>
     <!-- Bootstrap Core CSS -->
     <link href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <!-- chartist CSS -->
-    <link href="../assets/plugins/chartist-js/dist/chartist.min.css" rel="stylesheet">
-    <link href="../assets/plugins/chartist-js/dist/chartist-init.css" rel="stylesheet">
-    <link href="../assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css" rel="stylesheet">
-    <!--This page css - Morris CSS -->
-    <link href="../assets/plugins/c3-master/c3.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="css/style.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->
@@ -34,8 +28,6 @@ if (!isset($_SESSION['staff_id'])) {
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-    <!-- Latest compiled and minified JavaScript -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script
             src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -49,100 +41,32 @@ if (!isset($_SESSION['staff_id'])) {
             src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
             integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
             crossorigin="anonymous"></script>
+    <script>
+        $(async () => {
+            try {
+                let serviceURL = "http://127.0.0.1:8001/staff/roles/" +<?php echo $_SESSION['roles']?>;
+                const response = await fetch(serviceURL, {
+                    headers: {"Content-Type": "application/json"},
+                    method: 'GET',
+                    mode: 'cors'
+                });
+                const data = await response.json();
+                console.log(data);
+                if (data.result == true) {
+                    $("#role").text(data.type);
+                } else {
+                    $("#role").text("Error Retrieving your Account Details");
+                }
+            } catch (e) {
+                console.error(e);
+                $("#role").text("Error Retrieving your Account Details");
+
+            }
+
+        });
+    </script>
 </head>
-<script>
-    $(document).ready(function () {
-        $("#tableError").hide();
-        $("#errorFlight").hide();
-        let serviceURL = "http://127.0.0.1:8003/flight/route";
-        getRoutesData(serviceURL);
-        serviceURL = "http://127.0.0.1:8003/flight/details";
-        getFlights(serviceURL);
-    });
 
-    async function getRoutesData(serviceURL) {
-        let requestParam = {
-            headers: {"content-type": "charset=UTF-8"},
-            mode: 'cors', // allow cross-origin resource sharing
-            method: 'GET',
-
-        }
-        try {
-            const response = await fetch(serviceURL, requestParam);
-            const data = await response.json();
-            let route = data.route;
-
-            if (data.result == true) {
-                var rows = "";
-                for (const listRoute of route) {
-                    eachRow =
-                        "<td>" + listRoute.flight_no + "</td>" +
-                        "<td>" + listRoute.departure_airport_id + "</td>" +
-                        "<td>" + listRoute.arrival_airport_id + "</td>" +
-                        "<td>" + listRoute.departure_time + "</td>" +
-                        "<td>" + listRoute.arrival_time + "</td>";
-                    rows += "<tbody><tr>" + eachRow + "</tr></tbody>";
-
-                }
-                // add all the rows to the table
-                $('#routeListTable').append(rows);
-            } else {
-                $("#tableError").show();
-                $("#routeListTable").hide();
-            }
-        } catch (e) {
-            console.error(e)
-            $("#tableError").show();
-            $("#routeListTable").hide();
-        }
-
-
-    }
-
-    async function getFlights(serviceURL) {
-        let requestParam = {
-            headers: {"content-type": "charset=UTF-8"},
-            mode: 'cors', // allow cross-origin resource sharing
-            method: 'GET',
-
-        }
-        try {
-            const response = await fetch(serviceURL, requestParam);
-            const data = await response.json();
-            let flight = data.flight;
-            if (data.result == true) {
-
-                let rows = "";
-                for (const listFlight of flight) {
-                    let departureDate = new Date(listFlight.flight_departure);
-                    let arrivalDate =  new Date(listFlight.flight_arrival);
-                    let departureMonth = departureDate.getMonth()+1;
-                    let arrivalMonth = arrivalDate.getMonth()+1;
-                    eachRow =
-                        "<td>" + listFlight.aircraft_tail_no + "</td>" +
-                        "<td>" + listFlight.economy_seats + "</td>" +
-                        "<td>" + listFlight.premium_economy_seats + "</td>" +
-                        "<td>" + listFlight.business_seats + "</td>" +
-                        "<td>" + listFlight.first_class_seats + "</td>" +
-                        "<td>" + departureDate.getDate().toString() + "/" + departureMonth.toString()  + "/" + departureDate.getFullYear().toString() + "</td>" +
-                        "<td>" + arrivalDate.getDate().toString() + "/" + arrivalMonth.toString()  + "/" + arrivalDate.getFullYear().toString() + "</td>" +
-                        "<td>" + listFlight.status + "</td>";
-                    rows += "<tbody><tr>" + eachRow + "</tr></tbody>";
-                }
-                // add all the rows to the table
-                $('#flightTable').append(rows);
-
-            } else {
-                $("#errorFlight").show();
-                $("#flightTable").hide();
-            }
-        } catch (e) {
-            console.error(e);
-            $("#errorFlight").show();
-            $("#flightTable").hide();
-        }
-    }
-</script>
 <body class="fix-header fix-sidebar card-no-border">
 <!-- ============================================================== -->
 <!-- Preloader - style you can find in spinners.css -->
@@ -174,8 +98,8 @@ if (!isset($_SESSION['staff_id'])) {
                     </b>
                     <!--End Logo icon -->
                     <!-- Logo text --><span>
-
-                         <!-- Light Logo text -->
+                         
+                         <!-- Light Logo text -->    
                          <img src="../assets/images/logo-light-text.png" class="light-logo" alt="homepage"/></span> </a>
             </div>
             <!-- ============================================================== -->
@@ -252,6 +176,7 @@ if (!isset($_SESSION['staff_id'])) {
                                     class="mdi mdi-help-circle"></i><span class="hide-menu">Error 404</span></a>
                     </li>
                 </ul>
+
             </nav>
             <!-- End Sidebar navigation -->
         </div>
@@ -261,7 +186,8 @@ if (!isset($_SESSION['staff_id'])) {
             <!-- item--><a href="" class="link" data-toggle="tooltip" title="Settings"><i class="ti-settings"></i></a>
             <!-- item--><a href="" class="link" data-toggle="tooltip" title="Email"><i class="mdi mdi-gmail"></i></a>
             <!-- item--><a href="../logout.php" class="link" data-toggle="tooltip" title="Logout"><i
-                        class="mdi mdi-power"></i></a></div>
+                        class="mdi mdi-power"></i></a>
+        </div>
         <!-- End Bottom points-->
     </aside>
     <!-- ============================================================== -->
@@ -280,12 +206,13 @@ if (!isset($_SESSION['staff_id'])) {
             <!-- ============================================================== -->
             <div class="row page-titles">
                 <div class="col-md-5 col-8 align-self-center">
-                    <h3 class="text-themecolor">Dashboard</h3>
+                    <h3 class="text-themecolor m-b-0 m-t-0">Profile</h3>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                        <li class="breadcrumb-item active">Dashboard</li>
+                        <li class="breadcrumb-item active">Profile</li>
                     </ol>
                 </div>
+
             </div>
             <!-- ============================================================== -->
             <!-- End Bread crumb and right sidebar toggle -->
@@ -296,90 +223,102 @@ if (!isset($_SESSION['staff_id'])) {
             <!-- Row -->
             <div class="row">
                 <!-- Column -->
-
-                <div class="col-lg-12">
+                <div class="col-lg-4 col-xlg-3 col-md-5">
                     <div class="card">
                         <div class="card-block">
-                            <h4 class="card-title">Current Routes</h4>
-                            <div class="table-responsive" id="tableError"><p>No Records Found</p></div>
-                            <div class="table-responsive">
-                                <table class="table" id="routeListTable">
-                                    <thead>
-                                    <tr>
-                                        <th>Flight No.</th>
-                                        <th>Departure Airport</th>
-                                        <th>Arrival Airport</th>
-                                        <th>Departure Time</th>
-                                        <th>Arrival Time</th>
-                                    </tr>
-                                    </thead>
-
-                                </table>
-                                <a style="float: right;" href="#" class="btn btn-success">
-                                    Add More Routes</a>
-                            </div>
+                            <center class="m-t-30"><img src="../assets/images/users/5.jpg" class="img-circle"
+                                                        width="150"/>
+                                <h4 class="card-title m-t-10"><?php echo $_SESSION['prefix'], " ", $_SESSION['first_name'], ", ", $_SESSION['last_name'] ?></h4>
+                                <h6 class="card-subtitle" id="role"></h6>
+                            </center>
                         </div>
                     </div>
                 </div>
-
+                <!-- Column -->
+                <!-- Column -->
+                <div class="col-lg-8 col-xlg-9 col-md-7">
+                    <div class="card">
+                        <div class="card-block">
+                            <form class="form-horizontal form-material">
+                                <div class="form-group">
+                                    <label class="col-md-12">Full Name</label>
+                                    <div class="col-md-12">
+                                        <input type="text"
+                                               placeholder="<?php echo $_SESSION['first_name'], " ", $_SESSION['last_name'] ?> "
+                                               class="form-control form-control-line" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="example-email" class="col-md-12">Email</label>
+                                    <div class="col-md-12">
+                                        <input type="email" placeholder="<?php echo $_SESSION['email'] ?>"
+                                               class="form-control form-control-line" name="example-email"
+                                               id="example-email" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">Password</label>
+                                    <div class="col-md-12">
+                                        <input type="password" value="password" class="form-control form-control-line">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">Phone No</label>
+                                    <div class="col-md-12">
+                                        <input type="text" placeholder="123 456 7890"
+                                               class="form-control form-control-line">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">Message</label>
+                                    <div class="col-md-12">
+                                        <textarea rows="5" class="form-control form-control-line"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">Select Country</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control form-control-line">
+                                            <option>London</option>
+                                            <option>India</option>
+                                            <option>Usa</option>
+                                            <option>Canada</option>
+                                            <option>Thailand</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <button class="btn btn-success">Update Profile</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Column -->
             </div>
             <!-- Row -->
-            <div class="row">
-                <!-- Column -->
-
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-block">
-                            <h4 class="card-title">Current Flights</h4>
-                            <div class="table-responsive" id="errorFlight"><p>No Records Found</p></div>
-                            <div class="table-responsive">
-                                <table class="table" id="flightTable">
-                                    <thead>
-                                    <tr>
-                                        <th>Aircraft Assigned</th>
-                                        <th>Economy Seats</th>
-                                        <th>Premium Economy Seats</th>
-                                        <th>Business Class Seats</th>
-                                        <th>First Class Seats</th>
-                                        <th>Departure Date</th>
-                                        <th>Arrival Date</th>
-                                        <th>Status</th>
-                                    </tr>
-                                    </thead>
-
-                                </table>
-                                <a style="float: right;" href="#" class="btn btn-success">
-                                    Add More Flights</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-
+            <!-- ============================================================== -->
+            <!-- End PAge Content -->
+            <!-- ============================================================== -->
         </div>
-        <!-- Row -->
-        <!-- Row -->
-
         <!-- ============================================================== -->
-        <!-- End PAge Content -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+        <footer class="footer">
+            © 2017 Material Pro Admin by wrappixel.com
+        </footer>
+        <!-- ============================================================== -->
+        <!-- End footer -->
         <!-- ============================================================== -->
     </div>
     <!-- ============================================================== -->
-    <!-- End Container fluid  -->
+    <!-- End Page wrapper  -->
     <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- footer -->
-    <!-- ============================================================== -->
-    <footer class="footer"> © 2017 Material Pro Admin by wrappixel.com</footer>
-    <!-- ============================================================== -->
-    <!-- End footer -->
-    <!-- ============================================================== -->
-</div>
-<!-- ============================================================== -->
-<!-- End Page wrapper  -->
-<!-- ============================================================== -->
 </div>
 <!-- ============================================================== -->
 <!-- End Wrapper -->
@@ -401,17 +340,6 @@ if (!isset($_SESSION['staff_id'])) {
 <script src="../assets/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
 <!--Custom JavaScript -->
 <script src="js/custom.min.js"></script>
-<!-- ============================================================== -->
-<!-- This page plugins -->
-<!-- ============================================================== -->
-<!-- chartist chart -->
-<script src="../assets/plugins/chartist-js/dist/chartist.min.js"></script>
-<script src="../assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js"></script>
-<!--c3 JavaScript -->
-<script src="../assets/plugins/d3/d3.min.js"></script>
-<script src="../assets/plugins/c3-master/c3.min.js"></script>
-<!-- Chart JS -->
-<script src="js/dashboard1.js"></script>
 </body>
 
 </html>
