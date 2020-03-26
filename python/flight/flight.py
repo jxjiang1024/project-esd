@@ -3,6 +3,10 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from os import environ
 import datetime
+import aircraft
+import requests
+import json
+import traceback
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
@@ -18,7 +22,7 @@ def jsonTimeConverter(o):
 # Flight class
 class Flight(db.Model):
     __tablename__ = 'flight_details'
-    flight_details_id = db.Column(db.Integer, primary_key=True)
+    flight_details_id = db.Column(db.Integer, primary_key=True , autoincrement=True)
     flight_no = db.Column(db.String(45), nullable=False)
     flight_departure = db.Column(db.Date, nullable=False)
     flight_arrival = db.Column(db.Date, nullable=False)
@@ -45,38 +49,150 @@ class Flight(db.Model):
     first_stnd_seat = db.Column(db.Integer, nullable=False)
     status_code = db.Column(db.String(3), nullable=False)
 
-    def __init__(flight_details_id, flight_no, flight_departure, flight_arrival,
+    def __init__(self,flight_details_id, flight_no, flight_departure, flight_arrival,
     aircraft_tail_no, econ_sv_price, econ_sv_seat, econ_stnd_price, econ_stnd_seat,
     econ_plus_price, econ_plus_seat, pr_econ_sv_price, pr_econ_sv_seat,
     pr_econ_stnd_price, pr_econ_stnd_seat, pr_econ_plus_price, pr_econ_plus_seat,
     bus_sv_price, bus_sv_seat, bus_stnd_price, bus_stnd_seat, bus_plus_price,
     bus_plus_seat, first_stnd_price, first_stnd_seat, status_code):
-        self.flight_details_id = flight_details_id
-        self.flight_no = flight_no
-        self.flight_departure = flight_departure
-        self.flight_arrival = flight_arrival
-        self.aircraft_tail_no = aircraft_tail_no
-        self.econ_sv_price = econ_sv_price
-        self.econ_sv_seat = econ_sv_seat
-        self.econ_stnd_price = econ_stnd_price
-        self.econ_stnd_seat = econ_stnd_seat
-        self.econ_plus_price = econ_plus_price
-        self.econ_plus_seat = econ_plus_seat
-        self.pr_econ_sv_price = pr_econ_sv_price
-        self.pr_econ_sv_seat = pr_econ_sv_seat
-        self.pr_econ_stnd_price = pr_econ_stnd_price
-        self.pr_econ_stnd_seat = pr_econ_stnd_seat
-        self.pr_econ_plus_price = pr_econ_plus_price
-        self.pr_econ_plus_seat = pr_econ_plus_seat
-        self.bus_sv_price = bus_sv_price
-        self.bus_sv_seat = bus_sv_seat
-        self.bus_stnd_price = bus_stnd_price
-        self.bus_stnd_seat = bus_stnd_seat
-        self.bus_plus_price = bus_plus_price
-        self.bus_plus_seat = bus_plus_seat
-        self.first_stnd_price = first_stnd_price
-        self.first_stnd_seat = first_stnd_seat
-        self.status_code = status_code
+        self._flight_details_id = flight_details_id
+        self._flight_no = flight_no
+        self._flight_departure = flight_departure
+        self._flight_arrival = flight_arrival
+        self._aircraft_tail_no = aircraft_tail_no
+        self._econ_sv_price = econ_sv_price
+        self._econ_sv_seat = econ_sv_seat
+        self._econ_stnd_price = econ_stnd_price
+        self._econ_stnd_seat = econ_stnd_seat
+        self._econ_plus_price = econ_plus_price
+        self._econ_plus_seat = econ_plus_seat
+        self._pr_econ_sv_price = pr_econ_sv_price
+        self._pr_econ_sv_seat = pr_econ_sv_seat
+        self._pr_econ_stnd_price = pr_econ_stnd_price
+        self._pr_econ_stnd_seat = pr_econ_stnd_seat
+        self._pr_econ_plus_price = pr_econ_plus_price
+        self._pr_econ_plus_seat = pr_econ_plus_seat
+        self._bus_sv_price = bus_sv_price
+        self._bus_sv_seat = bus_sv_seat
+        self._bus_stnd_price = bus_stnd_price
+        self._bus_stnd_seat = bus_stnd_seat
+        self._bus_plus_price = bus_plus_price
+        self._bus_plus_seat = bus_plus_seat
+        self._first_stnd_price = first_stnd_price
+        self._first_stnd_seat = first_stnd_seat
+        self._status_code = status_code
+
+    def getflight_details_id(self):
+        return self._flight_details_id
+    
+    def setflight_details_id(self,flight_details_id):
+        self._flight_details_id = flight_details_id
+    
+    def getflight_no(self):
+        return self._flight_no
+    def setflight_no(self,flight_no):
+        self._flight_no = flight_no 
+    
+    def getflight_departure(self):
+        return self._flight_departure
+    
+    def setflight_departure(self,flight_departure):
+        self._flight_departure = flight_departure
+    def getflight_arrival(self):
+        return self._flight_arrival
+    def setflight_arrival(self,flight_arrival):
+        self._flight_arrival = flight_arrival
+    def getaircraft_tail_no(self):
+        return self._aircraft_tail_no 
+    def setaircraft_tail_no (self,aircraft_tail_no ):
+        self._aircraft_tail_no  = aircraft_tail_no 
+
+    def getecon_sv_price(self):
+        return self._econ_sv_price
+    def setecon_sv_price(self,econ_sv_price):
+        self._econ_sv_price = econ_sv_price
+    def getecon_sv_seat(self):
+        return self._econ_sv_seat
+    def setecon_sv_seat(self,econ_sv_seat):
+        self._econ_sv_seat = econ_sv_seat
+    def getecon_stnd_price(self):
+        return self.econ_stnd_price
+    def setecon_stnd_price(self,econ_stnd_price):
+        self._econ_stnd_price = econ_stnd_price
+    def getecon_stnd_seat(self):
+        return self._econ_stnd_seat
+    def setecon_stnd_seat(self,econ_stnd_seat):
+        self._econ_stnd_seat = econ_stnd_seat
+    def getecon_plus_price(self):
+        return self._econ_plus_price
+    def setecon_plus_price(self,econ_plus_price):
+        self._econ_plus_price = econ_plus_price
+    def getecon_plus_seat(self):
+        return self._econ_plus_seat
+    def setecon_plus_seat(self,econ_plus_seat):
+        self._econ_plus_seat = econ_plus_seat
+    def getpr_econ_sv_price(self):
+        return self._pr_econ_sv_price
+    def setpr_econ_sv_price(self,pr_econ_sv_price):
+        self._pr_econ_sv_price =pr_econ_sv_price
+    def getpr_econ_sv_seat(self):
+        return self._pr_econ_sv_seat
+    def setpr_econ_sv_seat(self,pr_econ_sv_seat):
+        self._pr_econ_sv_seat =pr_econ_sv_seat
+    def getpr_econ_stnd_price(self):
+        return self._pr_econ_stnd_price
+    def setpr_econ_stnd_price(self,pr_econ_stnd_price):
+        self._pr_econ_stnd_price = pr_econ_stnd_price
+    def getpr_econ_stnd_seat(self):
+        return self._pr_econ_stnd_seat
+    def setpr_econ_stnd_seat(self,pr_econ_stnd_seat):
+        self._pr_econ_stnd_seat = pr_econ_stnd_seat
+    def getpr_econ_plus_price(self):
+        return self._pr_econ_plus_price 
+    def setpr_econ_plus_price (self,pr_econ_plus_price ):
+        self._pr_econ_plus_price  = pr_econ_plus_price 
+    def getpr_econ_plus_seat(self):
+        return self._pr_econ_plus_seat
+    def setpr_econ_plus_seat(self,pr_econ_plus_seat):
+        self._pr_econ_plus_seat = pr_econ_plus_seat
+    def getbus_sv_price(self):
+        return self._bus_sv_price
+    def setbus_sv_price(self,bus_sv_price):
+        self._bus_sv_price = bus_sv_price
+    def getbus_sv_seat(self):
+        return self._bus_sv_seat
+    def setbus_sv_seat(self,bus_sv_seat):
+        self._bus_sv_seat = bus_sv_seat
+    def getbus_stnd_price(self):
+        return self._bus_stnd_price
+    def setbus_stnd_price(self,bus_stnd_price):
+        self._bus_stnd_price = bus_stnd_price
+    def getbus_stnd_seat(self):
+        return self._bus_stnd_seat
+    def setbus_stnd_seat(self,bus_stnd_seat):
+        self._bus_stnd_seat = bus_stnd_seat
+    def getbus_plus_price (self):
+        return self._bus_plus_price 
+    def setbus_plus_price (self,bus_plus_price ):
+        self._bus_plus_price = bus_plus_price 
+    def getbus_plus_seat(self):
+        return self._bus_plus_seat
+    def setbus_plus_seat(self,bus_plus_seat):
+        self._bus_plus_seat = bus_plus_seat
+    def getfirst_stnd_price(self):
+        return self._first_stnd_price
+    def setfirst_stnd_price(self,first_stnd_price):
+        self._first_stnd_price = first_stnd_price
+    def getfirst_stnd_seat(self):
+        return self._first_stnd_seat
+    def setfirst_stnd_seat(self,first_stnd_seat):
+        self._first_stnd_seat = first_stnd_seat
+    def getstatus_code(self):
+        return self._status_code
+    def setstatus_code(self,status_code):
+        self._status_code =status_code
+
+    
 
     def json(self):
         return {"flight_details_id": self.flight_details_id, "flight_no": self.flight_no,
@@ -92,6 +208,11 @@ class Flight(db.Model):
         "bus_stnd_seat": self.bus_stnd_seat, "bus_plus_price": self.bus_plus_price,
         "bus_plus_seat": self.bus_plus_seat, "first_stnd_price": self.first_stnd_price,
         "first_stnd_seat": self.first_stnd_seat, "status_code": self.status_code}
+    def json_get_flights(self,Status):
+        stat = Status.query.filter(Status.status_code ==  self.status_code).first()
+        return {"flight_details_id": self.flight_details_id , "flight_no": self.flight_no,
+        "flight_departure": self.flight_departure, "flight_arrival": self.flight_arrival,
+        "aircraft_tail_no": self.aircraft_tail_no,"economy_seats":self.econ_sv_seat+self.econ_stnd_seat+self.econ_plus_seat,"premium_economy_seats":self.pr_econ_sv_seat+self.pr_econ_stnd_seat+self.pr_econ_plus_seat,"business_seats": self.bus_sv_seat+self.bus_stnd_seat+self.bus_plus_seat,"first_class_seats":self.first_stnd_seat,"status": stat.status }
 
 # Route class
 class Route(db.Model):
@@ -104,17 +225,21 @@ class Route(db.Model):
     arrival_time = db.Column(db.TIME, nullable=False)
     next_day = db.Column(db.SMALLINT, nullable=False)
 
-    def __init__(flight_no, departure_airport_id, arrival_airport_id, departure_time, arrival_time, next_day):
+    def __init__(self,flight_no, departure_airport_id, arrival_airport_id, departure_time, arrival_time, next_day):
         self.flight_no = flight_no
         self.departure_airport_id = departure_airport_id
         self.arrival_airport_id = arrival_airport_id
         self.departure_time = departure_time
         self.arrival_time = arrival_time
         self.next_day = next_day
-
+    
     
     def json(self):
-        return {"flight_no": self.flight_no, "departure_airport_id": self.departure_airport_id, "arrival_airport_id": self.arrival_airport_id, "departure_time": jsonTimeConverter(self.departure_time), "arrival_time": jsonTimeConverter(self.arrival_time), "next_day": self.next_day}
+        return {"flight_no": self.flight_no, "departure_airport_id": self.departure_airport_id, "arrival_airport_id": self.arrival_airport_id, "departure_time": self.departure_time, "arrival_time":self.arrival_time, "next_day": self.next_day}
+    def json_set(self,iataCode):
+        depAirports = iataCode.query.filter(iataCode.IATA_CODE == self.departure_airport_id).first()
+        arrAirports = iataCode.query.filter(iataCode.IATA_CODE == self.arrival_airport_id).first()
+        return {"flight_no": self.flight_no, "departure_airport_id": depAirports.airportName+" ("+ self.departure_airport_id+")" , "arrival_airport_id":arrAirports.airportName+" ("+ self.arrival_airport_id+")", "departure_time": jsonTimeConverter(self.departure_time), "arrival_time": jsonTimeConverter(self.arrival_time), "next_day": self.next_day}
 
 class iataCode(db.Model):
     __tablename__ = "iata_code"
@@ -129,32 +254,83 @@ class iataCode(db.Model):
         self.COUNTRY_CODE = COUNTRY_CODE
         self.CONTINENT_CODE = CONTINENT_CODE
 
-    def jsonify(self):
+    def json(self):
         return{"IATA_CODE": self.IATA_CODE,"airportName":self.airportName,"COUNTRY_CODE":self.COUNTRY_CODE,"CONTINENT_CODE":self.CONTINENT_CODE}
 
-# # TEST FUNCTION: returns JSON list of all flights
-# @app.route("/flight")
-# def get_all():
-#     return jsonify({"flights": [flight.json() for flight in Flight.query.all()]})
+class Status(db.Model):
+     __tablename__ = 'status'
+     status_code = db.Column(db.String(3), primary_key=True)
+     status = db.Column(db.String(255),  nullable=False)
 
-# # TEST FUNCTION: returns JSON list of all routes
-# @app.route("/route")
-# def get_all():
-#     return jsonify({"routes": [route.json() for route in Route.query.all()]})
+     def __init__(self,status_code,status):
+         self._status = status
+         self._status_code = status_code
+     def getstatus_code(self):
+         return self._status_code 
+     def setstatus_code(self,status_code):
+         self._status_code = status_code
+     def getstatus(self):
+         return self._status
+     def setstatus(self,status):
+         self._status =status
+     def json(self):
+         return{"status_code":self.status_code,"status":self.status}
+
+
 
 ## Retrieve All Flights Routes Listing
 @app.route("/flight/route")
 def get_all_routes():
     try:
         route_record = Route.query.all()
-        return jsonify({"route":[route_record.json()for route_record in route_record ],"result":True})
+        return jsonify({"route":[route_record.json_set(iataCode)for route_record in route_record ],"result":True})
     except:
         return jsonify({"result":False,"message":"Database Error"})
 
-@app.route("/flight/airport/<string:iata_code>")
-def get_airport(iata_code):
-    airports = iataCode.query.filter(iataCode.IATA_CODE == iata_code).first()
-    return jsonify({"result":True,"IATA_CODE":airports.IATA_CODE,"airportName":airports.airportName,"COUNTRY_CODE":airports.COUNTRY_CODE,"CONTINENT_CODE":airports.CONTINENT_CODE })
+@app.route("/flight/details")
+def get_all_details():
+    try:
+        flight_record = Flight.query.all()
+        return jsonify({"flight":[flight_record.json_get_flights(Status) for flight_record in flight_record], "result": True})
+    except:
+        return jsonify({"result":False,"message":"Database Error"})
+
+@app.route("/flight/aircrafts",methods=['POST'])
+def get_all_aircrafts():
+    aircrafts =  aircraft.getAircrafts()
+    return aircrafts
+@app.route("/flight/add/flights",methods=['POST'])
+def addFlightDetails():
+    json_1 = request.get_json()
+    staffURL = "http://localhost:8001/staff/check/"+json_1['email']
+    r = requests.post(staffURL, json = json_1)
+    result = json.loads(r.text.lower())
+    if(result['result'] == True):
+        ## Check if User is valid
+        if(result['role'] == 999 or result['role'] == 2):
+            try:
+                aircraftData = aircraft.getSpecificAircraft(json_1['tail_no'])
+                economy = int(json_1['econ_sv_seat']) + int(json_1['econ_stnd_seat'])+int(json_1['econ_plus_seat'])
+                pr_economy = int(json_1['pr_econ_sv_seat']) + int(json_1['pr_econ_stnd_seat']) + int(json_1['pr_econ_plus_seat'])
+                business = int(json_1['bus_sv_seat'])+int(json_1['bus_stnd_seat'])+int(json_1['bus_plus_seat'])
+                if(economy> int(aircraftData['econ']) or int(business) > int(aircraftData['business']) or int(pr_economy) > int(aircraftData['pre_econ']) or int(json_1['first'])>int(aircraftData['first'])):
+                    message = {"result": False, "message":"Seat amount entered Exceeded"}
+                elif (int(economy) < 0 or int(business) < 0 or int(pr_economy) < 0 or int(json_1['first']) < 0):
+                    message = {"result": False, "message":"Seat amount cannot be lower than 0"}
+                else:
+                    route =  Route.query.filter(Route.flight_no == str(json_1['route'])).first()
+                    if(str(json_1['route']) == str(route.flight_no)):
+                        message = {"result": True,"message":"Data Created"}
+                    else:
+                        message = {"result": False, "message":"invalid Flight Number"}
+            except Exception:
+                traceback.print_exc()
+                message = {"result": False, "message":"Database Error"}
+        else:
+            message = {"result":"insufficient Rights"}
+    else:
+        message = {"result": "incorrect"}
+    return message
 
 if __name__ == "__main__":
-     app.run( port=8002, debug=True)
+     app.run( port=8003, debug=True)
