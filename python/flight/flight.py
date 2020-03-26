@@ -55,142 +55,142 @@ class Flight(db.Model):
     pr_econ_stnd_price, pr_econ_stnd_seat, pr_econ_plus_price, pr_econ_plus_seat,
     bus_sv_price, bus_sv_seat, bus_stnd_price, bus_stnd_seat, bus_plus_price,
     bus_plus_seat, first_stnd_price, first_stnd_seat, status_code):
-        self._flight_details_id = flight_details_id
-        self._flight_no = flight_no
-        self._flight_departure = flight_departure
-        self._flight_arrival = flight_arrival
-        self._aircraft_tail_no = aircraft_tail_no
-        self._econ_sv_price = econ_sv_price
-        self._econ_sv_seat = econ_sv_seat
-        self._econ_stnd_price = econ_stnd_price
-        self._econ_stnd_seat = econ_stnd_seat
-        self._econ_plus_price = econ_plus_price
-        self._econ_plus_seat = econ_plus_seat
-        self._pr_econ_sv_price = pr_econ_sv_price
-        self._pr_econ_sv_seat = pr_econ_sv_seat
-        self._pr_econ_stnd_price = pr_econ_stnd_price
-        self._pr_econ_stnd_seat = pr_econ_stnd_seat
-        self._pr_econ_plus_price = pr_econ_plus_price
-        self._pr_econ_plus_seat = pr_econ_plus_seat
-        self._bus_sv_price = bus_sv_price
-        self._bus_sv_seat = bus_sv_seat
-        self._bus_stnd_price = bus_stnd_price
-        self._bus_stnd_seat = bus_stnd_seat
-        self._bus_plus_price = bus_plus_price
-        self._bus_plus_seat = bus_plus_seat
-        self._first_stnd_price = first_stnd_price
-        self._first_stnd_seat = first_stnd_seat
-        self._status_code = status_code
+        self.flight_details_id = flight_details_id
+        self.flight_no = flight_no
+        self.flight_departure = flight_departure
+        self.flight_arrival = flight_arrival
+        self.aircraft_tail_no = aircraft_tail_no
+        self.econ_sv_price = econ_sv_price
+        self.econ_sv_seat = econ_sv_seat
+        self.econ_stnd_price = econ_stnd_price
+        self.econ_stnd_seat = econ_stnd_seat
+        self.econ_plus_price = econ_plus_price
+        self.econ_plus_seat = econ_plus_seat
+        self.pr_econ_sv_price = pr_econ_sv_price
+        self.pr_econ_sv_seat = pr_econ_sv_seat
+        self.pr_econ_stnd_price = pr_econ_stnd_price
+        self.pr_econ_stnd_seat = pr_econ_stnd_seat
+        self.pr_econ_plus_price = pr_econ_plus_price
+        self.pr_econ_plus_seat = pr_econ_plus_seat
+        self.bus_sv_price = bus_sv_price
+        self.bus_sv_seat = bus_sv_seat
+        self.bus_stnd_price = bus_stnd_price
+        self.bus_stnd_seat = bus_stnd_seat
+        self.bus_plus_price = bus_plus_price
+        self.bus_plus_seat = bus_plus_seat
+        self.first_stnd_price = first_stnd_price
+        self.first_stnd_seat = first_stnd_seat
+        self.status_code = status_code
 
     def getflight_details_id(self):
-        return self._flight_details_id
+        return self.flight_details_id
     
     def setflight_details_id(self,flight_details_id):
-        self._flight_details_id = flight_details_id
+        self.flight_details_id = flight_details_id
     
     def getflight_no(self):
-        return self._flight_no
+        return self.flight_no
     def setflight_no(self,flight_no):
-        self._flight_no = flight_no 
+        self.flight_no = flight_no 
     
     def getflight_departure(self):
-        return self._flight_departure
+        return self.flight_departure
     
     def setflight_departure(self,flight_departure):
-        self._flight_departure = flight_departure
+        self.flight_departure = flight_departure
     def getflight_arrival(self):
-        return self._flight_arrival
+        return self.flight_arrival
     def setflight_arrival(self,flight_arrival):
-        self._flight_arrival = flight_arrival
+        self.flight_arrival = flight_arrival
     def getaircraft_tail_no(self):
-        return self._aircraft_tail_no 
+        return self.aircraft_tail_no 
     def setaircraft_tail_no (self,aircraft_tail_no ):
-        self._aircraft_tail_no  = aircraft_tail_no 
+        self.aircraft_tail_no  = aircraft_tail_no 
 
     def getecon_sv_price(self):
-        return self._econ_sv_price
+        return self.econ_sv_price
     def setecon_sv_price(self,econ_sv_price):
-        self._econ_sv_price = econ_sv_price
+        self.econ_sv_price = econ_sv_price
     def getecon_sv_seat(self):
-        return self._econ_sv_seat
+        return self.econ_sv_seat
     def setecon_sv_seat(self,econ_sv_seat):
-        self._econ_sv_seat = econ_sv_seat
+        self.econ_sv_seat = econ_sv_seat
     def getecon_stnd_price(self):
         return self.econ_stnd_price
     def setecon_stnd_price(self,econ_stnd_price):
-        self._econ_stnd_price = econ_stnd_price
+        self.econ_stnd_price = econ_stnd_price
     def getecon_stnd_seat(self):
-        return self._econ_stnd_seat
+        return self.econ_stnd_seat
     def setecon_stnd_seat(self,econ_stnd_seat):
-        self._econ_stnd_seat = econ_stnd_seat
+        self.econ_stnd_seat = econ_stnd_seat
     def getecon_plus_price(self):
-        return self._econ_plus_price
+        return self.econ_plus_price
     def setecon_plus_price(self,econ_plus_price):
-        self._econ_plus_price = econ_plus_price
+        self.econ_plus_price = econ_plus_price
     def getecon_plus_seat(self):
-        return self._econ_plus_seat
+        return self.econ_plus_seat
     def setecon_plus_seat(self,econ_plus_seat):
-        self._econ_plus_seat = econ_plus_seat
+        self.econ_plus_seat = econ_plus_seat
     def getpr_econ_sv_price(self):
-        return self._pr_econ_sv_price
+        return self.pr_econ_sv_price
     def setpr_econ_sv_price(self,pr_econ_sv_price):
-        self._pr_econ_sv_price =pr_econ_sv_price
+        self.pr_econ_sv_price =pr_econ_sv_price
     def getpr_econ_sv_seat(self):
-        return self._pr_econ_sv_seat
+        return self.pr_econ_sv_seat
     def setpr_econ_sv_seat(self,pr_econ_sv_seat):
-        self._pr_econ_sv_seat =pr_econ_sv_seat
+        self.pr_econ_sv_seat =pr_econ_sv_seat
     def getpr_econ_stnd_price(self):
-        return self._pr_econ_stnd_price
+        return self.pr_econ_stnd_price
     def setpr_econ_stnd_price(self,pr_econ_stnd_price):
-        self._pr_econ_stnd_price = pr_econ_stnd_price
+        self.pr_econ_stnd_price = pr_econ_stnd_price
     def getpr_econ_stnd_seat(self):
-        return self._pr_econ_stnd_seat
+        return self.pr_econ_stnd_seat
     def setpr_econ_stnd_seat(self,pr_econ_stnd_seat):
-        self._pr_econ_stnd_seat = pr_econ_stnd_seat
+        self.pr_econ_stnd_seat = pr_econ_stnd_seat
     def getpr_econ_plus_price(self):
-        return self._pr_econ_plus_price 
+        return self.pr_econ_plus_price 
     def setpr_econ_plus_price (self,pr_econ_plus_price ):
-        self._pr_econ_plus_price  = pr_econ_plus_price 
+        self.pr_econ_plus_price  = pr_econ_plus_price 
     def getpr_econ_plus_seat(self):
-        return self._pr_econ_plus_seat
+        return self.pr_econ_plus_seat
     def setpr_econ_plus_seat(self,pr_econ_plus_seat):
-        self._pr_econ_plus_seat = pr_econ_plus_seat
+        self.pr_econ_plus_seat = pr_econ_plus_seat
     def getbus_sv_price(self):
-        return self._bus_sv_price
+        return self.bus_sv_price
     def setbus_sv_price(self,bus_sv_price):
-        self._bus_sv_price = bus_sv_price
+        self.bus_sv_price = bus_sv_price
     def getbus_sv_seat(self):
-        return self._bus_sv_seat
+        return self.bus_sv_seat
     def setbus_sv_seat(self,bus_sv_seat):
-        self._bus_sv_seat = bus_sv_seat
+        self.bus_sv_seat = bus_sv_seat
     def getbus_stnd_price(self):
-        return self._bus_stnd_price
+        return self.bus_stnd_price
     def setbus_stnd_price(self,bus_stnd_price):
-        self._bus_stnd_price = bus_stnd_price
+        self.bus_stnd_price = bus_stnd_price
     def getbus_stnd_seat(self):
-        return self._bus_stnd_seat
+        return self.bus_stnd_seat
     def setbus_stnd_seat(self,bus_stnd_seat):
-        self._bus_stnd_seat = bus_stnd_seat
+        self.bus_stnd_seat = bus_stnd_seat
     def getbus_plus_price (self):
-        return self._bus_plus_price 
+        return self.bus_plus_price 
     def setbus_plus_price (self,bus_plus_price ):
-        self._bus_plus_price = bus_plus_price 
+        self.bus_plus_price = bus_plus_price 
     def getbus_plus_seat(self):
-        return self._bus_plus_seat
+        return self.bus_plus_seat
     def setbus_plus_seat(self,bus_plus_seat):
-        self._bus_plus_seat = bus_plus_seat
+        self.bus_plus_seat = bus_plus_seat
     def getfirst_stnd_price(self):
-        return self._first_stnd_price
+        return self.first_stnd_price
     def setfirst_stnd_price(self,first_stnd_price):
-        self._first_stnd_price = first_stnd_price
+        self.first_stnd_price = first_stnd_price
     def getfirst_stnd_seat(self):
-        return self._first_stnd_seat
+        return self.first_stnd_seat
     def setfirst_stnd_seat(self,first_stnd_seat):
-        self._first_stnd_seat = first_stnd_seat
+        self.first_stnd_seat = first_stnd_seat
     def getstatus_code(self):
-        return self._status_code
+        return self.status_code
     def setstatus_code(self,status_code):
-        self._status_code =status_code
+        self.status_code =status_code
 
     
 
@@ -320,6 +320,9 @@ def addFlightDetails():
                 else:
                     route =  Route.query.filter(Route.flight_no == str(json_1['route'])).first()
                     if(str(json_1['route']) == str(route.flight_no)):
+                        flight = Flight(0,json_1['route'],str(json_1['flight_departure']),str(json_1['flight_arrival']),str(json_1['tail_no']),float(json_1['econ_sv_price']),int(json_1['econ_sv_seat']),float(json_1['econ_stnd_price']),int(json_1['econ_stnd_seat']),float(json_1['econ_plus_price']),int(json_1['econ_plus_seat']),float(json_1['pr_econ_sv_price']),int(json_1['pr_econ_sv_seat']),float(json_1['pr_econ_stnd_price']),int(json_1['pr_econ_stnd_seat']),float(json_1['pr_econ_plus_price']),int(json_1['pr_econ_plus_seat']),float(json_1['bus_sv_price']),int(json_1['bus_sv_seat']),float(json_1['bus_stnd_price']),int(json_1['bus_stnd_seat']),float(json_1['bus_plus_price']),int(json_1['bus_plus_seat']),float(json_1['first_stnd_price']),int(json_1['first']),2)
+                        db.session.add(flight)
+                        db.session.commit()
                         message = {"result": True,"message":"Data Created"}
                     else:
                         message = {"result": False, "message":"invalid Flight Number"}
@@ -327,10 +330,10 @@ def addFlightDetails():
                 traceback.print_exc()
                 message = {"result": False, "message":"Database Error"}
         else:
-            message = {"result":"insufficient Rights"}
+            message = {"message":"insufficient Rights","result": False}
     else:
-        message = {"result": "incorrect"}
-    return message
+        message = {"result": False,"message":"invald user"}
+    return jsonify(message)
 
 if __name__ == "__main__":
      app.run( port=8003, debug=True)
