@@ -27,10 +27,23 @@
     <script>
     
       $(document).ready(function(){   
-        $("#return").click(function(){
-          alert("Another test");
+        $("#male").click(function(){
+          alert("Test");
         });
       });
+      $("#return").on( "click", function() {
+        $( "#log" ).html( $("#return").val() + " is checked!" );
+        alert("return trip checked");
+      });
+      
+      $("#one-way").on( "click", function() {
+        $( "#log" ).html( $("#one-way").val() + " is checked!" );
+        alert("one way trip checked");
+      });
+      function displayform(){
+        $('#one-way-form').hide();
+      }
+      
 
     
     </script>
@@ -39,12 +52,12 @@
 <body>
     
       
-    <div id='trip-type' class="btn-group btn-group-toggle" data-toggle="buttons">
+    <div id='trip-type' class="btn-group btn-group-toggle" >
         <label class="btn btn-secondary active">
-          <input type="radio" name="return" id="return" value='return' checked>Return
+          <input type="radio" name="return" id="return">Return
         </label>
         <label class="btn btn-secondary">
-          <input type="radio" name="one-way" id="one-way" value='one-way'>One-way
+          <input type="radio" name="one-way" id="one-way">One-way
         </label>
     </div>
 
