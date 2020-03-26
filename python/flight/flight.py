@@ -276,8 +276,6 @@ class Status(db.Model):
      def json(self):
          return{"status_code":self.status_code,"status":self.status}
 
-
-
 ## Retrieve All Flights Routes Listing
 @app.route("/flight/route")
 def get_all_routes():
@@ -299,6 +297,7 @@ def get_all_details():
 def get_all_aircrafts():
     aircrafts =  aircraft.getAircrafts()
     return aircrafts
+    
 @app.route("/flight/add/flights",methods=['POST'])
 def addFlightDetails():
     json_1 = request.get_json()
