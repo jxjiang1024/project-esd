@@ -1,8 +1,6 @@
 from flask import Flask,request,jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-import roles
-import json
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
@@ -66,39 +64,13 @@ def check_user(emails):
     try:
         records = Staff.query.filter(Staff.email == email).first()
         print(records)
-        if(str(records.password) == password['password']):
+        if(records.password == password['password']):
             return jsonify({"result":True,"staff_id":records.staff_id,"prefix":records.prefix,"first_name":records.first_name,"last_name":records.last_name,"middle_name":records.middle_name,"suffix":records.suffix,"roles":records.roles})
         else:
             return jsonify({"result":False})
     except:
         return jsonify({"result":"Database Error"})
 
-@app.route("/staff/roles/<string:role>" ,methods=['GET'])
-def getUserRoleName(role):
-    role_out = roles.userRoles(role)
-    return role_out
 
-@app.route("/staff/check/<string:emails>", methods=['POST'])
-def check_userRights(emails):
-    email = emails
-    staff = None
-    try:
-        if request.is_json:
-            staff = request.get_json()
-            records = Staff.query.filter(Staff.email == email).first()
-            if(records == None):
-                replymessage = json.dumps({"message": "Invalid Data Parsed", "data": staff, "result":False}, default=str)
-            else:
-                replymessage = json.dumps({"role": records.roles, "result":True}, default=str)
-            return replymessage, 200
-        else:
-            staff = request.get_data()
-            replymessage = json.dumps({"message": "Order should be in JSON", "data": staff, "result":False}, default=str)
-            return replymessage, 400 # Bad Request
-    except:
-        replymessage = json.dumps({"message":"Error" , "result":False}, default=str)
-        return replymessage, 501
-    
-    
 if __name__ == "__main__":
      app.run( port=8001, debug=True)

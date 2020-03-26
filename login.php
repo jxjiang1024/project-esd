@@ -79,12 +79,12 @@ if (isset($_SESSION["staff_id"])) {
                             serviceURL, {
                                 headers: {"Content-Type": "application/json"},
                                 method: 'POST',
-                                mode: 'cors',
+                                mode: 'cors',
                                 body: JSON.stringify({password: password})
                             }
                         );
                     const data = await response.json();
-
+                    console.log(data)
                     if (data.result == true) {
                         $.post("session_staff.php", {
                             "staff_id": data.staff_id,
@@ -93,8 +93,7 @@ if (isset($_SESSION["staff_id"])) {
                             "prefix": data.prefix,
                             "middle_name": data.middle_name,
                             "suffix": data.suffix,
-                            "email": email,
-                            "roles": data.roles
+                            "roles":data.roles
                         });
 
                         location.reload();
