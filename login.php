@@ -95,6 +95,8 @@ if (isset($_SESSION["staff_id"])) {
                             "suffix": data.suffix,
                             "email": email,
                             "roles": data.roles
+                            "country": data.country
+                            "country_code": data.country_code
                         });
 
                         location.reload();

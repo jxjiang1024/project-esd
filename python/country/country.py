@@ -1,11 +1,11 @@
 from flask import Flask,request,jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from os import environ
+import traceback
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 CORS(app)
@@ -33,6 +33,17 @@ class Country(db.Model):
 @app.route("/country-names")
 def get_all_names():
     return jsonify({"country names": [country.json()['NAME'] for country in Country.query.all()]})
+
+@app.route("/country/<string:code>", methods = ["GET"])
+def getCountryByCode(code):
+    country_code = code
+    try:
+        country_data = Country.query.filter(Country.COUNTRY_CODE == country_code).first()
+        return jsonify({"country_name": country_data.NAME,"result":True,"CONTINENT_CODE": country_data.CONTINENT_CODE})
+    except Exception:
+        traceback.print_exc()
+        return jsonify({"results":False,"message":"Database Error"})
+
 
 if __name__ == "__main__":
      app.run(host='0.0.0.0', port=8005, debug=True)

@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 import roles
 import json
+import requests
+import traceback
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
@@ -56,6 +58,12 @@ class Staff(db.Model):
         self.isactive = isactive
         self.hourly_rate = hourly_rate
         self.roles = roles
+
+    def getstaff_id(self):
+        return self.staff_id
+    def setstaff_id(self,staff_id):
+        self.staff_id = staff_id
+    
     def json(self):
         return{"staff_id":self.staff_id,"prefix":self.prefix,"first_name":self.first_name,"last_name":self.last_name,"middle_name":self.middle_name,"suffix":self.suffix,"email":self.email,"contact_hp":self.contact_hp,"contact_home":self.contact_home,"country_code":self.country_code,"address_1":self.address_1 ,"address_2":self.address_2 ,"state":self.state,"city":self.city ,"postal_code":self.postal_code ,"ispilot":self.ispilot,"isFlightCrew":self.isFlightCrew,"password":self.password,"isactive":self.isactive,"hourly_rate":self.hourly_rate,"roles":self.roles}
 
@@ -65,18 +73,23 @@ def check_user(emails):
     password = request.get_json()
     try:
         records = Staff.query.filter(Staff.email == email).first()
-        print(records)
         if(str(records.password) == password['password']):
-            return jsonify({"result":True,"staff_id":records.staff_id,"prefix":records.prefix,"first_name":records.first_name,"last_name":records.last_name,"middle_name":records.middle_name,"suffix":records.suffix,"roles":records.roles})
+            countryURL = "http://localhost:8005/country/"+str(records.country_code)
+            r = requests.get(countryURL)
+            result = json.loads(r.text.lower())
+            up = str(records.country_code)
+            prep_country = result['country_name']+ " ("+ up.upper() +")"
+            return jsonify({"result":True,"staff_id":records.staff_id,"prefix":records.prefix,"first_name":records.first_name,"last_name":records.last_name,"middle_name":records.middle_name,"suffix":records.suffix,"roles":records.roles,"country":prep_country.capitalize(),"country_code":records.country_code})
         else:
             return jsonify({"result":False})
-    except:
+    except Exception:
+        traceback.print_exc()
         return jsonify({"result":"Database Error"})
 
 @app.route("/staff/roles/<string:role>" ,methods=['GET'])
 def getUserRoleName(role):
     role_out = roles.userRoles(role)
-    return role_out
+    return jsonify(role_out)
 
 @app.route("/staff/check/<string:emails>", methods=['POST'])
 def check_userRights(emails):
