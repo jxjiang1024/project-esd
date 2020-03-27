@@ -52,10 +52,27 @@
         <input type="text" id="ntly" name="ntly">
                 <br/><br/>
 
-        <input id="personal-details-form-submit"class="btn btn-primary" type="submit" value="Submit">
+        <a id="personal-details-form-submit"class="btn btn-primary" type="submit" href="checkout.html">Submit</a>
       </div>
+      
 
     </form>
+    <script>
+      $('#personal-details-form-submit').click(async () => {
+          var Firstname = $('#firstname').val();
+          var Lastname = $('#lastname').val();
+          var Date = $('#date').val();
+          var Month = $('#month').val();
+          var Year=$('#year').val();
+          var Ntly= $('#ntly').val();
+
+          if (!Firstname || !Lastname || !Date || !Month || !Year || !NoOfTravellers) {
+              alert("Please enter valid inputs");
+              return;
+          }
+          
+  });
+  </script>
 
 
 </body>
