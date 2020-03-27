@@ -3,9 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Checkout</title>
 </head>
 <body>
-    
+    ENTER BILLING ADDRESS
+    <form id='checkout'>
+
+      <div class="form-group">
+        <br/><br/>
+        Street Address
+        <input type="text" id="street" name="street">
+        <br/><br/>
+        Town/City
+        <input type="text" id="town" name="town">
+        <br/><br/>
+        Country/Region
+        <input type="text" id="country" name="country">
+        <br/><br/>
+        State/Zip Code
+        <input type="text" id="zip" name="zip">
+        <br/><br/>
+        <label for="payment">Select payment Method</label>
+        <select name="payment" id="pment">
+            <option value="CC">Credit Card</option>
+            <option value="PP">PayPal</option>
+            <option value="GP">Google Pay</option>
+            <option value="Voucher">Voucher</option>
+        </select>
+        <br/><br/>
+        <a id="checkout-submit"class="btn btn-primary" type="submit" value="Checkout">
+      </div>
+      
+
+    </form>
+
 </body>
+
 </html>
