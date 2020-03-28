@@ -94,8 +94,8 @@ if (isset($_SESSION["staff_id"])) {
                             "middle_name": data.middle_name,
                             "suffix": data.suffix,
                             "email": email,
-                            "roles": data.roles
-                            "country": data.country
+                            "roles": data.roles,
+                            "country": data.country_name,
                             "country_code": data.country_code
                         });
 
@@ -194,7 +194,7 @@ if (isset($_SESSION["staff_id"])) {
 <!--===============================================================================================-->
 <script src="vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
-<script src="js/main.js"></script>
+<script src="js/main_login.js"></script>
 
 </body>
 </html>
