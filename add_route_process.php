@@ -5,6 +5,7 @@ $departure_airport_id = $_GET["departure_airport_id"];
 $arrival_airport_id = $_GET["arrival_airport_id"];
 $departure_time = $_GET["departure_time"];
 $arrival_time = $_GET["arrival_time"];
+$next_day = 0;
 
 echo "Posted: ";
 var_dump($_GET);
@@ -14,7 +15,8 @@ $new_route = array(
 	"departure_airport_id" => $departure_airport_id,
 	"arrival_airport_id" => $arrival_airport_id,
 	"departure_time" => $departure_time,
-	"arrival_time" => $arrival_time
+	"arrival_time" => $arrival_time,
+	"next_day" => $next_day
 );
 
 $payload = json_encode($new_route);
