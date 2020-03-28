@@ -308,7 +308,7 @@ def addFlightDetails():
         ## Check if User is valid
         if(result['role'] == 999 or result['role'] == 2):
             try:
-                aircraftData = aircraft.getSpecificAircraft(json_1['tail_no'])
+                aircraftData = aircraft.getSpecificAircraft(json_1['tail_no'],0)
                 economy = int(json_1['econ_sv_seat']) + int(json_1['econ_stnd_seat'])+int(json_1['econ_plus_seat'])
                 pr_economy = int(json_1['pr_econ_sv_seat']) + int(json_1['pr_econ_stnd_seat']) + int(json_1['pr_econ_plus_seat'])
                 business = int(json_1['bus_sv_seat'])+int(json_1['bus_stnd_seat'])+int(json_1['bus_plus_seat'])
@@ -333,6 +333,10 @@ def addFlightDetails():
     else:
         message = {"result": False,"message":"invald user"}
     return jsonify(message)
-
+@app.route("/aircraft/<string:tail_no>",methods=['GET'])
+def get_aircraft(tail_no):
+    tail = tail_no
+    aircrafts = aircraft.getSpecificAircraft(tail,1)
+    return aircrafts
 if __name__ == "__main__":
      app.run( port=8003, debug=True)
