@@ -192,8 +192,6 @@ class Flight(db.Model):
     def setstatus_code(self,status_code):
         self.status_code =status_code
 
-    
-
     def json(self):
         return {"flight_details_id": self.flight_details_id, "flight_no": self.flight_no,
         "flight_departure": self.flight_departure, "flight_arrival": self.flight_arrival,
@@ -333,10 +331,12 @@ def addFlightDetails():
     else:
         message = {"result": False,"message":"invald user"}
     return jsonify(message)
+
 @app.route("/aircraft/<string:tail_no>",methods=['GET'])
 def get_aircraft(tail_no):
     tail = tail_no
     aircrafts = aircraft.getSpecificAircraft(tail,1)
     return aircrafts
+
 if __name__ == "__main__":
      app.run( port=8003, debug=True)
