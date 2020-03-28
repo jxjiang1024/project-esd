@@ -22,7 +22,7 @@ $new_route = array(
 $payload = json_encode($new_route);
 
 // Prepare new cURL resource
-$ch = curl_init("localhost:8001/route")	;
+$ch = curl_init("localhost:8003/route/add")	;
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLINFO_HEADER_OUT, true);
 curl_setopt($ch, CURLOPT_POST, true);
