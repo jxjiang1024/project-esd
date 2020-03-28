@@ -37,7 +37,7 @@ if ($user != "admin") {
 </head>
 <body>
     <h1>ENTER ROUTE DETAILS</h1>
-    <form id='route-details' method ='get' action='add_route.php'>
+    <form id='route-details' method ='get' action='add_route_process.php'>
 
       <div class="form-group">
         Flight Number
@@ -55,9 +55,12 @@ if ($user != "admin") {
         Arrival Time
         <input type="time" id="arrival_time" name="arrival_time">
         <br/><br/>
-        Next Day
+        
+		<!--
+		Next Day
         <input type="number" id="next_day" name="next_day"  min="0" max="10">
                 <br/><br/>
+				-->
 
         <input id="submit-route"class="btn btn-primary" type="submit" value="Submit">
       </div>
