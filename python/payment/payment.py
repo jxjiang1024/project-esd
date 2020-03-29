@@ -2,8 +2,6 @@ from flask import Flask,request,jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from os import environ
-import requests
-import traceback
 
 
 app = Flask(__name__)
@@ -27,7 +25,7 @@ class Payment(db.Model):
     status = db.Column(db.String(10), nullable=False)
     last_4_digit = db.Column(db.Integer, nullable=False)
 
-    def __init__(self,payment_id, payment_type, prefix, first_name,
+    def __init__(payment_id, payment_type, prefix, first_name,
     last_name, middle_name, amount, status, last_4_digit):
         self.payment_id = payment_id
         self.payment_type = payment_type
@@ -52,19 +50,6 @@ class Payment(db.Model):
 # def get_payments():
 #     return jsonify({"payment": [payment.json() for payment in Payment.query.all()]})
 
-@app.route("/payment/add", methods=['POST'])
-def add_transaction():
-    try:
-        data = request.get_json()
-        size = len(Payment.query.all())
-        transaction = Payment(size+1,str(data['payment_type']),str(data['prefix']),str(data['first_name']),str(data['last_name']),str(data['middle_name']),float(data['amount']),str(data['status']),int(data['last_4_digit']))
-
-        db.session.add(transaction)
-        db.session.commit()
-        return {"result":"Success"}
-    except Exception:
-        traceback.print_exc()
-        return {"result":"Error"}
 
 
 if __name__ == "__main__":

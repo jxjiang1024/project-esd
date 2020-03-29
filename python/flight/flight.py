@@ -9,7 +9,7 @@ import json
 import traceback
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 CORS(app)
@@ -192,6 +192,8 @@ class Flight(db.Model):
     def setstatus_code(self,status_code):
         self.status_code =status_code
 
+    
+
     def json(self):
         return {"flight_details_id": self.flight_details_id, "flight_no": self.flight_no,
         "flight_departure": self.flight_departure, "flight_arrival": self.flight_arrival,
@@ -306,7 +308,7 @@ def addFlightDetails():
         ## Check if User is valid
         if(result['role'] == 999 or result['role'] == 2):
             try:
-                aircraftData = aircraft.getSpecificAircraft(json_1['tail_no'],0)
+                aircraftData = aircraft.getSpecificAircraft(json_1['tail_no'])
                 economy = int(json_1['econ_sv_seat']) + int(json_1['econ_stnd_seat'])+int(json_1['econ_plus_seat'])
                 pr_economy = int(json_1['pr_econ_sv_seat']) + int(json_1['pr_econ_stnd_seat']) + int(json_1['pr_econ_plus_seat'])
                 business = int(json_1['bus_sv_seat'])+int(json_1['bus_stnd_seat'])+int(json_1['bus_plus_seat'])
@@ -331,41 +333,6 @@ def addFlightDetails():
     else:
         message = {"result": False,"message":"invald user"}
     return jsonify(message)
-
-@app.route("/aircraft/<string:tail_no>",methods=['GET'])
-def get_aircraft(tail_no):
-    tail = tail_no
-    aircrafts = aircraft.getSpecificAircraft(tail,1)
-    return aircrafts
-
-@app.route("/route/add", methods=['POST'])
-def add_route():
-    try:
-        route_json = request.get_json()
-        if route_json['departure_airport_id'] == route_json['arrival_airport_id']:
-            return jsonify({"result": False,"message":"Departure and Arrical airport cannot be the same"})
-        departure_airport = iataCode.query.filter(iataCode.IATA_CODE == route_json['departure_airport_id'] ).first()
-        arrival_airport = iataCode.query.filter(iataCode.IATA_CODE == route_json['arrival_airport_id'] ).first()
-        if(departure_airport is None or arrival_airport is None):
-            return jsonify({"result":False,"message": "Airport Code Error"})
-        refl = "SFL"+str(route_json['flight_no'])
-        flightNo = Route.query.filter(Route.flight_no == refl).first()
-        if(flightNo is not None):
-            return jsonify({"result":False,"message":"Similar flight number exist"})
-        route = Route(refl,route_json['departure_airport_id'],route_json['arrival_airport_id'],route_json['departure_time'],route_json['arrival_time'],0)
-        db.session.add(route)
-        db.session.commit()
-        return jsonify({"result":True,"message":"Successfully added to database"})
-    except Exception:
-        traceback.print_exc()
-        return jsonify({"result": False, "message":"Error"})
-
-
-@app.route("/flight/iata/airports")
-def get_all_airport_names():
-    iata = iataCode.query.all()
-    return jsonify({"airport names":[airport.airportName for airport in iata], "result":True})
-
 
 if __name__ == "__main__":
      app.run( port=8003, debug=True)
