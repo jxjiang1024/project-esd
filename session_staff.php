@@ -13,5 +13,8 @@ if (isset($_POST['middle_name'])) {
 if (isset($_POST['suffix'])) {
     $_SESSION['suffix'] = $_POST['suffix'];
 }
-$_SESSION['roles'] = $_POST['roles']
+$_SESSION['roles'] = $_POST['roles'];
+
+//Error variable
+$_SESSION["errors"] = array();
 ?>
