@@ -15,6 +15,4 @@ if (isset($_POST['suffix'])) {
 }
 $_SESSION['roles'] = $_POST['roles'];
 
-//Error variable
-$_SESSION["errors"] = array();
 ?>
