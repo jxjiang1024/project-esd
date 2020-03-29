@@ -55,12 +55,94 @@
 	<![endif]-->
 
 	</head>
+	<script>
+		function showError(message) {
+            // Hide the table and button in the event of error
+            $('#two-way').hide();
+            $('#one-way').hide();
+    
+            // Display an error under the main container
+            $("#flight-reservation")
+                .append("<label>"+message+"</label>");
+        }
+		$(async() => {           
+            // Change serviceURL to your own
+            var flightURL = "http://127.0.0.1:8003/flight/details";
+			var routeURL = "http://127.0.0.1:8001/route";
+			var iataURL = "http://127.0.0.1:8003/flight/iata/airports" ;
+			
+
+
+			// get form data 
+			var FromCity = $('#from-city').val();
+            var ToCity = $('#to-city').val();
+            var DepartDate = $('#depart-date').val();
+            var ReturnDate = $('#return-date').val();
+            var NoOfTravellers = $('NoTravellers').val()
+
+            if (!FromCity || !ToCity || !DepartDate || !ReturnDate || !NoOfTravellers) {
+                alert("Please enter valid inputs");
+                return;
+            }
+        
+            try {
+                const flight_response =
+                await fetch(
+                    flightURL, { method: 'GET' }
+                );
+				const flight_data = await flight_response.json();
+
+				const route_response =
+                await fetch(
+                    routeURL, { method: 'GET' }
+                );
+				const route_data = await route_response.json();
+
+				const iata_response =
+                await fetch(
+                    iataURL, { method: 'GET' }
+                );
+                const iata_data = await iata_response.json();
+
+                var flight = flight_data.flight;
+				var route = route_data.routes;
+				var iata = iata_data; //the arr is in data.books of the JSON data
+				// getttt iata data also 
+				if (!FromCity || !ToCity || !DepartDate || !ReturnDate || !NoOfTravellers) {
+                alert("Please enter valid inputs");
+                return;
+            	}else {
+                    // for loop to setup all table rows with obtained book data
+                    var rows = "";
+                    for (const book of books) {
+                        eachRow =
+                            "<td>" + book.title + "</td>" +
+                            "<td>" + book.isbn13 + "</td>" +
+                            "<td>" + book.price + "</td>" +
+                            "<td>" + book.availability + "</td>";
+                        rows += "<tbody><tr>" + eachRow + "</tr></tbody>";
+                    }
+                    // add all the rows to the table
+                    $('#booksTable').append(rows);
+                }
+            } catch (error) {
+                // Errors when calling the service; such as network error, 
+                // service offline, etc
+                showError
+                  ('There is a problem retrieving books data, please try again later.<br />'+error);
+               
+            } // error
+        });
+		
+	
+	
+	</script>
 	<body>
 		
 	<div class="colorlib-loader"></div>
 
 	<div id="page">
-		<nav class="colorlib-nav" role="navigation">
+		<!-- <nav class="colorlib-nav" role="navigation">
 			<div class="top-menu">
 				<div class="container-fluid">
 					<div class="row">
@@ -89,7 +171,7 @@
 					</div>
 				</div>
 			</div>
-		</nav>
+		</nav> -->
 		<aside id="colorlib-hero">
 			<div class="flexslider">
 				<ul class="slides">
@@ -148,70 +230,122 @@
 			  	</ul>
 		  	</div>
 		</aside>
-		<div id="colorlib-reservation">
+		<div id="flight-reservation">
 			<!-- <div class="container"> -->
 				<div class="row">
 					<div class="search-wrap">
 						<div class="container">
 							<ul class="nav nav-tabs">
-								<li class="active"><a data-toggle="tab" href="#flight"><i class="flaticon-plane"></i> Flight</a></li>
-								<li><a data-toggle="tab" href="#hotel"><i class="flaticon-resort"></i> Hotel</a></li>
-								<li><a data-toggle="tab" href="#car"><i class="flaticon-car"></i> Car Rent</a></li>
-								<li><a data-toggle="tab" href="#cruises"><i class="flaticon-boat"></i> Cruises</a></li>
+								<li class="active"><a data-toggle="tab" href="#two-way"><i class="flaticon-plane"></i>Return</a></li>
+								<li><a data-toggle="tab" href="#one-way"><i class="flaticon-plane"></i>One-way</a></li>
+								<!-- <li><a data-toggle="tab" href="#car"><i class="flaticon-car"></i> Car Rent</a></li>
+								<li><a data-toggle="tab" href="#cruises"><i class="flaticon-boat"></i> Cruises</a></li> -->
 							</ul>
 						</div>
+
 						<div class="tab-content">
-							<div id="flight" class="tab-pane fade in active">
+							<div id="two-way" class="tab-pane fade in active">
 								<form method="post" class="colorlib-form">
 				              	<div class="row">
 				              	 <div class="col-md-3">
 				              	 	<div class="form-group">
 				                    <label for="date">Where:</label>
 				                    <div class="form-field">
-				                      <input type="text" id="location" class="form-control" placeholder="Search Location">
+				                      <input type="text" id="two-way-from" class="form-control" placeholder="Search Location">
 				                    </div>
 				                  </div>
-				              	 </div>
+								</div>
+				              	 <div class="col-md-3">
+									<div class="form-group">
+								 <label for="date">To:</label>
+								 <div class="form-field">
+								   <input type="text" id="two-way-to" class="form-control" placeholder="Search Location">
+								 </div>
+							   </div>
+								</div>
 				                <div class="col-md-2">
 				                  <div class="form-group">
-				                    <label for="date">Check-in:</label>
+				                    <label for="date">Depart</label>
 				                    <div class="form-field">
 				                      <i class="icon icon-calendar2"></i>
-				                      <input type="text" id="date" class="form-control date" placeholder="Check-in date">
+				                      <input type="text" id="two-way-startdate" class="form-control date" placeholder="Check-in date">
 				                    </div>
 				                  </div>
 				                </div>
 				                <div class="col-md-2">
 				                  <div class="form-group">
-				                    <label for="date">Check-out:</label>
+				                    <label for="date">Return</label>
 				                    <div class="form-field">
 				                      <i class="icon icon-calendar2"></i>
-				                      <input type="text" id="date" class="form-control date" placeholder="Check-out date">
+				                      <input type="text" id="two-way-enddate" class="form-control date" placeholder="Check-out date">
 				                    </div>
 				                  </div>
 				                </div>
 				                <div class="col-md-3">
 				                  <div class="form-group">
-				                    <label for="guests">Guest</label>
+									<label for="guests">Guest</label>
+<!-- number of travellers may abandon 								 -->
 				                    <div class="form-field">
-				                      <i class="icon icon-arrow-down3"></i>
-				                      <select name="people" id="people" class="form-control">
-				                        <option value="#">1</option>
-				                        <option value="#">2</option>
-				                        <option value="#">3</option>
-				                        <option value="#">4</option>
-				                        <option value="#">5+</option>
-				                      </select>
+										<input type="number" class="form-control" id="two-way-NoTravellers" >
+
 				                    </div>
 				                  </div>
 				                </div>
 				                <div class="col-md-2">
-				                  <input type="submit" name="submit" id="submit" value="Find Flights" class="btn btn-primary btn-block">
+								  <!-- <input type="submit" name="submit" id="two-way-submit" value="Find Flights" class="btn btn-primary btn-block"> -->
+								  <a id="two-way-submit" class="btn btn-primary btn-block" href="two_way_flight.html">Search</a>
 				                </div>
 				              </div>
-				            </form>
-				         </div>
-				         <div id="hotel" class="tab-pane fade">
+							</form>
+						</div>
+
+						 <div id="one-way" class="tab-pane fade">
+							<form method="post" class="colorlib-form">
+							  <div class="row">
+							   <div class="col-md-3">
+								   <div class="form-group">
+								<label for="date">Where:</label>
+								<div class="form-field">
+								  <input type="text" id="one-way-from" class="form-control" placeholder="Search Location">
+								</div>
+							  </div>
+							</div>
+							   <div class="col-md-3">
+								<div class="form-group">
+							 <label for="date">To:</label>
+							 <div class="form-field">
+							   <input type="text" id="one-way-to" class="form-control" placeholder="Search Location">
+							 </div>
+						   </div>
+							</div>
+							<div class="col-md-2">
+							  <div class="form-group">
+								<label for="date">Depart</label>
+								<div class="form-field">
+								  <i class="icon icon-calendar2"></i>
+								  <input type="text" id="one-way-date" class="form-control date" placeholder="Check-in date">
+								</div>
+							  </div>
+							</div>
+							
+							<div class="col-md-3">
+								<div class="form-group">
+								  <label for="guests">Guest</label>
+<!-- number of travellers may abandon 								 -->
+								  <div class="form-field">
+									  <input type="number" class="form-control" id="one-way-NoTravellers" >
+
+								  </div>
+								</div>
+							  </div>
+							<div class="col-md-2">
+								<a id="one-way-submit" class="btn btn-primary btn-block" href="one_way_flight.html">Search</a>
+							
+							</div>
+						  </div>
+							</form>
+					
+				         <!-- <div id="hotel" class="tab-pane fade">
 						      <form method="post" class="colorlib-form">
 				              	<div class="row">
 				              	 <div class="col-md-2">
@@ -258,8 +392,8 @@
 				                </div>
 				              </div>
 				            </form>
-						   </div>
-						   <div id="car" class="tab-pane fade">
+						   </div> -->
+						   <!-- <div id="car" class="tab-pane fade">
 						   	<form method="post" class="colorlib-form">
 				              	<div class="row">
 				              	 <div class="col-md-4">
@@ -293,8 +427,8 @@
 				                </div>
 				              </div>
 				            </form>
-						   </div>
-						   <div id="cruises" class="tab-pane fade">
+						   </div> -->
+						   <!-- <div id="cruises" class="tab-pane fade">
 						      <form method="post" class="colorlib-form">
 				              	<div class="row">
 				              	 <div class="col-md-4">
@@ -334,7 +468,7 @@
 				                </div>
 				              </div>
 				            </form>
-						   </div>
+						   </div> -->
 			         </div>
 					</div>
 				</div>
