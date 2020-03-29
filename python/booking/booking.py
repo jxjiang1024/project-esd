@@ -3,6 +3,9 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from os import environ
 import datetime
+from datetime import datetime
+import requests
+import traceback
 
 
 app = Flask(__name__)
@@ -34,7 +37,7 @@ class Booking(db.Model):
     staff_id = db.Column(db.Integer)
     comments = db.Column(db.Text)
 
-    def __init__(booking_id, flight_details_id, booking_date, payment_id,
+    def __init__(self, booking_id, flight_details_id, booking_date, payment_id,
     prefix, first_name, suffix, last_name, middle_name,
     email, staff_id, comments):
         self.booking_id = booking_id
@@ -72,7 +75,7 @@ class Ticket(db.Model):
     suffix = db.Column(db.String(45))
     ff_id = db.Column(db.String(10))
 
-    def __init__(ticket_id, booking_id, prefix, first_name, last_name, middle_name, suffix, ff_id):
+    def __init__(self, ticket_id, booking_id, prefix, first_name, last_name, middle_name, suffix, ff_id):
         self.ticket_id = ticket_id
         self.booking_id = booking_id
         self.prefix = prefix
@@ -100,7 +103,33 @@ class Ticket(db.Model):
 # def get_tickets():
 #     return jsonify({"tickets": [ticket.json() for ticket in Ticket.query.all()]})
 
+@app.route("/booking/add", methods=['POST'])
+def add_booking():
+    try:
+        data = request.get_json()
+        size = len(Booking.query.all())
+        booking = Booking(str(size+1),int(data['flight_details_id']),datetime.strptime(data['booking_date'], '%Y-%m-%d'), size+1, str(data['prefix']),str(data['first_name']), str(data['suffix']),str(data['last_name']), str(data['middle_name']),str(data['email']), int(data['staff_id']),str(data['comments']))
 
+        db.session.add(booking)
+        db.session.commit()
+        return {"result":"Success"}
+    except Exception:
+        traceback.print_exc()
+        return {"result":"Error"}
+
+@app.route("/ticket/create", methods=['POST'])
+def create_ticket():
+    try:
+        data = request.get_json()
+        size = len(Ticket.query.all())
+        ticket = Ticket(str(size+1),int(data['booking_id']), str(data['prefix']),str(data['first_name']), str(data['last_name']), str(data['middle_name']),str(data['suffix']),str(data['ff_id']))
+
+        db.session.add(ticket)
+        db.session.commit()
+        return {"result":"Success"}
+    except Exception:
+        traceback.print_exc()
+        return {"result":"Error"}
 
 if __name__ == "__main__":
      app.run(host='0.0.0.0', port=8001, debug=True)
