@@ -26,7 +26,7 @@ class Flight(db.Model):
     flight_no = db.Column(db.String(45), nullable=False)
     flight_departure = db.Column(db.Date, nullable=False)
     flight_arrival = db.Column(db.Date, nullable=False)
-    aircraft_tail_no = db.Column(db.String(45), nullable=False)
+    tail_no = db.Column(db.String(45), nullable=False)
     econ_sv_price = db.Column(db.Float(precision=2), nullable=False)
     econ_sv_seat = db.Column(db.Integer, nullable=False)
     econ_stnd_price = db.Column(db.Float(precision=2), nullable=False)
@@ -50,7 +50,7 @@ class Flight(db.Model):
     status_code = db.Column(db.String(3), nullable=False)
 
     def __init__(self,flight_details_id, flight_no, flight_departure, flight_arrival,
-    aircraft_tail_no, econ_sv_price, econ_sv_seat, econ_stnd_price, econ_stnd_seat,
+    tail_no, econ_sv_price, econ_sv_seat, econ_stnd_price, econ_stnd_seat,
     econ_plus_price, econ_plus_seat, pr_econ_sv_price, pr_econ_sv_seat,
     pr_econ_stnd_price, pr_econ_stnd_seat, pr_econ_plus_price, pr_econ_plus_seat,
     bus_sv_price, bus_sv_seat, bus_stnd_price, bus_stnd_seat, bus_plus_price,
@@ -59,7 +59,7 @@ class Flight(db.Model):
         self.flight_no = flight_no
         self.flight_departure = flight_departure
         self.flight_arrival = flight_arrival
-        self.aircraft_tail_no = aircraft_tail_no
+        self.tail_no = tail_no
         self.econ_sv_price = econ_sv_price
         self.econ_sv_seat = econ_sv_seat
         self.econ_stnd_price = econ_stnd_price
@@ -102,10 +102,10 @@ class Flight(db.Model):
         return self.flight_arrival
     def setflight_arrival(self,flight_arrival):
         self.flight_arrival = flight_arrival
-    def getaircraft_tail_no(self):
-        return self.aircraft_tail_no 
-    def setaircraft_tail_no (self,aircraft_tail_no ):
-        self.aircraft_tail_no  = aircraft_tail_no 
+    def gettail_no(self):
+        return self.tail_no 
+    def settail_no (self,tail_no ):
+        self.tail_no  = tail_no 
 
     def getecon_sv_price(self):
         return self.econ_sv_price
@@ -195,7 +195,7 @@ class Flight(db.Model):
     def json(self):
         return {"flight_details_id": self.flight_details_id, "flight_no": self.flight_no,
         "flight_departure": self.flight_departure, "flight_arrival": self.flight_arrival,
-        "aircraft_tail_no": self.aircraft_tail_no, "econ_sv_price": self.econ_sv_price,
+        "tail_no": self.tail_no, "econ_sv_price": self.econ_sv_price,
         "econ_sv_seat": self.econ_sv_seat, "econ_stnd_price": self.econ_stnd_price,
         "econ_stnd_seat": self.econ_stnd_seat, "econ_plus_price": self.econ_plus_price,
         "econ_plus_seat": self.econ_plus_seat, "pr_econ_sv_price": self.pr_econ_sv_price,
@@ -210,7 +210,7 @@ class Flight(db.Model):
         stat = Status.query.filter(Status.status_code ==  self.status_code).first()
         return {"flight_details_id": self.flight_details_id , "flight_no": self.flight_no,
         "flight_departure": self.flight_departure, "flight_arrival": self.flight_arrival,
-        "aircraft_tail_no": self.aircraft_tail_no,"economy_seats":self.econ_sv_seat+self.econ_stnd_seat+self.econ_plus_seat,"premium_economy_seats":self.pr_econ_sv_seat+self.pr_econ_stnd_seat+self.pr_econ_plus_seat,"business_seats": self.bus_sv_seat+self.bus_stnd_seat+self.bus_plus_seat,"first_class_seats":self.first_stnd_seat,"status": stat.status }
+        "tail_no": self.tail_no,"economy_seats":self.econ_sv_seat+self.econ_stnd_seat+self.econ_plus_seat,"premium_economy_seats":self.pr_econ_sv_seat+self.pr_econ_stnd_seat+self.pr_econ_plus_seat,"business_seats": self.bus_sv_seat+self.bus_stnd_seat+self.bus_plus_seat,"first_class_seats":self.first_stnd_seat,"status": stat.status }
 
 # Route class
 class Route(db.Model):
