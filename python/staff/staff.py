@@ -74,8 +74,9 @@ def check_user(emails):
     try:
         records = Staff.query.filter(Staff.email == email).first()
         if(str(records.password) == password['password']):
-            countryURL = "http://localhost:8005/country/"+str(records.country_code)
-            r = requests.get(countryURL)
+            countryURL = "https://countryesd.azurewebsites.net/country/"+str(records.country_code)
+            for x in range(2):
+                r = requests.get(countryURL)
             result = json.loads(r.text.lower())
             up = str(records.country_code)
             prep_country = result['country_name']+ " ("+ up.upper() +")"
