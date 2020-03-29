@@ -5,7 +5,7 @@ import traceback
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://esd:456852@database-1.cbchzgfp3eq7.us-east-1.rds.amazonaws.com:3306/fms'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 CORS(app)
@@ -46,4 +46,4 @@ def getCountryByCode(code):
 
 
 if __name__ == "__main__":
-     app.run(host='0.0.0.0', port=8005, debug=True)
+     app.run(host='0.0.0.0', port=80, debug=True)
