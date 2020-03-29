@@ -2,11 +2,11 @@
 <html lang="en">
 <?php
 session_start();
-/*
+
 if (!isset($_SESSION['staff_id'])) {
     header("location:../login.php");
 }
-*/	
+	
 ?>
 <head>
     <meta charset="utf-8">
@@ -308,7 +308,19 @@ if (!isset($_SESSION['staff_id'])) {
                         <div class="card-block">
                             <h4 class="card-title">Add New Route</h4>
                           
+<!--Error messages-->
+<?php
 
+if (!empty($_SESSION["errors"])) {
+	echo "<h5>Error</h5>";
+	echo "<ul>";
+		foreach ($_SESSION["errors"] as $error){
+			echo "<li>".$error."</li>";
+		}
+	echo "</ul>";
+}
+
+?>
 
     <form id='route-details' method ='get' action='add_route_process.php'>
 

@@ -352,7 +352,7 @@ def add_route():
         flightNo = Route.query.filter(Route.flight_no == refl).first()
         if(flightNo is not None):
             return jsonify({"result":False,"message":"Similar flight number exist"})
-        route = Route(refl,route_json['departure_airport_id'],route_json['arrival_airport_id'],route_json['departure_time'],route_json['arrival_time'],0)
+        route = Route(refl,route_json['departure_airport_id'],route_json['arrival_airport_id'],datetime.datetime.strptime(route_json['departure_time'], '%H:%M:%S'),datetime.datetime.strptime(route_json['arrival_time'], '%H:%M:%S'),0)
         db.session.add(route)
         db.session.commit()
         return jsonify({"result":True,"message":"Successfully added to database"})

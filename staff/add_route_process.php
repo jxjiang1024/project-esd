@@ -9,8 +9,16 @@ $departure_time = $_GET["departure_time"];
 $arrival_time = $_GET["arrival_time"];
 $next_day = 0;
 
+echo "<br>Arrival time: ".$arrival_time."<br>";
+echo "<br>Departure time: ".$departure_time."</br>";
+
+$arrival_time = strval($arrival_time).":00";
+$departure_time = strval($departure_time).":00";
+
+//var_dump($times);
+
 echo "Posted: ";
-var_dump($_GET);
+//var_dump($_GET);
 
 $new_route = array(
 	"flight_no" => $flight_no,
@@ -20,6 +28,8 @@ $new_route = array(
 	"arrival_time" => $arrival_time,
 	"next_day" => $next_day
 );
+
+var_dump($new_route);
 
 $payload = json_encode($new_route);
 
