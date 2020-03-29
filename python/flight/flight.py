@@ -9,7 +9,7 @@ import json
 import traceback
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 CORS(app)
@@ -359,6 +359,12 @@ def add_route():
     except Exception:
         traceback.print_exc()
         return jsonify({"result": False, "message":"Error"})
+
+
+@app.route("/flight/iata/airports")
+def get_all_airport_names():
+    iata = iataCode.query.all()
+    return jsonify({"airport names":[airport.airportName for airport in iata], "result":True})
 
 
 if __name__ == "__main__":
