@@ -42,15 +42,19 @@ def getAircrafts():
         traceback.print_exc()
         return jsonify({"results":False,"message":"Database Error"})
 
-def getSpecificAircraft(tail_no):
+def getSpecificAircraft(tail_no,stats):
     tail = tail_no
+    stat = stats
     try:
-        aircraft_record = Aircrafts.query.filter(Aircrafts.tail_no == tail).first()
-        return jsonify({"tail_no":aircraft_record.tail_no,"model":aircraft_record.model,"manufacturer":aircraft_record.manufacturer,"econ":aircraft_record.econ,"pre_econ":aircraft_record.pre_econ,"business":aircraft_record.business,"first":aircraft_record.first,"last_maintained":aircraft_record.last_maintained,"result":True})
+        if(stat == 0):
+            aircraft_record = Aircrafts.query.filter(Aircrafts.tail_no == tail).first()
+        else:
+            tail = "SF"+tail+"%"
+            aircraft_record = Aircrafts.query.filter(Aircrafts.tail_no.like(tail))
+        return jsonify({"aircraft": [aircraft_record.json() for aircraft_record in aircraft_record],"result":True})
     except Exception:
         traceback.print_exc()
         return jsonify({"results":False,"message":"Database Error"})
-
 
 if __name__ == "__main__":
      app.run( port=8004, debug=True)
