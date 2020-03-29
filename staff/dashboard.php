@@ -236,8 +236,8 @@ if (!isset($_SESSION['staff_id'])) {
                     <li><a class="waves-effect waves-dark" href="pages-profile.php" aria-expanded="false"><i
                                     class="mdi mdi-account-check"></i><span class="hide-menu">Profile</span></a>
                     </li>
-                    <li><a class="waves-effect waves-dark" href="table-basic.html" aria-expanded="false"><i
-                                    class="mdi mdi-table"></i><span class="hide-menu">Basic Table</span></a>
+                    <li><a class="waves-effect waves-dark" href="addflights.php" aria-expanded="false"><i
+                                    class="mdi mdi-airplane-takeoff"></i><span class="hide-menu">Add Flight Details</span></a>
                     </li>
                     <li><a class="waves-effect waves-dark" href="icon-material.html" aria-expanded="false"><i
                                     class="mdi mdi-emoticon"></i><span class="hide-menu">Icons</span></a>
@@ -348,7 +348,7 @@ if (!isset($_SESSION['staff_id'])) {
                                     </thead>
 
                                 </table>
-                                <a style="float: right;" href="#" class="btn btn-success">
+                                <a style="float: right;" href="addflights.php" class="btn btn-success">
                                     Add More Flights</a>
                             </div>
                         </div>

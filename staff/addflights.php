@@ -41,30 +41,86 @@
             src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
             integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
             crossorigin="anonymous"></script>
-    <!-- <script>
-        $(async () => {
-            try {
-                let serviceURL = "http://127.0.0.1:8001/staff/roles/" <?php //  echo $_SESSION['roles']?>;
-                const response = await fetch(serviceURL, {
-                    headers: {"Content-Type": "application/json"},
-                    method: 'GET',
-                    mode: 'cors'
+    <script>
+        $(document).ready(function(){
+            $("#error_msg").hide();
+            $("#fdsubmit").click(function(){
+                $(async() => {
+                    try {
+                        let flight_no = $("#flight_no").val();
+                        let flight_departure = $("flight_departure").val();
+                        let flight_arrival = $("flight_arrival").val();
+                        let tail_no = $("tail_no").val();
+                        let econ_sv_price = $("econ_sv_price").val();
+                        let econ_sv_seat = $("econ_sv_seat").val();
+                        let econ_stnd_price = $("econ_stnd_price").val();
+                        let econ_stnd_seat = $("econ_stnd_seat").val();
+                        let econ_plus_price = $("econ_plus_price").val();
+                        let econ_plus_seat = $("econ_plus_seat").val();
+                        let pr_econ_sv_price = $("pr_econ_sv_price").val();
+                        let pr_econ_sv_seat = $("pr_econ_sv_seat").val();
+                        let pr_econ_stnd_price = $("pr_econ_stnd_price").val();
+                        let pr_econ_stnd_seat = $("pr_econ_stnd_price").val();
+                        let pr_econ_plus_price = $("pr_econ_plus_price").val();
+                        let pr_econ_plus_seat = $("pr_econ_plus_seat").val();
+                        let bus_sv_price = $("bus_sv_price").val();
+                        let bus_sv_seat = $("bus_sv_seat").val();
+                        let bus_stnd_price = $("bus_stnd_price").val();
+                        let bus_stnd_seat = $("bus_stnd_seat").val();
+                        let bus_plus_price = $("bus_plus_price").val();
+                        let bus_plus_seat = $("bus_plus_seat").val();
+                        let first_stnd_price = $("first_stnd_price").val();
+                        let first_stnd_seat = $("first_stnd_seat").val();
+                        let serviceURL = "http://127.0.0.1:8003/flight/add/flights";
+                        const response = await fetch(serviceURL,{
+                            method: 'POST',
+                            mode: 'cors',
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                flight_no: flight_no,
+                                flight_departure: flight_departure,
+                                flight_arrival: flight_arrival,
+                                tail_no: tail_no,
+                                econ_sv_price: econ_sv_price,
+                                econ_sv_seat: econ_sv_seat,
+                                econ_stnd_price: econ_stnd_price,
+                                econ_stnd_seat: econ_stnd_seat,
+                                econ_plus_price: econ_plus_price,
+                                econ_plus_seat: econ_plus_seat,
+                                pr_econ_sv_price: pr_econ_sv_price,
+                                pr_econ_sv_seat: pr_econ_sv_seat,
+                                pr_econ_stnd_price: pr_econ_stnd_price,
+                                pr_econ_stnd_seat: pr_econ_stnd_seat,
+                                pr_econ_plus_price: pr_econ_plus_price,
+                                pr_econ_plus_seat: pr_econ_plus_seat,
+                                bus_sv_price: bus_sv_price,
+                                bus_sv_seat: bus_sv_seat,
+                                bus_stnd_price: bus_stnd_price,
+                                bus_stnd_seat: bus_stnd_seat,
+                                bus_plus_price: bus_plus_price,
+                                bus_plus_seat: bus_plus_seat,
+                                first_stnd_price: first_stnd_price,
+                                first_stnd_seat: first_stnd_seat,
+                            })
+                        });
+                        const data = await response.json();
+
+                        if (data.result == true){
+                            var location = "addflights-success.php";
+                            location.reload();
+                        } else {
+                            var errmsg = '<h6 class="col-md-12" style="color: #c80000;">' + data.message+'</h6>';
+                            $("#msg_error").append(errmsg);
+                            $("#error_msg").show();
+                        }
+                    }
+                    
                 });
-                const data = await response.json();
-                console.log(data);
-                if (data.result == true) {
-                    $("#role").text(data.type);
-                } else {
-                    $("#role").text("Error Retrieving your Account Details");
-                }
-            } catch (e) {
-                console.error(e);
-                $("#role").text("Error Retrieving your Account Details");
-
-            }
-
+            });
         });
-    </script> -->
+    </script>
 </head>
 
 <body class="fix-header fix-sidebar card-no-border">
@@ -154,14 +210,14 @@
             <!-- Sidebar navigation-->
             <nav class="sidebar-nav">
                 <ul id="sidebarnav">
-                    <li><a class="waves-effect waves-dark" href="../dashboard.php" aria-expanded="false"><i
+                    <li><a class="waves-effect waves-dark" href="dashboard.php" aria-expanded="false"><i
                                     class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard</span></a>
                     </li>
-                    <li><a class="waves-effect waves-dark" href="../pages-profile.php" aria-expanded="false"><i
+                    <li><a class="waves-effect waves-dark" href="pages-profile.php" aria-expanded="false"><i
                                     class="mdi mdi-account-check"></i><span class="hide-menu">Profile</span></a>
                     </li>
-                    <li><a class="waves-effect waves-dark" href="../table-basic.html" aria-expanded="false"><i
-                                    class="mdi mdi-table"></i><span class="hide-menu">Basic Table</span></a>
+                    <li><a class="waves-effect waves-dark" href="addflights.php" aria-expanded="false"><i
+                                    class="mdi mdi-airplane-takeoff"></i><span class="hide-menu">Add Fight Details</span></a>
                     </li>
                     <li><a class="waves-effect waves-dark" href="../icon-material.html" aria-expanded="false"><i
                                     class="mdi mdi-emoticon"></i><span class="hide-menu">Icons</span></a>
@@ -208,7 +264,7 @@
                 <div class="col-md-5 col-8 align-self-center">
                     <h3 class="text-themecolor m-b-0 m-t-0">Add Flight Details</h3>
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0)">Function</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
                         <li class="breadcrumb-item active">Add Flight Details</li>
                     </ol>
                 </div>
@@ -230,12 +286,8 @@
                         <div class="card-block">
                             <form class="form-horizontal form-material">
                                 <div class="form-group">
-                                    <label class="col-md-12">Flight Details ID</label>
-                                    <div class="col-md-12">
-                                        <input type="number"
-                                               placeholder="<?php //echo $_SESSION['first_name'], " ", $_SESSION['last_name'] ?> "
-                                               class="form-control form-control-line">
-                                               <!--Consider disabling this, +1 from max ID number retrieved -->
+                                    <div class="col-md-12" id="error_msg">
+                                        <P style="color: #c80000;" id="msg_error">Error!</P>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -257,9 +309,9 @@
                                     </div>
                                 </div></br>
                                 <div class="form-group">
-                                    <label for="aircraft_tail_no" class="col-md-12">Aircraft Tail Number</label>
+                                    <label for="tail_no" class="col-md-12">Aircraft Tail Number</label>
                                     <div class="col-md-12">
-                                        <input type="text" id="aircraft_tail_no" placeholder="SFXXXX"
+                                        <input type="text" id="tail_no" placeholder="SFXXXX"
                                                class="form-control form-control-line">
                                     </div>
                                 </div></br>
@@ -322,7 +374,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="vertical-align:middle">Business</td>
+                                                <td style="vertical-align:middle">First Class</td>
                                                 <td>
                                                 <input class="col-md" type="number" placeholder="NA" id="first_sv_price" name="first_sv_price"  min="0.00" step="any" disabled></br>
                                                 <input class="col-md"type="number" placeholder="NA" id="first_sv_seat" name="first_sv_seat"  min="0" disabled>
@@ -339,15 +391,6 @@
                                         </tbody>
                                     </table>
 
-                                </div>
-                                <div class="form-group">
-                                    <label for="status_code" class="col-sm-12">Status Code</label>
-                                    <div class="col-sm-12">
-                                        <select id="status_code" class="form-control form-control-line">
-                                            <option>1</option>
-                                            <option>2</option>
-                                        </select>
-                                    </div>
                                 </div></br>
                                 <div class="form-group">
                                     <div class="col-sm-12">
