@@ -365,6 +365,26 @@ def add_route():
 def get_all_airport_names():
     iata = iataCode.query.all()
     return jsonify({"airport names":[airport.airportName for airport in iata], "result":True})
+    
+@app.route("/flight/findFlights")
+def findFlights():
+    data = request.get_json()
+    try:
+        departureAirport = iataCode.query.filter(iataCode.airportName == data['departureAirport']).first()
+        arrivalAirport = iataCode.query.filter(iataCode.airportName == data['arrivalAirport']).first()
+        flightNo = Route.query.filter(Route.arrival_airport_id == arrivalAirport.IATA_CODE).filter(Route.departure_airport_id == departureAirport.IATA_CODE).all()
+        flightNoList = [flight.flight_no for flight in flightNo]
+        flights = Flight.query.filter(Flight.flight_departure == data['departDate']).filter(Flight.flight_no.in_(flightNoList)).all()
+        if data['isReturn']:
+            flightNo = Route.query.filter(Route.arrival_airport_id == departureAirport.IATA_CODE).filter(Route.departure_airport_id == arrivalAirport.IATA_CODE).all()
+            flightNoList = [flight.flight_no for flight in flightNo]
+            flights2 = Flight.query.filter(Flight.flight_departure == data['returnDate']).filter(Flight.flight_no.in_(flightNoList)).all()
+            return jsonify({"flights": [flight.json() for flight in flights] + [flight.json() for flight in flights2]})
+        return jsonify({"flights": [flight.json() for flight in flights]})
+    
+    except Exception:
+        traceback.print_exc()
+        return jsonify({"result": False, "message": "No available flights"})
 
 
 if __name__ == "__main__":
