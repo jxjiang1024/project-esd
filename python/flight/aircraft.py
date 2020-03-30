@@ -7,8 +7,9 @@ import traceback
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config["SQLALCHEMY_POOL_RECYCLE"] = 299
+app.config['CONN_MAX_AGE'] = None
 db = SQLAlchemy(app)
-CORS(app)
 
 class Aircrafts(db.Model):
     __tablename__ = 'aircraft'
@@ -55,8 +56,5 @@ def getSpecificAircraft(tail_no,stats):
     except Exception:
         traceback.print_exc()
         return jsonify({"results":False,"message":"Database Error"})
-
-if __name__ == "__main__":
-     app.run( port=8004, debug=True)
 
 

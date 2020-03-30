@@ -315,7 +315,7 @@ if (!isset($_SESSION['staff_id'])) {
                                     </thead>
 
                                 </table>
-                                <a style="float: right;" href="#" class="btn btn-success">
+                                <a style="float: right;" href="add_route.php" class="btn btn-success">
                                     Add More Routes</a>
                             </div>
                         </div>

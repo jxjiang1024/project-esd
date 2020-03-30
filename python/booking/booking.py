@@ -164,31 +164,30 @@ def check_payment():
     channel.exchange_declare(exchange=exchangename, exchange_type='direct')
 
     # prepare the message body content
-    message = json.dumps(data, default=str) # convert a JSON object to a string
-    
+    message = json.dumps(payment, default=str) # convert a JSON object to a string
     channel.queue_declare(queue='payment', durable=True) # make sure the queue used by the error handler exist and durable
     channel.queue_bind(exchange=exchangename, queue='payment', routing_key='payment.info') # make sure the queue is bound to the exchange
     channel.basic_publish(exchange=exchangename, routing_key="payment.info", body=message,
         properties=pika.BasicProperties(delivery_mode = 2) # make message persistent within the matching queues until it is received by some receiver (the matching queues have to exist and be durable and bound to the exchange)
     )
-    # inform Shipping and exit, leaving it to order_reply to handle replies
-    # Prepare the correlation id and reply_to queue and do some record keeping
-    corrid = str(uuid.uuid4())
-    row = {"payment_id": payment["payment_id"], "correlation_id": corrid}
-    csvheaders = ["payment_id", "correlation_id"]
-    with open("corrids.csv", "a+", newline='') as corrid_file: # 'with' statement in python auto-closes the file when the block of code finishes, even if some exception happens in the middle
-        csvwriter = csv.DictWriter(corrid_file, csvheaders)
-        csvwriter.writerow(row)
-    replyqueuename = "payment.reply"
-    # prepare the channel and send a message to Shipping
-    channel.queue_declare(queue='payment', durable=True) # make sure the queue used by Shipping exist and durable
-    channel.queue_bind(exchange=exchangename, queue='payment', routing_key='payment.booking') # make sure the queue is bound to the exchange
-    channel.basic_publish(exchange=exchangename, routing_key="payment.booking", body=message,
-        properties=pika.BasicProperties(delivery_mode = 2, # make message persistent within the matching queues until it is received by some receiver (the matching queues have to exist and be durable and bound to the exchange, which are ensured by the previous two api calls)
-            reply_to=replyqueuename, # set the reply queue which will be used as the routing key for reply messages
-            correlation_id=corrid # set the correlation id for easier matching of replies
-        )
-    )
+    # # inform Shipping and exit, leaving it to order_reply to handle replies
+    # # Prepare the correlation id and reply_to queue and do some record keeping
+    # corrid = str(uuid.uuid4())
+    # row = {"payment_id": payment["payment_id"], "correlation_id": corrid}
+    # csvheaders = ["payment_id", "correlation_id"]
+    # with open("corrids.csv", "a+", newline='') as corrid_file: # 'with' statement in python auto-closes the file when the block of code finishes, even if some exception happens in the middle
+    #     csvwriter = csv.DictWriter(corrid_file, csvheaders)
+    #     csvwriter.writerow(row)
+    # replyqueuename = "payment.reply"
+    # # prepare the channel and send a message to Shipping
+    # channel.queue_declare(queue='payment', durable=True) # make sure the queue used by Shipping exist and durable
+    # channel.queue_bind(exchange=exchangename, queue='payment', routing_key='payment.booking') # make sure the queue is bound to the exchange
+    # channel.basic_publish(exchange=exchangename, routing_key="payment.booking", body=message,
+    #     properties=pika.BasicProperties(delivery_mode = 2, # make message persistent within the matching queues until it is received by some receiver (the matching queues have to exist and be durable and bound to the exchange, which are ensured by the previous two api calls)
+    #         reply_to=replyqueuename, # set the reply queue which will be used as the routing key for reply messages
+    #         correlation_id=corrid # set the correlation id for easier matching of replies
+    #     )
+    # )
     # close the connection to the broker
     connection.close()
     print()

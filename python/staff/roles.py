@@ -23,6 +23,3 @@ def userRoles(role_id):
     except:
         return jsonify({"result":False})
 
-if __name__ == "__main__":
-     app.run( port=8002, debug=True)
-

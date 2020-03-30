@@ -308,18 +308,18 @@ if (!isset($_SESSION['staff_id'])) {
                         <div class="card-block">
                             <h4 class="card-title">Add New Route</h4>
                           
-<!--Error messages-->
+<!--Return messages-->
 <?php
 
-if (!empty($_SESSION["errors"])) {
-	echo "<h5>Error</h5>";
+if (!empty($_SESSION["messages"])) {
+	echo "<h5>Notice</h5>";
 	echo "<ul>";
-		foreach ($_SESSION["errors"] as $error){
-			echo "<li>".$error."</li>";
+		foreach ($_SESSION["messages"] as $message){
+			echo "<li>".$message."</li>";
 		}
 	echo "</ul>";
 }
-
+unset($_SESSION["messages"]);
 ?>
 
     <form id='route-details' method ='get' action='add_route_process.php'>
