@@ -7,7 +7,7 @@ import requests
 import traceback
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://esd:456852@database-1.cbchzgfp3eq7.us-east-1.rds.amazonaws.com:3306/fms'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 CORS(app)
@@ -90,7 +90,7 @@ def check_user(emails):
 @app.route("/staff/roles/<string:role>" ,methods=['GET'])
 def getUserRoleName(role):
     role_out = roles.userRoles(role)
-    return jsonify(role_out)
+    return role_out
 
 @app.route("/staff/check/<string:emails>", methods=['POST'])
 def check_userRights(emails):
