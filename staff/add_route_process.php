@@ -1,6 +1,6 @@
 <?php
 session_start();
-$_SESSION["errors"] = [];
+$_SESSION["messages"] = [];
 
 $flight_no = $_GET["flight_no"];
 $departure_airport_id = $_GET["departure_airport_id"];
@@ -55,9 +55,10 @@ curl_close($ch);
 //Handle return JSON
 $result = json_decode($result, true);
 echo "<br>".var_dump($result)."<br>";
-if ($result["result"]==false){
-	array_push($_SESSION["errors"], $result["message"]);
-	header("Location: add_route.php");
-}
+var_dump($_SESSION["messages"]);
+
+array_push($_SESSION["messages"], $result["message"]);
+header("Location: add_route.php");
+
 
 ?>
