@@ -9,8 +9,10 @@ import json
 import traceback
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config["SQLALCHEMY_POOL_RECYCLE"] = 299
+app.config['CONN_MAX_AGE'] = None
 db = SQLAlchemy(app)
 CORS(app)
 
@@ -106,7 +108,6 @@ class Flight(db.Model):
         return self.tail_no 
     def settail_no (self,tail_no ):
         self.tail_no  = tail_no 
-
     def getecon_sv_price(self):
         return self.econ_sv_price
     def setecon_sv_price(self,econ_sv_price):
@@ -191,7 +192,6 @@ class Flight(db.Model):
         return self.status_code
     def setstatus_code(self,status_code):
         self.status_code =status_code
-
     def json(self):
         return {"flight_details_id": self.flight_details_id, "flight_no": self.flight_no,
         "flight_departure": self.flight_departure, "flight_arrival": self.flight_arrival,
@@ -259,7 +259,6 @@ class Status(db.Model):
      __tablename__ = 'status'
      status_code = db.Column(db.String(3), primary_key=True)
      status = db.Column(db.String(255),  nullable=False)
-
      def __init__(self,status_code,status):
          self._status = status
          self._status_code = status_code
