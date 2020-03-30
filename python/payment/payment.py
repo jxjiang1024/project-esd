@@ -119,6 +119,7 @@ def processPayment(payment):
         send_error(resultmessage)
     else:
         print("OK payment.")
+        add_transaction(json.loads(json.dumps(payment)))
     return result
 
 def send_error(resultmessage):
@@ -130,10 +131,10 @@ def send_error(resultmessage):
     )
 
 
-@app.route("/payment/add", methods=['POST'])
-def add_transaction():
+# @app.route("/payment/add", methods=['POST'])
+def add_transaction(payment):
     try:
-        data = request.get_json()
+        data = payment
         size = len(Payment.query.all())
         transaction = Payment(size+1,str(data['payment_type']),str(data['prefix']),str(data['first_name']),str(data['last_name']),str(data['middle_name']),float(data['amount']),str(data['status']),int(data['last_4_digit']))
 
