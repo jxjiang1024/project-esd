@@ -52,7 +52,7 @@ if (!isset($_SESSION['staff_id'])) {
             let requestParam = {
                 headers: {"content-type": "charset=UTF-8"},
                 mode: 'cors', // allow cross-origin resource sharing
-                method: 'POST',
+                method: 'POST'
 
             }
             try {
