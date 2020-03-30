@@ -112,7 +112,7 @@
                         </li>
                         <li> <a class="waves-effect waves-dark" href="pages-profile.php" aria-expanded="false"><i class="mdi mdi-account-check"></i><span class="hide-menu">Profile</span></a>
                         </li>
-                        <li> <a class="waves-effect waves-dark" href="table-basic.html" aria-expanded="false"><i class="mdi mdi-table"></i><span class="hide-menu">Basic Table</span></a>
+                        <li> <a class="waves-effect waves-dark" href="addflights.php" aria-expanded="false"><i class="mdi mdi-airplane-takeoff"></i><span class="hide-menu">Add Flight Details</span></a>
                         </li>
                         <li> <a class="waves-effect waves-dark" href="icon-material.html" aria-expanded="false"><i class="mdi mdi-emoticon"></i><span class="hide-menu">Icons</span></a>
                         </li>
@@ -155,8 +155,9 @@
                     <div class="col-md-5 col-8 align-self-center">
                         <h3 class="text-themecolor m-b-0 m-t-0">Add Flight Details</h3>
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="javascript:void(0)">Function</a></li>
+                            <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
                             <li class="breadcrumb-item active">Add Flight Details</li>
+                            <li class="breadcrumb-item active">Success</li>
                         </ol>
                     </div>
                     <div class="col-md-7 col-4 align-self-center">
@@ -175,8 +176,8 @@
                             <div class="card-block">
                                 <h2 class="col-sm-12">Flight Details Added Successfully!</h2></br>
                                 <div class="col-sm-12">
-                                    <input type="button" id="flightdetails" value="Add Flight Details" class="btn btn-success">
-                                    <input type="button" id="homepage" value="Return to Homepage" class="btn btn-success">
+                                    <a id="flightdetails" href="addflights.php" class="btn btn-success">Add Another Flight Details</a>
+                                    <a id="homepage" href="dashboard.php" class="btn btn-success">Return to Homepage</a>
                                 </div>
                             </div>
                         </div>
