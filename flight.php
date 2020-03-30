@@ -97,6 +97,22 @@
                     
                     ?>
                 </div>
+                
+                <!-- <div id="results">
+                <table id="go-flight" class='table table-striped' border='1'>
+                    <thead>
+                        <th>Deapture Airport</th>
+                        <th>Arrival Airport</th>
+                        <th>Depature Time </th>
+                        <th>Availability</th>
+                    </thead>
+                </table>
+                </div> -->
+
+
+
+            </div>
+            
 				
 		</div>
 
@@ -174,27 +190,18 @@
         let one_way_from = "<?php echo $_POST["one-way-from"];?>"
         let one_way_to = "<?php echo $_POST["one-way-to"];?>"
         let one_way_date = "<?php echo $_POST["one-way-date"];?>"
+
+        let flightURL = "http://127.0.0.1:8003/flight/findFlights"
         
-        $("#loadingwheel").hide();
-        $("#error_msg").hide();
-        $("#submit").click(function () {
-            for (let x = 0; step < 2; step++) {
-                $("#loadingwheel").show();
-                let email = $("#email").val();
-                let password = $("#password").val();
-                let test = "<?php echo $_POST['test']?>"
-                let serviceURL = "http://127.0.0.1:8001/staff/login/" + email;
-                // anonymous async function
-                // - using await requires the function that calls it to be async
-                $(async () => {
+        $(async () => {
                     try {
                         const response =
                             await fetch(
-                                serviceURL, {
+                                flightURL, {
                                     headers: {"Content-Type": "application/json"},
                                     method: 'POST',
                                     mode: 'cors',
-                                    body: JSON.stringify({password: password})
+                                    body: JSON.stringify({p: password})
                                 }
                             );
                         const data = await response.json();
@@ -224,9 +231,8 @@
                     }
 
                 });
-            }
 
-        });
+ 
 
     });
 
