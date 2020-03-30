@@ -7,6 +7,8 @@ import traceback
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://esd:456852@database-1.cbchzgfp3eq7.us-east-1.rds.amazonaws.com:3306/fms'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config["SQLALCHEMY_POOL_RECYCLE"] = 299
+app.config['CONN_MAX_AGE'] = None
 db = SQLAlchemy(app)
 CORS(app)
 
