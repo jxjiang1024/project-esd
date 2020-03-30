@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-// session_start();
-// if (!isset($_SESSION['staff_id'])) {
-//     header("location:../login.php");
-// }
+session_start();
+if (!isset($_SESSION['staff_id'])) {
+    header("location:../login.php");
+}
 ?>
 <head>
     <meta charset="utf-8">
@@ -43,82 +43,30 @@
             crossorigin="anonymous"></script>
     <script>
         $(document).ready(function(){
-            $("#error_msg").hide();
-            $("#fdsubmit").click(function(){
-                $(async() => {
-                    try {
-                        let flight_no = $("#flight_no").val();
-                        let flight_departure = $("flight_departure").val();
-                        let flight_arrival = $("flight_arrival").val();
-                        let tail_no = $("tail_no").val();
-                        let econ_sv_price = $("econ_sv_price").val();
-                        let econ_sv_seat = $("econ_sv_seat").val();
-                        let econ_stnd_price = $("econ_stnd_price").val();
-                        let econ_stnd_seat = $("econ_stnd_seat").val();
-                        let econ_plus_price = $("econ_plus_price").val();
-                        let econ_plus_seat = $("econ_plus_seat").val();
-                        let pr_econ_sv_price = $("pr_econ_sv_price").val();
-                        let pr_econ_sv_seat = $("pr_econ_sv_seat").val();
-                        let pr_econ_stnd_price = $("pr_econ_stnd_price").val();
-                        let pr_econ_stnd_seat = $("pr_econ_stnd_price").val();
-                        let pr_econ_plus_price = $("pr_econ_plus_price").val();
-                        let pr_econ_plus_seat = $("pr_econ_plus_seat").val();
-                        let bus_sv_price = $("bus_sv_price").val();
-                        let bus_sv_seat = $("bus_sv_seat").val();
-                        let bus_stnd_price = $("bus_stnd_price").val();
-                        let bus_stnd_seat = $("bus_stnd_seat").val();
-                        let bus_plus_price = $("bus_plus_price").val();
-                        let bus_plus_seat = $("bus_plus_seat").val();
-                        let first_stnd_price = $("first_stnd_price").val();
-                        let first_stnd_seat = $("first_stnd_seat").val();
-                        let serviceURL = "http://127.0.0.1:8003/flight/add/flights";
-                        const response = await fetch(serviceURL,{
+            $("#error_msg").hide(); 
+                $(async()=>{
+                    try{
+                        let serviceURL = "http://127.0.0.1:8003/flight/aircrafts";
+                        const response = fetch(serviceURL,{
                             method: 'POST',
                             mode: 'cors',
-                            headers: {
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify({
-                                flight_no: flight_no,
-                                flight_departure: flight_departure,
-                                flight_arrival: flight_arrival,
-                                tail_no: tail_no,
-                                econ_sv_price: econ_sv_price,
-                                econ_sv_seat: econ_sv_seat,
-                                econ_stnd_price: econ_stnd_price,
-                                econ_stnd_seat: econ_stnd_seat,
-                                econ_plus_price: econ_plus_price,
-                                econ_plus_seat: econ_plus_seat,
-                                pr_econ_sv_price: pr_econ_sv_price,
-                                pr_econ_sv_seat: pr_econ_sv_seat,
-                                pr_econ_stnd_price: pr_econ_stnd_price,
-                                pr_econ_stnd_seat: pr_econ_stnd_seat,
-                                pr_econ_plus_price: pr_econ_plus_price,
-                                pr_econ_plus_seat: pr_econ_plus_seat,
-                                bus_sv_price: bus_sv_price,
-                                bus_sv_seat: bus_sv_seat,
-                                bus_stnd_price: bus_stnd_price,
-                                bus_stnd_seat: bus_stnd_seat,
-                                bus_plus_price: bus_plus_price,
-                                bus_plus_seat: bus_plus_seat,
-                                first_stnd_price: first_stnd_price,
-                                first_stnd_seat: first_stnd_seat,
-                            })
+                            headers: {"Content-Type": "application/json"},
                         });
                         const data = await response.json();
+                        var aircrafts = data.aircraft;
+                        console.log(aircrafts)
 
-                        if (data.result == true){
-                            var location = "addflights-success.php";
-                            location.reload();
-                        } else {
-                            var errmsg = '<h6 class="col-md-12" style="color: #c80000;">' + data.message+'</h6>';
-                            $("#msg_error").append(errmsg);
-                            $("#error_msg").show();
+                        if(data.result==true){
+                            var rows = "";
+                            for(const aircraft of aircrafts){
+                                rows += "<option value='"+ aircraft.tail_no + "'>" + aircraft.tail_no + "</option>";
+                            }
+                            $("select").html(rows);
                         }
+                    } catch(error){
+                        $("#error_msg").show();
                     }
-                    
                 });
-            });
         });
     </script>
 </head>
@@ -191,7 +139,7 @@
                         <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href=""
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
                                     src="../assets/images/users/1.jpg" alt="user"
-                                    class="profile-pic m-r-10"/><?php //echo $_SESSION['prefix'], " ", $_SESSION['first_name'], ", ", $_SESSION['last_name'] ?>
+                                    class="profile-pic m-r-10"/><?php echo $_SESSION['prefix'], " ", $_SESSION['first_name'], ", ", $_SESSION['last_name'] ?>
                         </a>
                     </li>
                 </ul>
@@ -293,7 +241,7 @@
                                 <div class="form-group">
                                     <label for="flight_no" class="col-md-12">Flight Number</label>
                                     <div class="col-md-12">
-                                        <input type="email" placeholder="SFLXXX"
+                                        <input type="text" placeholder="SFLXXX"
                                                class="form-control form-control-line" name="flight_no"
                                                id="flight_no">
                                     </div>
@@ -308,13 +256,16 @@
                                         <input type="date" id="flight_arrival" name="flight_arrival" class="form-control form-control-line">
                                     </div>
                                 </div></br>
+
                                 <div class="form-group">
-                                    <label for="tail_no" class="col-md-12">Aircraft Tail Number</label>
-                                    <div class="col-md-12">
-                                        <input type="text" id="tail_no" placeholder="SFXXXX"
-                                               class="form-control form-control-line">
+                                    <label class="col-md-12">Aircraft Tail Number</label>
+                                    <div class="col-md-12" id="dropdown">
+                                        <select id="tail_no" placeholder="SFXXXX" class="form-control form-control-line">
+                                            <option disabled selected>Select Aircraft Tail Number</option>
+                                        </select>
                                     </div>
                                 </div></br>
+
                                 <div class="form-group">
                                     <h4 class="col-md-12">Pricing Table</h4>
                                     <h5 class="col-md-12">Economy</h5>
@@ -403,6 +354,14 @@
                 </div>
                 <!-- Column -->
             </div>
+
+            <form id='route-details' method ='get' action='autocompletetail.php'>
+
+                <div class="form-group">
+                    <input type="hidden" id="flight_no" name="flight_no">
+                </div>
+
+            </form>
             <!-- Row -->
             <!-- ============================================================== -->
             <!-- End PAge Content -->
