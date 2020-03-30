@@ -169,68 +169,56 @@
 
 	<!-- Main -->
 	<script src="js/main.js"></script>
-    <?php
-                    if (isset($_POST["two-way-from"]) && isset($_POST["two-way-to"]) && isset($_POST["two-way-startdate"]) && isset($_POST["two-way-enddate"])) {
-                        echo "<h2>You have searched a flight from ".$_POST["two-way-from"]." to ".$_POST["two-way-to"]."</h2>";
-                        echo "<h2>From ".$_POST["two-way-startdate"]." to ".$_POST["two-way-enddate"]."</h2>";
-                    }elseif(isset($_POST["one-way-from"]) && isset($_POST["one-way-to"]) && isset($_POST["one-way-date"])){
-                        echo "<h2>You have searched a flight from ".$_POST["one-way-from"]." to ".$_POST["one-way-to"]." on ".$_POST["one-way-date"]."</h2>";
-                    }else{
-                        header("Location: index.html");
-                    }
-                    
-                    ?>
+
     </body>
     <script>
     $(document).ready(function () {
-        let two_way_from = "<?php echo $_POST["two-way-from"];?>"
-        let two_way_to = "<?php echo $_POST["two-way-to"];?>"
-        let two_way_startdate = "<?php echo $_POST["two-way-startdate"];?>"
-        let two_way_enddate = "<?php echo $_POST["two-way-enddate"];?>"
-        let one_way_from = "<?php echo $_POST["one-way-from"];?>"
-        let one_way_to = "<?php echo $_POST["one-way-to"];?>"
-        let one_way_date = "<?php echo $_POST["one-way-date"];?>"
+        let tripCheck = <?php echo $_POST["check"]?>;
+        // if(tripCheck == 0){
+        //     let two_way_from = <?php echo $_POST["two-way-from"]?>
+        //     let two_way_to = <?php echo $_POST["two-way-to"];?>
+        //     let two_way_startdate = <?php echo $_POST["two-way-startdate"];?>
+        //     let two_way_enddate = <?php echo $_POST["two-way-enddate"];?>
+        //     let isReturn = TRUE;
+        // }else{
+        //     let one_way_from = <?php echo $_POST["one-way-from"];?>
+        //     let one_way_to = <?php echo $_POST["one-way-to"];?>
+        //     let one_way_date = <?php echo $_POST["one-way-date"];?>
+        //     let isReturn =FALSE;
+        // }
 
-        let flightURL = "http://127.0.0.1:8003/flight/findFlights"
+        // if(two_way_to != NULL  || two_way_to != ""){
+        //     let isReturn = TRUE;
+        // }else{
+        //     let isReturn =FALSE;
+        // }
+        console.log(tripCheck);
+
+
+
+       // let flightURL = "http://127.0.0.1:8003/flight/findFlights"
         
-        $(async () => {
-                    try {
-                        const response =
-                            await fetch(
-                                flightURL, {
-                                    headers: {"Content-Type": "application/json"},
-                                    method: 'POST',
-                                    mode: 'cors',
-                                    body: JSON.stringify({p: password})
-                                }
-                            );
-                        const data = await response.json();
+        // $(async () => {
+        //             try {
+        //                 const response =
+        //                     await fetch(
+        //                         flightURL, {
+        //                             headers: {"Content-Type": "application/json"},
+        //                             method: 'POST',
+        //                             mode: 'cors',
+        //                             body: JSON.stringify({departureAirport: one_way_from, arrivalAirport: one_way_to, depatureDate: one_way_date, isReturn: False})
+        //                         }
+        //                     );
+        //                 const data = await response.json();
+        //                 console.log(data);
+                       
+             
+        //                 }
+        //             } catch (e) {
+        //                 alert("database has error")
+        //             }
 
-                        if (data.result == true) {
-                            $.post("session_staff.php", {
-                                "staff_id": data.staff_id,
-                                "first_name": data.first_name,
-                                "last_name": data.last_name,
-                                "prefix": data.prefix,
-                                "middle_name": data.middle_name,
-                                "suffix": data.suffix,
-                                "email": email,
-                                "roles": data.roles,
-                                "country": data.country_name,
-                                "country_code": data.country_code
-                            });
-
-                            location.reload();
-                        } else {
-                            $("#loadingwheel").hide();
-                            $("#error_msg").show();
-                        }
-                    } catch (e) {
-                        $("#loadingwheel").hide();
-                        $("#error_msg").show();
-                    }
-
-                });
+        //         });
 
  
 
