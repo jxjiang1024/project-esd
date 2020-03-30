@@ -66,7 +66,7 @@ if (isset($_SESSION["staff_id"])) {
         $("#loadingwheel").hide();
         $("#error_msg").hide();
         $("#submit").click(function () {
-            for (let x = 0; step < 2; step++) {
+            for (let x = 0; step < 2; x++) {
                 $("#loadingwheel").show();
                 let email = $("#email").val();
                 let password = $("#password").val();
