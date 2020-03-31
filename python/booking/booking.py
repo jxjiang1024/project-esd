@@ -10,6 +10,7 @@ import pika
 import uuid
 import csv
 import json
+import payment
 
 
 app = Flask(__name__)
@@ -136,17 +137,19 @@ def create_ticket():
         traceback.print_exc()
         return {"result":"Error"}
 
-def create_payment_msg(data):
-    payment = dict()
-    payment['payment_id'] = len(Booking.query.all())+1
-    payment['payment_type'] = data['payment_type']
-    payment['prefix'] = data['prefix']
-    payment['first_name'] = data['first_name']
-    payment['last_name'] = data['last_name']
-    payment['middle_name'] = data['middle_name']
-    payment['amount'] = data['amount']
-    payment['status'] = data['status']
-    payment['last_4_digit'] = data['last_4_digit']
+def create_booking(data):
+    booking = dict()
+    booking['booking_id'] = len(Booking.query.all())+1
+    booking['flight_details_id'] = data['payment_type']
+    booking['booking_date'] = data['prefix']
+    booking['payment_id'] = data['first_name']
+    booking['prefix'] = data['last_name']
+    booking['first_name'] = data['middle_name']
+    booking['suffix'] = data['amount']
+    booking['last_name'] = data['status']
+    booking['email'] = data['last_4_digit']
+    booking['staff_id'] = data['last_4_digit']
+    booking['comments'] = data['last_4_digit']
     return payment
 
 
@@ -154,46 +157,50 @@ def create_payment_msg(data):
 @app.route("/payment/check", methods=['POST'])
 def check_payment():
     data = request.get_json()
-    payment = create_payment_msg(data)
-    hostname = "localhost"
-    port = 5672
-    # connect to the broker and set up a communication channel in the connection
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host=hostname, port=port))
-    channel = connection.channel()
+    result = payment.processPayment(data)
+    print(result)
+    # if(result['result'] != False):
+    #     booking = create_booking(data)
+    #     hostname = "localhost"
+    #     port = 5672
+    # # # connect to the broker and set up a communication channel in the connection
+    #     connection = pika.BlockingConnection(pika.ConnectionParameters(host=hostname, port=port))
+    #     channel = connection.channel()
 
-    # set up the exchange if the exchange doesn't exist
-    exchangename="booking_direct"
-    channel.exchange_declare(exchange=exchangename, exchange_type='direct')
+    # # # set up the exchange if the exchange doesn't exist
+    #     exchangename="booking_direct"
+    #     channel.exchange_declare(exchange=exchangename, exchange_type='direct')
 
-    # prepare the message body content
-    message = json.dumps(payment, default=str) # convert a JSON object to a string
-    channel.queue_declare(queue='payment', durable=True) # make sure the queue used by the error handler exist and durable
-    channel.queue_bind(exchange=exchangename, queue='payment', routing_key='payment.info') # make sure the queue is bound to the exchange
-    channel.basic_publish(exchange=exchangename, routing_key="payment.info", body=message,
-        properties=pika.BasicProperties(delivery_mode = 2) # make message persistent within the matching queues until it is received by some receiver (the matching queues have to exist and be durable and bound to the exchange)
-    )
-    # inform Shipping and exit, leaving it to order_reply to handle replies
-    # Prepare the correlation id and reply_to queue and do some record keeping
-    corrid = str(uuid.uuid4())
-    row = {"payment_id": payment["payment_id"], "correlation_id": corrid}
-    csvheaders = ["payment_id", "correlation_id"]
-    with open("corrids.csv", "a+", newline='') as corrid_file: # 'with' statement in python auto-closes the file when the block of code finishes, even if some exception happens in the middle
-        csvwriter = csv.DictWriter(corrid_file, csvheaders)
-        csvwriter.writerow(row)
-    replyqueuename = "payment.reply"
-    # prepare the channel and send a message to Shipping
-    channel.queue_declare(queue='payment', durable=True) # make sure the queue used by Shipping exist and durable
-    channel.queue_bind(exchange=exchangename, queue='payment', routing_key='payment.booking') # make sure the queue is bound to the exchange
-    channel.basic_publish(exchange=exchangename, routing_key="payment.booking", body=message,
-        properties=pika.BasicProperties(delivery_mode = 2, # make message persistent within the matching queues until it is received by some receiver (the matching queues have to exist and be durable and bound to the exchange, which are ensured by the previous two api calls)
-            reply_to=replyqueuename, # set the reply queue which will be used as the routing key for reply messages
-            correlation_id=corrid # set the correlation id for easier matching of replies
-        )
-    )
-    # close the connection to the broker
-    connection.close()
-    print()
-    return "payment info sent to payment.py"
+    # # prepare the message body content
+    # message = json.dumps(payment, default=str) # convert a JSON object to a string
+    # channel.queue_declare(queue='payment', durable=True) # make sure the queue used by the error handler exist and durable
+    # channel.queue_bind(exchange=exchangename, queue='payment', routing_key='payment.info') # make sure the queue is bound to the exchange
+    # channel.basic_publish(exchange=exchangename, routing_key="payment.info", body=message,
+    #     properties=pika.BasicProperties(delivery_mode = 2) # make message persistent within the matching queues until it is received by some receiver (the matching queues have to exist and be durable and bound to the exchange)
+    # )
+    # # inform Shipping and exit, leaving it to order_reply to handle replies
+    # # Prepare the correlation id and reply_to queue and do some record keeping
+    # corrid = str(uuid.uuid4())
+    # row = {"payment_id": payment["payment_id"], "correlation_id": corrid}
+    # csvheaders = ["payment_id", "correlation_id","result"]
+    # with open("corrids.csv", "a+", newline='') as corrid_file: # 'with' statement in python auto-closes the file when the block of code finishes, even if some exception happens in the middle
+    #     csvwriter = csv.DictWriter(corrid_file, csvheaders)
+    #     csvwriter.writerow(row)
+    # replyqueuename = "payment.reply"
+    # # prepare the channel and send a message to Shipping
+    # channel.queue_declare(queue='payment', durable=True) # make sure the queue used by Shipping exist and durable
+    # channel.queue_bind(exchange=exchangename, queue='payment', routing_key='payment.booking') # make sure the queue is bound to the exchange
+    # channel.basic_publish(exchange=exchangename, routing_key="payment.booking", body=message,
+    #     properties=pika.BasicProperties(delivery_mode = 2, # make message persistent within the matching queues until it is received by some receiver (the matching queues have to exist and be durable and bound to the exchange, which are ensured by the previous two api calls)
+    #         reply_to=replyqueuename, # set the reply queue which will be used as the routing key for reply messages
+    #         correlation_id=corrid # set the correlation id for easier matching of replies
+    #     )
+    # )
+    # # close the connection to the broker
+    # connection.close()
+    # print()
+    # return "payment info sent to payment.py"
+    return jsonify({"result":True,"message":"your ticket will be issued shortly"})
     
 
 if __name__ == "__main__":
