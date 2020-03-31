@@ -18,7 +18,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["SQLALCHEMY_POOL_RECYCLE"] = 299
 app.config['CONN_MAX_AGE'] = None
 db = SQLAlchemy(app)
-CORS(app)
 
 class Ticket(db.Model):
     __tablename__ = 'ticket'
@@ -64,6 +63,7 @@ exchangename="booking"
 channel.exchange_declare(exchange=exchangename, exchange_type='direct')
 
 def receieveTicket():
+    print('running')
     # prepare a queue for receiving messages
     channelqueue = channel.queue_declare(queue="ticketing", durable=True) # 'durable' makes the queue survive broker restarts so that the messages in it survive broker restarts too
     queue_name = channelqueue.method.queue
@@ -103,7 +103,7 @@ def create_ticket():
     try:
         data = request.get_json()
         size = len(Ticket.query.all())
-        ticket = Ticket(str(size+1),int(data['booking_id']), str(data['prefix']),str(data['first_name']), str(data['last_name']), str(data['middle_name']),str(data['suffix']),str(data['ff_id']))
+        ticket = Ticketing(str(size+1),int(data['booking_id']), str(data['prefix']),str(data['first_name']), str(data['last_name']), str(data['middle_name']),str(data['suffix']),str(data['ff_id']))
 
         db.session.add(ticket)
         db.session.commit()
