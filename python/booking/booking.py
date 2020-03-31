@@ -1,9 +1,7 @@
 from flask import Flask,request,jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from os import environ
-import datetime
-from datetime import datetime
+from datetime import datetime,date
 import requests
 import traceback
 import pika
@@ -13,12 +11,14 @@ import json
 import payment
 
 
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["SQLALCHEMY_POOL_RECYCLE"] = 299
 app.config['CONN_MAX_AGE'] = None
 db = SQLAlchemy(app)
+CORS(app)
 
 # converts data type time col to make them serializable by json
 def jsonTimeConverter(o):
@@ -81,7 +81,7 @@ class Ticket(db.Model):
     suffix = db.Column(db.String(45))
     ff_id = db.Column(db.String(10))
 
-    def __init__(self, ticket_id, booking_id, prefix, first_name, last_name, middle_name, suffix, ff_id):
+    def __init__(self, ticket_id, booking_id, prefix, first_name, last_name, middle_name, suffix, ff_id,comments):
         self.ticket_id = ticket_id
         self.booking_id = booking_id
         self.prefix = prefix
@@ -137,33 +137,24 @@ def create_ticket():
         traceback.print_exc()
         return {"result":"Error"}
 
-def create_booking(data,id):
-    booking = dict()
-    booking['booking_id'] = len(Booking.query.all())+1
-    booking['flight_details_id'] = data['payment_type']
-    booking['booking_date'] = data['prefix']
-    booking['payment_id'] = id
-    booking['prefix'] = data['prefix']
-    booking['first_name'] = data['first_name']
+def create_ticketing(data,id):
+    ticket = dict()
+    ticket['ticket_id'] = len(Booking.query.all())+1
+    ticket['booking_id'] = id
+    ticket['prefix'] = data['prefix']
+    ticket['first_name'] = data['first_name']
+    ticket['last_name'] = data['prefix']
+    ticket['middle_name'] = data['middle_name']
     if(data['suffix'] == "" or data['suffix'] == None):
-        booking['suffix'] = ""
+        ticket['suffix'] = ""
     else:
-        booking['suffix'] = data['suffix']
-    booking['last_name'] = data['last_name']
-    if(data['middle_name'] == "" or data['middle_name'] == None):
-        booking['middle_name'] = ""
+        ticket['suffix'] = data['suffix']
+    ticket['last_name'] = data['last_name']
+    if(data['ff_id'] == "" or data['ff_id'] == None):
+        ticket['middle_name'] = ""
     else:
-        booking['middle_name'] = data['middle_name']
-    booking['email'] = data['email']
-    if(data['staff_id'] == "" or data['staff_id'] == None):
-        booking['staff_id'] = ""
-    else:
-        booking['staff_id'] = data['staff_id']
-    if(data['comments'] == "" or data['comments'] == None):
-        booking['comments'] = ""
-    else:
-        booking['comments'] = data['comments']
-    return payment
+        ticket['ff_id'] = data['ff_id']
+    return ticket
 
 
 # AMQP Check valid payment
@@ -172,19 +163,72 @@ def check_payment():
     data = request.get_json()
     result = payment.processPayment(data)
     if(result['result'] != False):
-        booking = create_booking(data,result['id'])
-        hostname = "localhost"
-        port = 5672
-    # # connect to the broker and set up a communication channel in the connection
-        connection = pika.BlockingConnection(pika.ConnectionParameters(host=hostname, port=port))
-        channel = connection.channel()
+        try:
+            ccode = "SFA"
+            today = date.today()
+            year = today.year
+            month = today.month
+            if(month < 10):
+                month = "0"+str(month)
+            day = today.day
+            last_booking = Booking.query.filter(Booking.booking_date == today).order_by(Booking.booking_id.desc()).first()
+            if(last_booking != None):
+                bookingID = last_booking.booking_id[11:]
+                bookingID = int(bookingID)+1
+                bookingID = str(bookingID).zfill(5)
+                bookingID = ccode+str(day)+str(month)+str(year)+bookingID
+            else:
+                bookingID = 1
+                bookingID = str(bookingID).zfill(5)
+                bookingID = ccode+str(day)+str(month)+str(year)+bookingID
+            if (data['staff_id'] == ""):
+                staff_id = None
+            bookingDetails = Booking(bookingID,data['flight_details_id'],str(today),result['id'],data['prefix'],data['first_name'],data['suffix'],data['last_name'],data['middle_name'],data['email'],staff_id,data['comments'])
+            db.session.add(bookingDetails)
+            db.session.commit()
+            tickets = create_ticketing(data,bookingID)
+            hostname = "localhost"
+            port = 5672
+            # # connect to the broker and set up a communication channel in the connection
+            connection = pika.BlockingConnection(pika.ConnectionParameters(host=hostname, port=port))
+            channel = connection.channel()
+            # # set up the exchange if the exchange doesn't exist
+            exchangename="booking"
+            corrid = str(uuid.uuid4())
+            row = {"ticket_id": tickets["payment_id"], "correlation_id": corrid}
+            csvheaders = ["payment_id", "correlation_id","result"]
+            message = json.dumps(tickets, default=str)
+            with open("corrids.csv", "a+", newline='') as corrid_file: # 'with' statement in python auto-closes the file when the block of code finishes, even if some exception happens in the middle
+                csvwriter = csv.DictWriter(corrid_file, csvheaders)
+                csvwriter.writerow(row)
+            replyqueuename = "ticketing.reply"
+            channel.queue_declare(queue='ticketing', durable=True) # make sure the queue used by Shipping exist and durable
+            channel.queue_bind(exchange=exchangename, queue='ticketing', routing_key='booking.ticketing')
+            channel.basic_publish(exchange=exchangename, routing_key="shipping.order", body=message,
+            properties=pika.BasicProperties(delivery_mode = 2, # make message persistent within the matching queues until it is received by some receiver (the matching queues have to exist and be durable and bound to the exchange, which are ensured by the previous two api calls)
+                reply_to=replyqueuename, # set the reply queue which will be used as the routing key for reply messages
+                correlation_id=corrid # set the correlation id for easier matching of replies
+                )
+            )
+            return jsonify({"result":True,"message":"Ticket will be issued to you shortly"})   
+        except Exception:
+             traceback.print_exc()
+             db.session.rollback()
+             db.session.close()
+             return jsonify({"result":False,"message":"booking failed please contact our staff with the following transaction ID","id":result['id']})
+    #     booking = create_booking(data,result['id'])
+    #     hostname = "localhost"
+    #     port = 5672
+    # # # connect to the broker and set up a communication channel in the connection
+    #     connection = pika.BlockingConnection(pika.ConnectionParameters(host=hostname, port=port))
+    #     channel = connection.channel()
 
-    # # set up the exchange if the exchange doesn't exist
-        exchangename="booking_direct"
-        channel.exchange_declare(exchange=exchangename, exchange_type='direct')
+    # # # set up the exchange if the exchange doesn't exist
+    #     exchangename="booking_direct"
+    #     channel.exchange_declare(exchange=exchangename, exchange_type='direct')
 
-    # # prepare the message body content
-    # message = json.dumps(payment, default=str) # convert a JSON object to a string
+    # prepare the message body content
+    #     message = json.dumps(payment, default=str) # convert a JSON object to a string
     # channel.queue_declare(queue='payment', durable=True) # make sure the queue used by the error handler exist and durable
     # channel.queue_bind(exchange=exchangename, queue='payment', routing_key='payment.info') # make sure the queue is bound to the exchange
     # channel.basic_publish(exchange=exchangename, routing_key="payment.info", body=message,
@@ -212,7 +256,10 @@ def check_payment():
     # connection.close()
     # print()
     # return "payment info sent to payment.py"
-    return jsonify({"result":True,"message":"your ticket will be issued shortly"})
+        
+    else:
+        return jsonify({"result":False,"message":"Payment Failed"})
+   
     
 
 if __name__ == "__main__":

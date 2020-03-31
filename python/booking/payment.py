@@ -146,5 +146,7 @@ def add_transaction(payment):
         db.session.commit()
         return {"result":True,"message":"Successfully committed to database","id":size}
     except Exception:
+        db.session.rollback()
         traceback.print_exc()
+        db.session.close()
         return {"result":False,"message":"Failed to commit to database"}
