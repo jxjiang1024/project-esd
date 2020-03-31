@@ -50,7 +50,7 @@ def processOrder(order):
     print(order)
     # Can do anything here. E.g., publish a message to the error handler when processing fails.
     resultstatus = bool(random.getrandbits(1)) # simulate success/failure with a random True or False
-    result = {'status': resultstatus, 'message': 'Simulated random shipping result.', 'booking': order}
+    result = {'status': resultstatus, 'message': 'Simulated random booking result.', 'booking': order}
     resultmessage = json.dumps(result, default=str) # convert the JSON object to a string
     if not resultstatus: # inform the error handler when shipping fails
         print("Failed shipping.")
