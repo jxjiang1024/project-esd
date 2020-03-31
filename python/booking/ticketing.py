@@ -31,7 +31,7 @@ class Ticket(db.Model):
     suffix = db.Column(db.String(45))
     ff_id = db.Column(db.String(10))
 
-    def __init__(self, ticket_id, booking_id, prefix, first_name, last_name, middle_name, suffix, ff_id,comments):
+    def __init__(self, ticket_id, booking_id, prefix, first_name, last_name, middle_name, suffix, ff_id):
         self.ticket_id = ticket_id
         self.booking_id = booking_id
         self.prefix = prefix
@@ -97,13 +97,15 @@ def processTicket(ticket):
         print("Failed ticket.")
     else:
         print("OK ticket.")
+        # uncomment following to create ticket in db
+        # create_ticket(resultmessage)
     return result
 
-def create_ticket():
+def create_ticket(details):
     try:
-        data = request.get_json()
+        data = json.loads(details)
         size = len(Ticket.query.all())
-        ticket = Ticketing(str(size+1),int(data['booking_id']), str(data['prefix']),str(data['first_name']), str(data['last_name']), str(data['middle_name']),str(data['suffix']),str(data['ff_id']))
+        ticket = Ticket(str(size+1),int(data['booking_id']), str(data['prefix']),str(data['first_name']), str(data['last_name']), str(data['middle_name']),str(data['suffix']),str(data['ff_id']))
 
         db.session.add(ticket)
         db.session.commit()
