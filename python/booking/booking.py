@@ -137,19 +137,32 @@ def create_ticket():
         traceback.print_exc()
         return {"result":"Error"}
 
-def create_booking(data):
+def create_booking(data,id):
     booking = dict()
     booking['booking_id'] = len(Booking.query.all())+1
     booking['flight_details_id'] = data['payment_type']
     booking['booking_date'] = data['prefix']
-    booking['payment_id'] = data['first_name']
-    booking['prefix'] = data['last_name']
-    booking['first_name'] = data['middle_name']
-    booking['suffix'] = data['amount']
-    booking['last_name'] = data['status']
-    booking['email'] = data['last_4_digit']
-    booking['staff_id'] = data['last_4_digit']
-    booking['comments'] = data['last_4_digit']
+    booking['payment_id'] = id
+    booking['prefix'] = data['prefix']
+    booking['first_name'] = data['first_name']
+    if(data['suffix'] == "" or data['suffix'] == None):
+        booking['suffix'] = ""
+    else:
+        booking['suffix'] = data['suffix']
+    booking['last_name'] = data['last_name']
+    if(data['middle_name'] == "" or data['middle_name'] == None):
+        booking['middle_name'] = ""
+    else:
+        booking['middle_name'] = data['middle_name']
+    booking['email'] = data['email']
+    if(data['staff_id'] == "" or data['staff_id'] == None):
+        booking['staff_id'] = ""
+    else:
+        booking['staff_id'] = data['staff_id']
+    if(data['comments'] == "" or data['comments'] == None):
+        booking['comments'] = ""
+    else:
+        booking['comments'] = data['comments']
     return payment
 
 
@@ -158,18 +171,17 @@ def create_booking(data):
 def check_payment():
     data = request.get_json()
     result = payment.processPayment(data)
-    print(result)
-    # if(result['result'] != False):
-    #     booking = create_booking(data)
-    #     hostname = "localhost"
-    #     port = 5672
-    # # # connect to the broker and set up a communication channel in the connection
-    #     connection = pika.BlockingConnection(pika.ConnectionParameters(host=hostname, port=port))
-    #     channel = connection.channel()
+    if(result['result'] != False):
+        booking = create_booking(data,result['id'])
+        hostname = "localhost"
+        port = 5672
+    # # connect to the broker and set up a communication channel in the connection
+        connection = pika.BlockingConnection(pika.ConnectionParameters(host=hostname, port=port))
+        channel = connection.channel()
 
-    # # # set up the exchange if the exchange doesn't exist
-    #     exchangename="booking_direct"
-    #     channel.exchange_declare(exchange=exchangename, exchange_type='direct')
+    # # set up the exchange if the exchange doesn't exist
+        exchangename="booking_direct"
+        channel.exchange_declare(exchange=exchangename, exchange_type='direct')
 
     # # prepare the message body content
     # message = json.dumps(payment, default=str) # convert a JSON object to a string

@@ -116,14 +116,14 @@ def processPayment(payment):
     #resultmessage = json.dumps(result, default=str) # convert the JSON object to a string
     if not resultstatus: # inform the error handler when shipping fails
         print("Failed payment.")
-        return jsonify({"result":False,"message":"Payment Failed"})
+        return {"result":False,"message":"Payment Failed"}
     else:
         print("OK payment.")
         transaction_r = add_transaction(json.loads(json.dumps(payment)))
         if not transaction_r:
-            return jsonify({"result":False,"message":"Payment Failed"})
+            return {"result":False,"message":"Payment Failed"}
         else:
-            return jsonify({"result":True,"message":"Payment Success"})
+            return {"result":True,"message":"Payment Success","id":transaction_r['id']}
 
 # def send_error(resultmessage):
 #     # send the message to the error handler
@@ -139,11 +139,12 @@ def add_transaction(payment):
     try:
         data = payment
         size = len(Payment.query.all())
-        transaction = Payment(size+1,str(data['payment_type']),str(data['prefix']),str(data['first_name']),str(data['last_name']),str(data['middle_name']),float(data['amount']),str(data['status']),int(data['last_4_digit']))
+        size+=1
+        transaction = Payment(size,str(data['payment_type']),str(data['prefix']),str(data['first_name']),str(data['last_name']),str(data['middle_name']),float(data['amount']),str(data['status']),int(data['last_4_digit']))
 
         db.session.add(transaction)
         db.session.commit()
-        return {"result":True,"message":"Successfully committed to database"}
+        return {"result":True,"message":"Successfully committed to database","id":size}
     except Exception:
         traceback.print_exc()
         return {"result":False,"message":"Failed to commit to database"}
