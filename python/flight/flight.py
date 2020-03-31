@@ -9,7 +9,7 @@ import json
 import traceback
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["SQLALCHEMY_POOL_RECYCLE"] = 299
 app.config['CONN_MAX_AGE'] = None
@@ -305,7 +305,8 @@ def addFlightDetails():
         ## Check if User is valid
         if(result['role'] == 999 or result['role'] == 2):
             try:
-                aircraftData = aircraft.getSpecificAircraft(json_1['tail_no'],0)
+                tail_no = "SF"+str(json_1['tail_no'])
+                aircraftData = aircraft.getSpecificAircraft(tail_no,0)
                 economy = int(json_1['econ_sv_seat']) + int(json_1['econ_stnd_seat'])+int(json_1['econ_plus_seat'])
                 pr_economy = int(json_1['pr_econ_sv_seat']) + int(json_1['pr_econ_stnd_seat']) + int(json_1['pr_econ_plus_seat'])
                 business = int(json_1['bus_sv_seat'])+int(json_1['bus_stnd_seat'])+int(json_1['bus_plus_seat'])
