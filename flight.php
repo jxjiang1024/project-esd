@@ -194,47 +194,24 @@
         let serviceURL = "http://127.0.0.1:8003/flight/findFlights";// Input your Microservice URL
         // getRoutes(serviceURL);
 
-        
-        let tripCheck = <?php echo $_POST['check']?>;
-        
-        if(parseInt(tripCheck) == 0){
-
-            let two_way_from = <?php echo $_POST['two-way-from']?>;
-            let two_way_to = <?php echo $_POST["two-way-to"]?>;
-            let two_way_startdate = <?php echo $_POST["two-way-startdate"]?>;
-            let two_way_enddate = <?php echo $_POST["two-way-enddate"]?>;
-            let isReturn = TRUE;
-        }else{
-            let one_way_from = <?php echo $_POST["one-way-from"]?>;
-            let one_way_to = <?php echo $_POST["one-way-to"]?>;
-            let one_way_date = <?php echo $_POST["one-way-date"]?>;
-            let isReturn = FALSE;
-        }
-
-        // if(two_way_to != NULL  || two_way_to != ""){
-        //     let isReturn = TRUE;
-        // }else{
-        //     let isReturn =FALSE;
-        // }
-        console.log(tripCheck);
-        console.log(one_way_from);
-       
-        let serviceURL = "";// Input your Microservice URL
         check = <?php echo $_POST['check']?>;
         if(parseInt(check) === 0){
             let two_way_end = <?php echo $_POST['two-way-enddate']?>;
             let two_way_start = <?php echo $_POST['two-way-startdate']?>;
             let two_way_to = <?php echo $_POST['two-way-to']?>;
             let two_way_from = <?php echo $_POST['two-way-from']?>;
-            let two_way_NoTravellers = <?php echo $_POST['two-way-NoTravellers']?>
+            let two_way_NoTravellers = <?php echo $_POST['two-way-NoTravellers']?>;
+            let isReturn = TRUE;
         }else{
-            let one_way_date = <?php echo $_POST['one-way-date']?>;
-            let one_way_to = <?php echo $_POST['one-way-to']?>;
-
+            let one_way_from = <?php echo $_POST["one-way-from"]?>;
+            let one_way_to = <?php echo $_POST["one-way-to"]?>;
+            let one_way_date = <?php echo $_POST["one-way-date"]?>;
+            let isReturn = FALSE;
 
         }
         //getRoutes(serviceURL);
-
+        console.log(tripCheck);
+        console.log(one_way_from);
     });
 
     /*async function getRoutes(serviceURL) {
