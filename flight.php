@@ -196,7 +196,10 @@
             let two_way_from = <?php echo $_POST['two-way-from']?>;
             let two_way_NoTravellers = <?php echo $_POST['two-way-NoTravellers']?>
         }else{
-            
+            let one_way_date = <?php echo $_POST['one-way-date']?>;
+            let one_way_to = <?php echo $_POST['one-way-to']?>;
+
+
         }
         //getRoutes(serviceURL);
 
