@@ -69,14 +69,14 @@ class Staff(db.Model):
 
 @app.route("/staff/login/<string:emails>" ,methods=['POST'])
 def check_user(emails):
+    db = SQLAlchemy(app)
     email = emails
     password = request.get_json()
     try:
         records = Staff.query.filter(Staff.email == email).first()
         if(str(records.password) == password['password']):
             countryURL = "https://countryesd.azurewebsites.net/country/"+str(records.country_code)
-            for x in range(2):
-                r = requests.get(countryURL)
+            r = requests.get(countryURL)
             result = json.loads(r.text.lower())
             up = str(records.country_code)
             prep_country = result['country_name']+ " ("+ up.upper() +")"
@@ -94,6 +94,7 @@ def getUserRoleName(role):
 
 @app.route("/staff/check/<string:emails>", methods=['POST'])
 def check_userRights(emails):
+    db = SQLAlchemy(app)
     email = emails
     staff = None
     try:

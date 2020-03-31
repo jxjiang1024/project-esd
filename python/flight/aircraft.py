@@ -48,6 +48,7 @@ def getSpecificAircraft(tail_no,stats):
     stat = stats
     try:
         if(stat == 0):
+            
             aircraft_record = Aircrafts.query.filter(Aircrafts.tail_no == tail).first()
         else:
             tail = "SF"+tail+"%"
