@@ -46,36 +46,8 @@ if (!isset($_SESSION['staff_id'])) {
             $("#error_msg").hide();
             let serviceURL = "http://127.0.0.1:8003/flight/aircrafts";
             getTail(serviceURL);
-
-            // $("#fdsubmit").click(function(){
-            //     $("#error_msg").hide();
-            //     let serviceURL = "http://127.0.0.1:8003/flight/add/flights";
-            //     let flight_no = $("#flight_no").val();
-            //     let flight_departure = $("flight_departure").val();
-            //     let flight_arrival = $("flight_arrival").val();
-            //     let tail_no = $("tail_no").val();
-            //     let econ_sv_price = $("econ_sv_price").val();
-            //     let econ_sv_seat = $("econ_sv_seat").val();
-            //     let econ_stnd_price = $("econ_stnd_price").val();
-            //     let econ_stnd_seat = $("econ_stnd_seat").val();
-            //     let econ_plus_price = $("econ_plus_price").val();
-            //     let econ_plus_seat = $("econ_plus_seat").val();
-            //     let pr_econ_sv_price = $("pr_econ_sv_price").val();
-            //     let pr_econ_sv_seat = $("pr_econ_sv_seat").val();
-            //     let pr_econ_stnd_price = $("pr_econ_stnd_price").val();
-            //     let pr_econ_stnd_seat = $("pr_econ_stnd_price").val();
-            //     let pr_econ_plus_price = $("pr_econ_plus_price").val();
-            //     let pr_econ_plus_seat = $("pr_econ_plus_seat").val();
-            //     let bus_sv_price = $("bus_sv_price").val();
-            //     let bus_sv_seat = $("bus_sv_seat").val();
-            //     let bus_stnd_price = $("bus_stnd_price").val();
-            //     let bus_stnd_seat = $("bus_stnd_seat").val();
-            //     let bus_plus_price = $("bus_plus_price").val();
-            //     let bus_plus_seat = $("bus_plus_seat").val();
-            //     let first_stnd_price = $("first_stnd_price").val();
-            //     let first_stnd_seat = $("first_stnd_seat").val();
-            //     submitForm(serviceURL);
-            // });
+            serviceURL = "http://127.0.0.1:8003/flight/route";
+            getFlight(serviceURL);
         });
 
         async function getTail(serviceURL) {
@@ -101,6 +73,31 @@ if (!isset($_SESSION['staff_id'])) {
                     $("#error_msg").show();
             }
         }
+
+        async function getFlight(serviceURL) {
+            let requestParam = {
+                headers: {"content-type": "charset=UTF-8"},
+                mode: 'cors', // allow cross-origin resource sharing
+                method: 'GET'
+            }
+            try {
+                const response = await fetch(serviceURL, requestParam);
+                const data = await response.json();
+                let flights = data.route;
+                console.log(flights);
+                var row = "";
+                for(const flight of flights){
+                    row += "<option value='" + flight.flight_no + "'>" + flight.flight_no + "</option>";
+                }
+                $("#flight_no").append(row);
+
+            } catch (e) {
+                var errmsg = '<h6 style="color: #c80000;">' + "Error Loading Page" +'</h6>';
+                    $("#msg_error").append(errmsg);
+                    $("#error_msg").show();
+            }
+        }
+        
 
         // async function submitForm(serviceURL){
         //     let requestParam = {
@@ -251,15 +248,15 @@ if (!isset($_SESSION['staff_id'])) {
                     <li><a class="waves-effect waves-dark" href="pages-profile.php" aria-expanded="false"><i
                                     class="mdi mdi-account-check"></i><span class="hide-menu">Profile</span></a>
                     </li>
+                    <li><a class="waves-effect waves-dark" href="add_route.php" aria-expanded="false"><i
+                                    class="mdi mdi-earth"></i><span class="hide-menu">Add More Routes</span></a>
+                    </li>
                     <li><a class="waves-effect waves-dark" href="addflights.php" aria-expanded="false"><i
                                     class="mdi mdi-airplane-takeoff"></i><span
                                     class="hide-menu">Add Fight Details</span></a>
                     </li>
                     <li><a class="waves-effect waves-dark" href="../icon-material.html" aria-expanded="false"><i
                                     class="mdi mdi-emoticon"></i><span class="hide-menu">Icons</span></a>
-                    </li>
-                    <li><a class="waves-effect waves-dark" href="../map-google.html" aria-expanded="false"><i
-                                    class="mdi mdi-earth"></i><span class="hide-menu">Google Map</span></a>
                     </li>
                     <li><a class="waves-effect waves-dark" href="../pages-blank.html" aria-expanded="false"><i
                                     class="mdi mdi-book-open-variant"></i><span class="hide-menu">Blank Page</span></a>
@@ -313,16 +310,27 @@ if (!isset($_SESSION['staff_id'])) {
             <!-- Start Page Content -->
             <!-- ============================================================== -->
             <!-- Row -->
-            <?php
-            if (!empty($_SESSION['spiderweb'])){
-                echo "<h5 style='color: #c80000;'>ERROR!</h5>";
-                echo "<ul style='color: #c80000;'>";
-                foreach($_SESSION["spiderweb"] as $spiders){
-                    echo "<li>".$spiders."</li";
-                } echo "</ul>";
-            }
-            unset($_SESSION["spiderweb"]);
-            ?>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class= "card">
+                        <div class="card-block">
+                            <div class="form-horizontal form-material">
+                            <?php
+                                    if (!empty($_SESSION['spiderweb'])){
+                                        echo "<h5 style='color: #c80000;'>ERROR!</h5>";
+                                        echo "<ul style='color: #c80000;'>";
+                                        foreach($_SESSION["spiderweb"] as $spiders){
+                                            echo "<li>".$spiders."</li";
+                                        } echo "</ul>";
+                                    }
+                                    unset($_SESSION["spiderweb"]);
+                                    ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <form id="comeon" method="post" action="addflightprocess.php">
             
             <div class="row">
@@ -341,9 +349,9 @@ if (!isset($_SESSION['staff_id'])) {
                                 <div class="form-group">
                                     <label for="flight_no" class="col-md-12">Flight Number</label>
                                     <div class="col-md-12">
-                                        <input type="text" placeholder="SFLXXX"
-                                               class="form-control form-control-line" name="flight_no"
-                                               id="flight_no">
+                                        <select placeholder="SFLXXX" id="flight_no"
+                                               class="form-control form-control-line" name="flight_no">
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-inline">

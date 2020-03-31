@@ -310,14 +310,15 @@ def addFlightDetails():
                 economy = int(json_1['econ_sv_seat']) + int(json_1['econ_stnd_seat'])+int(json_1['econ_plus_seat'])
                 pr_economy = int(json_1['pr_econ_sv_seat']) + int(json_1['pr_econ_stnd_seat']) + int(json_1['pr_econ_plus_seat'])
                 business = int(json_1['bus_sv_seat'])+int(json_1['bus_stnd_seat'])+int(json_1['bus_plus_seat'])
-                if(economy> int(aircraftData['econ']) or int(business) > int(aircraftData['business']) or int(pr_economy) > int(aircraftData['pre_econ']) or int(json_1['first'])>int(aircraftData['first'])):
+                first = int(json_1['first_stnd_seat'])
+                if(economy> int(aircraftData['econ']) or int(business) > int(aircraftData['business']) or int(pr_economy) > int(aircraftData['pre_econ']) or int(first)>int(aircraftData['first'])):
                     message = {"result": False, "message":"Seat amount entered Exceeded"}
-                elif (int(economy) < 0 or int(business) < 0 or int(pr_economy) < 0 or int(json_1['first']) < 0):
+                elif (int(economy) < 0 or int(business) < 0 or int(pr_economy) < 0 or int(first) < 0):
                     message = {"result": False, "message":"Seat amount cannot be lower than 0"}
                 else:
-                    route =  Route.query.filter(Route.flight_no == str(json_1['route'])).first()
-                    if(str(json_1['route']) == str(route.flight_no)):
-                        flight = Flight(0,json_1['route'],str(json_1['flight_departure']),str(json_1['flight_arrival']),str(json_1['tail_no']),float(json_1['econ_sv_price']),int(json_1['econ_sv_seat']),float(json_1['econ_stnd_price']),int(json_1['econ_stnd_seat']),float(json_1['econ_plus_price']),int(json_1['econ_plus_seat']),float(json_1['pr_econ_sv_price']),int(json_1['pr_econ_sv_seat']),float(json_1['pr_econ_stnd_price']),int(json_1['pr_econ_stnd_seat']),float(json_1['pr_econ_plus_price']),int(json_1['pr_econ_plus_seat']),float(json_1['bus_sv_price']),int(json_1['bus_sv_seat']),float(json_1['bus_stnd_price']),int(json_1['bus_stnd_seat']),float(json_1['bus_plus_price']),int(json_1['bus_plus_seat']),float(json_1['first_stnd_price']),int(json_1['first']),2)
+                    route =  Route.query.filter(Route.flight_no == str(json_1['flight_no'])).first()
+                    if(str(json_1['flight_no']) == str(route.flight_no)):
+                        flight = Flight(0,json_1['flight_no'],str(json_1['flight_departure']),str(json_1['flight_arrival']),str(json_1['tail_no']),float(json_1['econ_sv_price']),int(json_1['econ_sv_seat']),float(json_1['econ_stnd_price']),int(json_1['econ_stnd_seat']),float(json_1['econ_plus_price']),int(json_1['econ_plus_seat']),float(json_1['pr_econ_sv_price']),int(json_1['pr_econ_sv_seat']),float(json_1['pr_econ_stnd_price']),int(json_1['pr_econ_stnd_seat']),float(json_1['pr_econ_plus_price']),int(json_1['pr_econ_plus_seat']),float(json_1['bus_sv_price']),int(json_1['bus_sv_seat']),float(json_1['bus_stnd_price']),int(json_1['bus_stnd_seat']),float(json_1['bus_plus_price']),int(json_1['bus_plus_seat']),float(json_1['first_stnd_price']),int(json_1['first_stnd_seat']),2)
                         db.session.add(flight)
                         db.session.commit()
                         message = {"result": True,"message":"Data Created"}

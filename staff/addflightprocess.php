@@ -87,13 +87,16 @@ $result = curl_exec($ch);
 curl_close($ch);
 
 //Handle return JSON
-//$result = json_decode($result, true);
-var_dump($result);
-//echo "<br>".var_dump($result)."<br>";
-//var_dump($_SESSION["spiderweb"]);
+$result = json_decode($result, true);
 
-// array_push($_SESSION["spiderweb"], $result["message"]);
-// header("Location: add_route.php");
+$status = $result['result'];
+$msg = $result['message'];
 
+if($status==true){
+    header("Location: addflights-success.php");
+} else {
+    array_push($_SESSION['spiderweb'],$msg);
+    header("Location: addflights.php");
+}
 
 ?>
