@@ -48,13 +48,14 @@ def getSpecificAircraft(tail_no,stats):
     stat = stats
     try:
         if(stat == 0):
+            
             aircraft_record = Aircrafts.query.filter(Aircrafts.tail_no == tail).first()
         else:
             tail = "SF"+tail+"%"
             aircraft_record = Aircrafts.query.filter(Aircrafts.tail_no.like(tail))
-        return jsonify({"aircraft": [aircraft_record.json() for aircraft_record in aircraft_record],"result":True})
+        return {"aircraft": [aircraft_record.json() for aircraft_record in aircraft_record],"result":True}
     except Exception:
         traceback.print_exc()
-        return jsonify({"results":False,"message":"Database Error"})
+        return {"results":False,"message":"Database Error"}
 
 

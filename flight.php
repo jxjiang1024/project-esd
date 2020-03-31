@@ -119,7 +119,7 @@
                     <th>Arrival Airport</th>
                     <th>Depature Time </th>
                     <th>Availability</th>
-                    
+
                 </thead>
             </table>
             </div> -->
@@ -219,10 +219,22 @@
         console.log(tripCheck);
         console.log(one_way_from);
        
+        let serviceURL = "";// Input your Microservice URL
+        check = <?php echo $_POST['check']?>;
+        if(parseInt(check) === 0){
+            let two_way_end = <?php echo $_POST['two-way-enddate']?>;
+            let two_way_start = <?php echo $_POST['two-way-startdate']?>;
+            let two_way_to = <?php echo $_POST['two-way-to']?>;
+            let two_way_from = <?php echo $_POST['two-way-from']?>;
+            let two_way_NoTravellers = <?php echo $_POST['two-way-NoTravellers']?>
+        }else{
+            
+        }
+        //getRoutes(serviceURL);
 
     });
 
-    async function getRoutes(serviceURL) {
+    /*async function getRoutes(serviceURL) {
         let requestParam = {
             headers: {"content-type": "charset=UTF-8"},
             mode: 'cors', // allow cross-origin resource sharing
@@ -238,7 +250,7 @@
             console.log(e);
 
         }
-    }
+    }*/
 
 
 
