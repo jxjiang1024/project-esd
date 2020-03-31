@@ -32,13 +32,13 @@ def receiveOrderError():
     channel.start_consuming() # an implicit loop waiting to receive messages; it doesn't exit by default. Use Ctrl+C in the command window to terminate it.
 
 def callback(channel, method, properties, body): # required signature for the callback; no return
-    print("Received an order error by " + __file__)
-    processOrderError(json.loads(body))
+    print("Received a payment error by " + __file__)
+    processPaymentError(json.loads(body))
     print() # print a new line feed
 
-def processOrderError(order):
-    print("Processing an order error:")
-    print(order)
+def processPaymentError(payment):
+    print("Processing a payment error:")
+    print(payment)
 
 
 if __name__ == "__main__":  # execute this program only if it is run as a script (not by 'import')

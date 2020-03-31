@@ -1,60 +1,80 @@
 <!DOCTYPE HTML>
+
 <html>
-	<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Tour Template</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="" />
-	<meta name="keywords" content="" />
-	<meta name="author" content="" />
+  
+<head>
+<?php
+session_start();
+?>
 
-  <!-- Facebook and Twitter integration -->
-	<meta property="og:title" content=""/>
-	<meta property="og:image" content=""/>
-	<meta property="og:url" content=""/>
-	<meta property="og:site_name" content=""/>
-	<meta property="og:description" content=""/>
-	<meta name="twitter:title" content="" />
-	<meta name="twitter:image" contnt="" />
-	<meta name="twitter:url" content="" />
-	<meta name="twitter:card" content="" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>View Flights</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <meta name="author" content=""/>
 
-	<link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet">
-	
-	<!-- Animate.css -->
-	<link rel="stylesheet" href="css/animate.css">
-	<!-- Icomoon Icon Fonts-->
-	<link rel="stylesheet" href="css/icomoon.css">
-	<!-- Bootstrap  -->
-	<link rel="stylesheet" href="css/bootstrap.css">
+    <!-- Facebook and Twitter integration -->
+    <meta property="og:title" content=""/>
+    <meta property="og:image" content=""/>
+    <meta property="og:url" content=""/>
+    <meta property="og:site_name" content=""/>
+    <meta property="og:description" content=""/>
+    <meta name="twitter:title" content=""/>
+    <meta name="twitter:image" content=""/>
+    <meta name="twitter:url" content=""/>
+    <meta name="twitter:card" content=""/>
 
-	<!-- Magnific Popup -->
-	<link rel="stylesheet" href="css/magnific-popup.css">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet">
 
-	<!-- Flexslider  -->
-	<link rel="stylesheet" href="css/flexslider.css">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="css/animate.css">
+    <!-- Icomoon Icon Fonts-->
+    <link rel="stylesheet" href="css/icomoon.css">
+    <!-- Bootstrap  -->
+    <link rel="stylesheet" href="css/bootstrap.css">
 
-	<!-- Owl Carousel -->
-	<link rel="stylesheet" href="css/owl.carousel.min.css">
-	<link rel="stylesheet" href="css/owl.theme.default.min.css">
-	
-	<!-- Date Picker -->
-	<link rel="stylesheet" href="css/bootstrap-datepicker.css">
-	<!-- Flaticons  -->
-	<link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+    <!-- Magnific Popup -->
+    <link rel="stylesheet" href="css/magnific-popup.css">
 
-	<!-- Theme style  -->
-	<link rel="stylesheet" href="css/style.css">
+    <!-- Flexslider  -->
+    <link rel="stylesheet" href="css/flexslider.css">
 
-	<!-- Modernizr JS -->
-	<script src="js/modernizr-2.6.2.min.js"></script>
-	<!-- FOR IE9 below -->
-	<!--[if lt IE 9]>
-	<script src="js/respond.min.js"></script>
-	<![endif]-->
+    <!-- Owl Carousel -->
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
 
-	</head>
+    <!-- Date Picker -->
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <!-- Flaticons  -->
+    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+
+    <!-- Theme style  -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Modernizr JS -->
+    <script src="js/modernizr-2.6.2.min.js"></script>
+    <!-- FOR IE9 below -->
+    <!--[if lt IE 9]>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Latest compiled and minified JavaScript -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+            integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+            crossorigin="anonymous"></script>
+
+    <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+            crossorigin="anonymous"></script>
+</head>
 	<body>
 		
 	<div class="colorlib-loader"></div>
@@ -81,22 +101,43 @@
     </aside>
               
 		<div id="colorlib-reservation">
-     
 						<div class="tab-content">
+              <div class="col-md-1">
+                <div class="colorlib-form">
+                  <br>
+                 <label for="title"> TTILE:</label>
+                      <div class="form-field">
+                        <select name="title" id="title" class="form-control">
+                          <option value="#">MR</option>
+                          <option value="#">MRS</option>
+                          <option value="#">MS</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+              
 							<div id="flight" class="tab-pane fade in active">
 								<form method="post" class="colorlib-form">
 				              	<div class="row">
 				              	 <div class="col-md-3">
 				              	 	<div class="form-group">
-				                    <label for="date">First Name:</label>
+				                    <label for="fname">First Name:</label>
 				                    <div class="form-field">
 				                      <input type="text" id="firstname" class="form-control" placeholder="First Name">
 				                    </div>
 				                  </div>
-				              	 </div>
-                         <div class="col-md-2">
+                         </div>
+                         <div class="col-md-3">
                           <div class="form-group">
-                           <label for="date">Last Name:</label>
+                           <label for="mname">Middle Name:</label>
+                           <div class="form-field">
+                             <input type="text" id="midname" class="form-control" placeholder="Middle Name">
+                           </div>
+                         </div>
+                        </div>
+                         <div class="col-md-3">
+                          <div class="form-group">
+                           <label for="lname">Last Name:</label>
                            <div class="form-field">
                              <input type="text" id="lastname" class="form-control" placeholder="Last Name">
                            </div>
@@ -104,7 +145,7 @@
                         </div>
 				                <div class="col-md-2">
                           <div class="form-group">
-                           <label for="date"> BIRTHDAY:</label>
+                           <label for="bday"> BIRTHDAY:</label>
                                 <div class="form-field">
                                   <i class="icon icon-arrow-down3"></i>
                                   <select name="day" id="day" class="form-control">
@@ -174,16 +215,8 @@
                            </div>
                          </div>
                         </div>
-                        <div class="col-md-2">
-                          <div class="form-group">
-                           <label for="date">Nationality:</label>
-                           <div class="form-field">
-                             <input type="text" id="ntly" class="form-control" placeholder="Nationality">
-                           </div>
-                         </div>
-                        </div>
 				                <div class="col-md-2">
-                          <a href="checkout.html" class="btn btn-primary btn-block">Proceed to Checkout</a>
+                          <a href="checkout.html" id="details_submit" class="btn btn-primary btn-block">Proceed to checkout<a>
 				                </div>
 				              </div>
 				            </form>
@@ -217,26 +250,49 @@
 	<!-- Main -->
 	<script src="js/main.js"></script>
 
-	</body>
-    </form>
-    <script>
-      $('#submit').click(async () => {
-          var Firstname = $('#firstname').val();
-          var Lastname = $('#lastname').val();
-          var Date = $('#day').val();
-          var Month = $('#month').val();
-          var Year=$('#year').val();
-          var Ntly= $('#ntly').val();
+  </body>
+  <script>
+    $(document).ready(function () {
+      $("#details_submit").click(function () {
 
-          if (!Firstname || !Lastname || !Date || !Month || !Year || !NoOfTravellers) {
-              alert("Please enter valid inputs");
-              return;
-          }
-          
-  });
-  </script>
+        let serviceURL = "";  //----------->FILL THIS 
+        let firstname = $("#firsname").val();
+        let midname = $("#midname").val();
+        let lastname = $("#lastname").val();
+        let title = $("#title").val();
+
+    });
+    $(async () => {
+                    try {
+                        const response =
+                            await fetch(
+                                serviceURL, {
+                                    headers: {"Content-Type": "application/json"},
+                                    method: 'POST',
+                                    mode: 'cors',
+                                    body: JSON.stringify({first_name:firstname,last_name:lastname,middle_name:midname,prefix:title})
+                                }
+                           );
+            const data = await response.json();
+
+            if (data.result == true) {
+                            $.post("personal_details.php", {
+                                "first_name": data.first_name,
+                                "middle_name":data.middle_name
+                                "last_name": data.last_name,
+                                "prefix": data.prefix,
+                              });
+            console.log(data) 
+        }
+        catch (e) {
+            console.log(e);
+
+        }
+    }
+  }
+  }
 
 
-</body>
+</script>
 
 </html>

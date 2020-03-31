@@ -1,5 +1,8 @@
 <!DOCTYPE HTML>
 <html>
+	<?php
+	session_start();
+	?>
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -87,7 +90,7 @@
 				              	<div class="row">
 				              	 <div class="col-md-3">
 				              	 	<div class="form-group">
-				                    <label for="date">Street Address:</label>
+				                    <label for="street">Street Address:</label>
 				                    <div class="form-field">
 				                      <input type="text" id="street" class="form-control" placeholder="Street Name">
 				                    </div>
@@ -95,7 +98,7 @@
 				              	 </div>
                          <div class="col-md-2">
                           <div class="form-group">
-                           <label for="date">Town/City:</label>
+                           <label for="town">Town/City:</label>
                            <div class="form-field">
                              <input type="text" id="town" class="form-control" placeholder="Town/City">
                            </div>
@@ -103,7 +106,7 @@
                         </div>
                         <div class="col-md-2">
                           <div class="form-group">
-                           <label for="date">Country:</label>
+                           <label for="country">Country:</label>
                            <div class="form-field">
                              <input type="text" id="country" class="form-control" placeholder="Country">
                            </div>
@@ -111,7 +114,7 @@
                         </div>
                         <div class="col-md-2">
                           <div class="form-group">
-                           <label for="date">Zip/State Code:</label>
+                           <label for="state">Zip/State Code:</label>
                            <div class="form-field">
                              <input type="text" id="zip" class="form-control" placeholder="Zip/State Code">
                            </div>
@@ -131,7 +134,7 @@
                                   </div>
                                 </div>
 				                <div class="col-md-2">
-                          <a href="" class="btn btn-primary btn-block">Confirm Booking!</a>
+                          <a href="" id="checkout "class="btn btn-primary btn-block">Confirm Booking!</a>
 				                </div>
 				              </div>
 				            </form>
@@ -166,22 +169,40 @@
 	<script src="js/main.js"></script>
 
 	</body>
-    </form>
     <script>
-      $('#submit').click(async () => {
-          var Firstname = $('#firstname').val();
-          var Lastname = $('#lastname').val();
-          var Date = $('#day').val();
-          var Month = $('#month').val();
-          var Year=$('#year').val();
-          var Ntly= $('#ntly').val();
+      $(document).ready(function () {
+      $("#checkout").click(function () {
 
-          if (!Firstname || !Lastname || !Date || !Month || !Year || !NoOfTravellers) {
-              alert("Please enter valid inputs");
-              return;
-          }
-          
-  });
+        let serviceURL = "";  //----------->FILL THIS 
+        let payment = $("#payment").val();
+    });
+    $(async () => {
+                    try {
+                        const response =
+                            await fetch(
+                                serviceURL, {
+                                    headers: {"Content-Type": "application/json"},
+                                    method: 'POST',
+                                    mode: 'cors',
+                                    body: JSON.stringify({payment_type:payment})
+                                }
+                           );
+            const data = await response.json();
+
+            if (data.result == true) {
+                            $.post("personal_details.php", {
+                                "payment_type": data.payment,
+        
+                              });
+            console.log(data) 
+        }
+        catch (e) {
+            console.log(e);
+
+        }
+    }
+  }
+  }
   </script>
 
 
