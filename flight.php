@@ -193,25 +193,6 @@
     $(document).ready(function () {
         let serviceURL = "http://127.0.0.1:8003/flight/findFlights";// Input your Microservice URL
         // getRoutes(serviceURL);
-
-        check = <?php echo $_POST['check']?>;
-        if(parseInt(check) === 0){
-            let two_way_end = <?php echo $_POST['two-way-enddate']?>;
-            let two_way_start = <?php echo $_POST['two-way-startdate']?>;
-            let two_way_to = <?php echo $_POST['two-way-to']?>;
-            let two_way_from = <?php echo $_POST['two-way-from']?>;
-            let two_way_NoTravellers = <?php echo $_POST['two-way-NoTravellers']?>;
-            let isReturn = TRUE;
-        }else{
-            let one_way_from = <?php echo $_POST["one-way-from"]?>;
-            let one_way_to = <?php echo $_POST["one-way-to"]?>;
-            let one_way_date = <?php echo $_POST["one-way-date"]?>;
-            let isReturn = FALSE;
-
-        }
-        //getRoutes(serviceURL);
-        console.log(tripCheck);
-        console.log(one_way_from);
        
         //let serviceURL = "";// Input your Microservice URL
         let check = <?php echo $_POST['check']?>;
