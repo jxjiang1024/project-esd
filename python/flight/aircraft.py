@@ -48,7 +48,6 @@ def getSpecificAircraft(tail_no,stats):
     stat = stats
     try:
         if(stat == 0):
-            
             aircraft_record = Aircrafts.query.filter(Aircrafts.tail_no == tail).first()
             return{"result":True,"tail_no":aircraft_record.tail_no,"model":aircraft_record.model,"manufacturer":aircraft_record.manufacturer,"econ":aircraft_record.econ,"pre_econ":aircraft_record.pre_econ,"business":aircraft_record.business,"first":aircraft_record.first,"last_maintained":aircraft_record.last_maintained}
         else:
