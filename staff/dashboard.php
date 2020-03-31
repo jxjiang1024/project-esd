@@ -119,7 +119,7 @@ if (!isset($_SESSION['staff_id'])) {
                     let departureMonth = departureDate.getMonth()+1;
                     let arrivalMonth = arrivalDate.getMonth()+1;
                     eachRow =
-                        "<td>" + listFlight.aircraft_tail_no + "</td>" +
+                        "<td>" + listFlight.tail_no + "</td>" +
                         "<td>" + listFlight.economy_seats + "</td>" +
                         "<td>" + listFlight.premium_economy_seats + "</td>" +
                         "<td>" + listFlight.business_seats + "</td>" +
