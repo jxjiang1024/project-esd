@@ -119,6 +119,7 @@
                     <th>Arrival Airport</th>
                     <th>Depature Time </th>
                     <th>Availability</th>
+
                 </thead>
             </table>
             </div> -->
@@ -186,7 +187,38 @@
 
 </body>
 <script>
+
+
+    
     $(document).ready(function () {
+        let serviceURL = "http://127.0.0.1:8003/flight/findFlights";// Input your Microservice URL
+        // getRoutes(serviceURL);
+
+        
+        let tripCheck = <?php echo $_POST['check']?>;
+        
+        if(parseInt(tripCheck) == 0){
+
+            let two_way_from = <?php echo $_POST['two-way-from']?>;
+            let two_way_to = <?php echo $_POST["two-way-to"]?>;
+            let two_way_startdate = <?php echo $_POST["two-way-startdate"]?>;
+            let two_way_enddate = <?php echo $_POST["two-way-enddate"]?>;
+            let isReturn = TRUE;
+        }else{
+            let one_way_from = <?php echo $_POST["one-way-from"]?>;
+            let one_way_to = <?php echo $_POST["one-way-to"]?>;
+            let one_way_date = <?php echo $_POST["one-way-date"]?>;
+            let isReturn = FALSE;
+        }
+
+        // if(two_way_to != NULL  || two_way_to != ""){
+        //     let isReturn = TRUE;
+        // }else{
+        //     let isReturn =FALSE;
+        // }
+        console.log(tripCheck);
+        console.log(one_way_from);
+       
         let serviceURL = "";// Input your Microservice URL
         check = <?php echo $_POST['check']?>;
         if(parseInt(check) === 0){
@@ -210,17 +242,44 @@
             headers: {"content-type": "charset=UTF-8"},
             mode: 'cors', // allow cross-origin resource sharing
             method: 'POST',
-            body: JSON.stringify({password: password}) //Please prepare your json body string
-        }
+            body: JSON.stringify({departureAirport: one_way_from, arrivalAirport: one_way_to, depatureDate: one_way_date, isReturn: isReturn})
+        };
         try{
+
             const response = await fetch(serviceURL, requestParam);
             const data = await response.json();
-            console.log(data) // Check for return
+            console.log(data); // Check for return
         }catch (e) {
             console.log(e);
 
         }
     }*/
+
+
+
+    // $(document).ready(function () {
+    //     let serviceURL = "";// Input your Microservice URL
+    //     getRoutes(serviceURL);
+
+    // });
+
+    // async function getRoutes(serviceURL) {
+    //     let requestParam = {
+    //         headers: {"content-type": "charset=UTF-8"},
+    //         mode: 'cors', // allow cross-origin resource sharing
+    //         method: 'POST',
+    //         body: JSON.stringify({password: password}) //Please prepare your json body string
+    //     }
+    //     try{
+    //         const response = await fetch(serviceURL, requestParam);
+    //         const data = await response.json();
+    //         console.log(data) // Check for return
+    //     }catch (e) {
+    //         console.log(e);
+
+    //     }
+    // }
+
 
 
 </script>
