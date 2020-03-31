@@ -100,11 +100,11 @@
         <div class="container">
             <div>
                 <?php
-                if (isset($_POST["two-way-from"]) && isset($_POST["two-way-to"]) && isset($_POST["two-way-startdate"]) && isset($_POST["two-way-enddate"])) {
-                    echo "<h2>You have searched a flight from " . $_POST["two-way-from"] . " to " . $_POST["two-way-to"] . "</h2>";
-                    echo "<h2>From " . $_POST["two-way-startdate"] . " to " . $_POST["two-way-enddate"] . "</h2>";
-                } elseif (isset($_POST["one-way-from"]) && isset($_POST["one-way-to"]) && isset($_POST["one-way-date"])) {
-                    echo "<h2>You have searched a flight from " . $_POST["one-way-from"] . " to " . $_POST["one-way-to"] . " on " . $_POST["one-way-date"] . "</h2>";
+                if (isset($_POST["from"]) && isset($_POST["to"]) && isset($_POST["start_date"]) && isset($_POST["end_date"])) {
+                    echo "<h2>You have searched a flight from " . $_POST["from"] . " to " . $_POST["to"] . "</h2>";
+                    echo "<h2>From " . $_POST["start_date"] . " to " . $_POST["end_date"] . "</h2>";
+                } elseif (isset($_POST["from"]) && isset($_POST["to"]) && isset($_POST["start_date"])) {
+                    echo "<h2>You have searched a flight from " . $_POST["from"] . " to " . $_POST["to"] . " on " . $_POST["start_date"] . "</h2>";
                 } else {
                     header("Location: index.html");
                 }
@@ -212,6 +212,15 @@
         //getRoutes(serviceURL);
         console.log(tripCheck);
         console.log(one_way_from);
+       
+        //let serviceURL = "";// Input your Microservice URL
+        let check = <?php echo $_POST['check']?>;
+        let start_date = <?php echo $_POST['start_date']?>;
+        let end_date = <?php echo $_POST['end_date']?>;
+        let two_way_to = <?php echo $_POST['to']?>;
+        let two_way_from = <?php echo $_POST['from']?>;
+        let two_way_NoTravellers = <?php echo $_POST['travellers']?>
+
     });
 
     /*async function getRoutes(serviceURL) {

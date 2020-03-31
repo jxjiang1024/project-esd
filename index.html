@@ -252,7 +252,7 @@
 				              	 	<div class="form-group">
 				                    <label for="date">Where:</label>
 				                    <div class="form-field">
-				                      <input type="text" id="two-way-from" name="two-way-from" class="form-control" placeholder="Search Location">
+				                      <input type="text" id="two-way-from" name="from" class="form-control" placeholder="Search Location">
 				                    </div>
 				                  </div>
 								</div>
@@ -260,7 +260,7 @@
 									<div class="form-group">
 								 <label for="date">To:</label>
 								 <div class="form-field">
-								   <input type="text" id="two-way-to" name="two-way-to" class="form-control" placeholder="Search Location">
+								   <input type="text" id="two-way-to" name="to" class="form-control" placeholder="Search Location">
 								 </div>
 							   </div>
 								</div>
@@ -269,7 +269,7 @@
 				                    <label for="date">Depart</label>
 				                    <div class="form-field">
 				                      <i class="icon icon-calendar2"></i>
-				                      <input type="text" id="two-way-startdate" name="two-way-startdate" class="form-control date" placeholder="Select date">
+				                      <input type="text" id="two-way-startdate" name="start_date" class="form-control date" placeholder="Select date">
 				                    </div>
 				                  </div>
 				                </div>
@@ -278,7 +278,7 @@
 				                    <label for="date">Return</label>
 				                    <div class="form-field">
 				                      <i class="icon icon-calendar2"></i>
-				                      <input type="text" id="two-way-enddate" name="two-way-enddate" class="form-control date" placeholder="Select date">
+				                      <input type="text" id="two-way-enddate" name="end_date" class="form-control date" placeholder="Select date">
 				                    </div>
 				                  </div>
 				                </div>
@@ -287,7 +287,7 @@
 									<label for="guests">Guest</label>
 
 				                    <div class="form-field">
-										<input type="number" class="form-control" id="two-way-NoTravellers" name="two-way-NoTravellers" >
+										<input type="number" class="form-control" id="travellers" name="travellers" >
 
 				                    </div>
 				                  </div>
@@ -308,7 +308,7 @@
 								   <div class="form-group">
 								<label for="date">Where:</label>
 								<div class="form-field">
-								  <input type="text" id="one-way-from" name="one-way-from" class="form-control" placeholder="Search Location">
+								  <input type="text" id="one-way-from" name="from" class="form-control" placeholder="Search Location">
 								</div>
 							  </div>
 							</div>
@@ -316,7 +316,7 @@
 								<div class="form-group">
 							 <label for="date">To:</label>
 							 <div class="form-field">
-							   <input type="text" id="one-way-to" name="one-way-to" class="form-control" placeholder="Search Location">
+							   <input type="text" id="one-way-to" name="to" class="form-control" placeholder="Search Location">
 							 </div>
 						   </div>
 							</div>
@@ -325,9 +325,10 @@
 								<label for="date">Depart</label>
 								<div class="form-field">
 								  <i class="icon icon-calendar2"></i>
-								  <input type="text" id="one-way-date" name="one-way-date" class="form-control date" placeholder="Select date">
+								  <input type="text" id="one-way-date" name="start_date" class="form-control date" placeholder="Select date">
 								</div>
 							  </div>
+								<input type="hidden"  name="end_date" value =""  >
 							</div>
 							
 							<div class="col-md-3">
@@ -335,7 +336,7 @@
 								  <label for="guests">Guest</label>
 <!-- number of travellers may abandon 								 -->
 								  <div class="form-field">
-									  <input type="number" class="form-control" id="one-way-NoTravellers" name="one-way-NoTravellers" >
+									  <input type="number" class="form-control" id="one-way-NoTravellers" name="travellers" >
 
 								  </div>
 								</div>

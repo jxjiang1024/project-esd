@@ -298,7 +298,7 @@ def get_all_aircrafts():
 @app.route("/flight/add/flights",methods=['POST'])
 def addFlightDetails():
     json_1 = request.get_json()
-    staffURL = "http://localhost:8001/staff/check/"+json_1['email']
+    staffURL = "http://localhost:8001/staff/check/"+str(json_1['email'])
     r = requests.post(staffURL, json = json_1)
     result = json.loads(r.text.lower())
     if(result['result'] == True):
