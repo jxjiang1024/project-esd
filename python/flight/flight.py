@@ -305,8 +305,9 @@ def addFlightDetails():
         ## Check if User is valid
         if(result['role'] == 999 or result['role'] == 2):
             try:
-                tail_no = "SF"+str(json_1['tail_no'])
-                aircraftData = aircraft.getSpecificAircraft(tail_no,0)
+                tail_no = str(json_1['tail_no'])
+                aircraft_record = aircraft.getSpecificAircraft(tail_no,0)
+                #aircraftData = aircraft_record.json() aircraft_record in aircraft_record
                 economy = int(json_1['econ_sv_seat']) + int(json_1['econ_stnd_seat'])+int(json_1['econ_plus_seat'])
                 pr_economy = int(json_1['pr_econ_sv_seat']) + int(json_1['pr_econ_stnd_seat']) + int(json_1['pr_econ_plus_seat'])
                 business = int(json_1['bus_sv_seat'])+int(json_1['bus_stnd_seat'])+int(json_1['bus_plus_seat'])

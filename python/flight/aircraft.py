@@ -52,9 +52,7 @@ def getSpecificAircraft(tail_no,stats):
         else:
             tail = "SF"+tail+"%"
             aircraft_record = Aircrafts.query.filter(Aircrafts.tail_no.like(tail))
-        return {"aircraft": [aircraft_record.json() for aircraft_record in aircraft_record],"result":True}
+        return {"aircraft": aircraft_record,"result":True}
     except Exception:
         traceback.print_exc()
         return {"results":False,"message":"Database Error"}
-
-

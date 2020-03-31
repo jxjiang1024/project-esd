@@ -2,6 +2,7 @@
 session_start();
 $_SESSION["spiderweb"] = [];
 
+$email = $_SESSION['email'];
 $flight_no = $_POST["flight_no"];
 $flight_departure = $_POST["flight_departure"];
 $flight_arrival = $_POST["flight_arrival"];
@@ -32,6 +33,8 @@ echo "Posted: ";
 //var_dump($_POST);
 
 $new_flight = array(
+
+    "email" => $email,
     "flight_no" => $flight_no,
     "flight_departure" => $flight_departure,
     "flight_arrival" => $flight_arrival,
