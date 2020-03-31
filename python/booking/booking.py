@@ -151,7 +151,7 @@ def create_ticketing(data,id):
         ticket['suffix'] = data['suffix']
     ticket['last_name'] = data['last_name']
     if(data['ff_id'] == "" or data['ff_id'] == None):
-        ticket['middle_name'] = ""
+        ticket['ff_id'] = ""
     else:
         ticket['ff_id'] = data['ff_id']
     return ticket
@@ -194,21 +194,11 @@ def check_payment():
             channel = connection.channel()
             # # set up the exchange if the exchange doesn't exist
             exchangename="booking"
-            corrid = str(uuid.uuid4())
-            row = {"ticket_id": tickets["payment_id"], "correlation_id": corrid}
-            csvheaders = ["payment_id", "correlation_id","result"]
             message = json.dumps(tickets, default=str)
-            with open("corrids.csv", "a+", newline='') as corrid_file: # 'with' statement in python auto-closes the file when the block of code finishes, even if some exception happens in the middle
-                csvwriter = csv.DictWriter(corrid_file, csvheaders)
-                csvwriter.writerow(row)
-            replyqueuename = "ticketing.reply"
             channel.queue_declare(queue='ticketing', durable=True) # make sure the queue used by Shipping exist and durable
             channel.queue_bind(exchange=exchangename, queue='ticketing', routing_key='booking.ticketing')
-            channel.basic_publish(exchange=exchangename, routing_key="shipping.order", body=message,
-            properties=pika.BasicProperties(delivery_mode = 2, # make message persistent within the matching queues until it is received by some receiver (the matching queues have to exist and be durable and bound to the exchange, which are ensured by the previous two api calls)
-                reply_to=replyqueuename, # set the reply queue which will be used as the routing key for reply messages
-                correlation_id=corrid # set the correlation id for easier matching of replies
-                )
+            channel.basic_publish(exchange=exchangename, routing_key="booking.ticketing", body=message,
+                properties=pika.BasicProperties(delivery_mode = 2) # make message persistent within the matching queues until it is received by some receiver (the matching queues have to exist and be durable and bound to the exchange)
             )
             return jsonify({"result":True,"message":"Ticket will be issued to you shortly"})   
         except Exception:

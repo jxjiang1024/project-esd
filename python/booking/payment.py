@@ -139,7 +139,10 @@ def add_transaction(payment):
     try:
         data = payment
         size = len(Payment.query.all())
-        size+=1
+        if(size == None or size == 0):
+            size = 1
+        else:
+            size+=1
         transaction = Payment(size,str(data['payment_type']),str(data['prefix']),str(data['first_name']),str(data['last_name']),str(data['middle_name']),float(data['amount']),str(data['status']),int(data['last_4_digit']))
 
         db.session.add(transaction)
