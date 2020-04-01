@@ -75,10 +75,6 @@ session_start();
             integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
             crossorigin="anonymous"></script>
 </head>
-<form action="checkout.php" method="post">
-  <input type="text" name="try">
-  <input type="submit">
-</form>
 	<body>
 	<div class="colorlib-loader"></div>
   
