@@ -69,6 +69,7 @@ class Staff(db.Model):
 
 @app.route("/staff/login/<string:emails>" ,methods=['POST'])
 def check_user(emails):
+
     email = emails
     password = request.get_json()
     try:
@@ -94,6 +95,7 @@ def getUserRoleName(role):
 
 @app.route("/staff/check/<string:emails>", methods=['POST'])
 def check_userRights(emails):
+ 
     email = emails
     staff = None
     try:

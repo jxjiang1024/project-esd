@@ -100,11 +100,11 @@
         <div class="container">
             <div>
                 <?php
-                if (isset($_POST["two-way-from"]) && isset($_POST["two-way-to"]) && isset($_POST["two-way-startdate"]) && isset($_POST["two-way-enddate"])) {
-                    echo "<h2>You have searched a flight from " . $_POST["two-way-from"] . " to " . $_POST["two-way-to"] . "</h2>";
-                    echo "<h2>From " . $_POST["two-way-startdate"] . " to " . $_POST["two-way-enddate"] . "</h2>";
-                } elseif (isset($_POST["one-way-from"]) && isset($_POST["one-way-to"]) && isset($_POST["one-way-date"])) {
-                    echo "<h2>You have searched a flight from " . $_POST["one-way-from"] . " to " . $_POST["one-way-to"] . " on " . $_POST["one-way-date"] . "</h2>";
+                if (isset($_POST["from"]) && isset($_POST["to"]) && isset($_POST["start_date"]) && $_POST["end_date"] != "") {
+                    echo "<h2>You have searched a flight from " . $_POST["from"] . " to " . $_POST["to"] . "</h2>";
+                    echo "<h2>From " . $_POST["start_date"] . " to " . $_POST["end_date"] . "</h2>";
+                } elseif (isset($_POST["from"]) && isset($_POST["to"]) && isset($_POST["start_date"])) {
+                    echo "<h2>You have searched a flight from " . $_POST["from"] . " to " . $_POST["to"] . " on " . $_POST["start_date"] . "</h2>";
                 } else {
                     header("Location: index.html");
                 }
@@ -112,16 +112,21 @@
                 ?>
             </div>
 
-            <!-- <div id="results">
-            <table id="go-flight" class='table table-striped' border='1'>
-                <thead>
-                    <th>Deapture Airport</th>
-                    <th>Arrival Airport</th>
-                    <th>Depature Time </th>
-                    <th>Availability</th>
-                </thead>
-            </table>
-            </div> -->
+            <div id="main-container" class="container">
+
+                <table id="go-flight" class='table table-striped' border='1'>
+                    <thead class='thread-dark'>
+                        <tr>
+                            <th>Depature Date</th>
+                            <th>Arrival Date</th>
+                            <th>Price</th>
+                            <th>Availability</th>
+                            <th>Selection</th>
+                        </tr>
+
+                    </thead>
+                </table>
+            </div>
 
 
         </div>
@@ -143,7 +148,7 @@
                             <div class="col-md-12 col-md-offset-0">
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="email" placeholder="Enter your email">
-                                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                                    <button type="submit" class="btn btn-primary" id="subscribe">Subscribe</button>
                                 </div>
                             </div>
                         </div>
@@ -186,10 +191,30 @@
 
 </body>
 <script>
-    $(document).ready(function () {
-        let serviceURL = "";// Input your Microservice URL
-        getRoutes(serviceURL);
 
+    $("subscribe").click(function(){
+        alert("Thank you for your subsription");
+    });
+    
+    $(document).ready(function () {
+        let serviceURL = "http://127.0.0.1:8003/flight/findFlights";// Input your Microservice URL
+        // getRoutes(serviceURL);
+        
+        let check = <?php echo $_POST['check']?>;
+        let start_date = <?php echo $_POST['start_date']?>;
+        if(<?php echo $_POST['end_date']?> !== ""){
+            isReturn = False;
+        }else{
+            let end_date = <?php echo $_POST['end_date']?>;
+            isReturn = True;
+        }
+        
+        let from = <?php echo $_POST['from']?>;
+        let to = <?php echo $_POST['to']?>;
+       
+        let NoTravellers = <?php echo $_POST['travellers']?>
+        
+        console.log();
     });
 
     async function getRoutes(serviceURL) {
@@ -197,17 +222,58 @@
             headers: {"content-type": "charset=UTF-8"},
             mode: 'cors', // allow cross-origin resource sharing
             method: 'POST',
-            body: JSON.stringify({password: password}) //Please prepare your json body string
-        }
+            body: JSON.stringify({departureAirport: from, arrivalAirport: to, depatureDate: start_date, isReturn: isReturn, returnDate: end_date})
+        };
         try{
+
             const response = await fetch(serviceURL, requestParam);
             const data = await response.json();
-            console.log(data) // Check for return
+
+            console.log(data); // Check for return
+            var flights = data.flights;
+            // only showing econs standard 
+            for( const flight of  flights){
+                eachRow = "<td>" + flight.flight_no + "</td>" +
+                        "<td>" + flight.flight_depature + "</td>" +
+                        "<td>" + flight.flight_arrival + "</td>" +
+                        "<td>" + flight.econ_stnd_price+ "</td>" + 
+                        "<td>" + flight.econ_stnd_seat+ "</td>";
+                            
+                rows += "<tbody><tr>" + eachRow + "</tr></tbody>";  
+
+            }
+            $('#go-flight').append(rows);
         }catch (e) {
             console.log(e);
 
         }
     }
+
+
+
+    // $(document).ready(function () {
+    //     let serviceURL = "";// Input your Microservice URL
+    //     getRoutes(serviceURL);
+
+    // });
+
+    // async function getRoutes(serviceURL) {
+    //     let requestParam = {
+    //         headers: {"content-type": "charset=UTF-8"},
+    //         mode: 'cors', // allow cross-origin resource sharing
+    //         method: 'POST',
+    //         body: JSON.stringify({password: password}) //Please prepare your json body string
+    //     }
+    //     try{
+    //         const response = await fetch(serviceURL, requestParam);
+    //         const data = await response.json();
+    //         console.log(data) // Check for return
+    //     }catch (e) {
+    //         console.log(e);
+
+    //     }
+    // }
+
 
 
 </script>

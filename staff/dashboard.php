@@ -119,7 +119,7 @@ if (!isset($_SESSION['staff_id'])) {
                     let departureMonth = departureDate.getMonth()+1;
                     let arrivalMonth = arrivalDate.getMonth()+1;
                     eachRow =
-                        "<td>" + listFlight.aircraft_tail_no + "</td>" +
+                        "<td>" + listFlight.tail_no + "</td>" +
                         "<td>" + listFlight.economy_seats + "</td>" +
                         "<td>" + listFlight.premium_economy_seats + "</td>" +
                         "<td>" + listFlight.business_seats + "</td>" +
@@ -236,14 +236,14 @@ if (!isset($_SESSION['staff_id'])) {
                     <li><a class="waves-effect waves-dark" href="pages-profile.php" aria-expanded="false"><i
                                     class="mdi mdi-account-check"></i><span class="hide-menu">Profile</span></a>
                     </li>
+                    <li><a class="waves-effect waves-dark" href="add_route.php" aria-expanded="false"><i
+                                    class="mdi mdi-earth"></i><span class="hide-menu">Add More Routes</span></a>
+                    </li>
                     <li><a class="waves-effect waves-dark" href="addflights.php" aria-expanded="false"><i
                                     class="mdi mdi-airplane-takeoff"></i><span class="hide-menu">Add Flight Details</span></a>
                     </li>
                     <li><a class="waves-effect waves-dark" href="icon-material.html" aria-expanded="false"><i
                                     class="mdi mdi-emoticon"></i><span class="hide-menu">Icons</span></a>
-                    </li>
-                    <li><a class="waves-effect waves-dark" href="map-google.html" aria-expanded="false"><i
-                                    class="mdi mdi-earth"></i><span class="hide-menu">Google Map</span></a>
                     </li>
                     <li><a class="waves-effect waves-dark" href="pages-blank.html" aria-expanded="false"><i
                                     class="mdi mdi-book-open-variant"></i><span class="hide-menu">Blank Page</span></a>
