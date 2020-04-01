@@ -1,67 +1,75 @@
 <!DOCTYPE HTML>
 <html>
-	<?php
-	session_start();
-	?>
-	<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Tour Template</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="" />
-	<meta name="keywords" content="" />
-	<meta name="author" content="" />
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>View Flights</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <meta name="author" content=""/>
 
-  <!-- Facebook and Twitter integration -->
-	<meta property="og:title" content=""/>
-	<meta property="og:image" content=""/>
-	<meta property="og:url" content=""/>
-	<meta property="og:site_name" content=""/>
-	<meta property="og:description" content=""/>
-	<meta name="twitter:title" content="" />
-	<meta name="twitter:image" contnt="" />
-	<meta name="twitter:url" content="" />
-	<meta name="twitter:card" content="" />
+    <!-- Facebook and Twitter integration -->
+    <meta property="og:title" content=""/>
+    <meta property="og:image" content=""/>
+    <meta property="og:url" content=""/>
+    <meta property="og:site_name" content=""/>
+    <meta property="og:description" content=""/>
+    <meta name="twitter:title" content=""/>
+    <meta name="twitter:image" content=""/>
+    <meta name="twitter:url" content=""/>
+    <meta name="twitter:card" content=""/>
 
-	<link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet">
-	
-	<!-- Animate.css -->
-	<link rel="stylesheet" href="css/animate.css">
-	<!-- Icomoon Icon Fonts-->
-	<link rel="stylesheet" href="css/icomoon.css">
-	<!-- Bootstrap  -->
-	<link rel="stylesheet" href="css/bootstrap.css">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet">
 
-	<!-- Magnific Popup -->
-	<link rel="stylesheet" href="css/magnific-popup.css">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="css/animate.css">
+    <!-- Icomoon Icon Fonts-->
+    <link rel="stylesheet" href="css/icomoon.css">
+    <!-- Bootstrap  -->
+    <link rel="stylesheet" href="css/bootstrap.css">
 
-	<!-- Flexslider  -->
-	<link rel="stylesheet" href="css/flexslider.css">
+    <!-- Magnific Popup -->
+    <link rel="stylesheet" href="css/magnific-popup.css">
 
-	<!-- Owl Carousel -->
-	<link rel="stylesheet" href="css/owl.carousel.min.css">
-	<link rel="stylesheet" href="css/owl.theme.default.min.css">
-	
-	<!-- Date Picker -->
-	<link rel="stylesheet" href="css/bootstrap-datepicker.css">
-	<!-- Flaticons  -->
-	<link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+    <!-- Flexslider  -->
+    <link rel="stylesheet" href="css/flexslider.css">
 
-	<!-- Theme style  -->
-	<link rel="stylesheet" href="css/style.css">
+    <!-- Owl Carousel -->
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
 
-	<!-- Modernizr JS -->
-	<script src="js/modernizr-2.6.2.min.js"></script>
-	<!-- FOR IE9 below -->
-	<!--[if lt IE 9]>
-	<script src="js/respond.min.js"></script>
-	<![endif]-->
+    <!-- Date Picker -->
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <!-- Flaticons  -->
+    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
 
-	</head>
-	<body>
-		
-	<div class="colorlib-loader"></div>
+    <!-- Theme style  -->
+    <link rel="stylesheet" href="css/style.css">
 
+    <!-- Modernizr JS -->
+    <script src="js/modernizr-2.6.2.min.js"></script>
+    <!-- FOR IE9 below -->
+    <!--[if lt IE 9]>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Latest compiled and minified JavaScript -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+            integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+            crossorigin="anonymous"></script>
+
+    <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+            crossorigin="anonymous"></script>
+</head>
+<body>
 	<div id="personal_details">
 		<aside id="colorlib-hero">
 			<div class="flexslider">
@@ -72,7 +80,7 @@
 			   			<div class="row">
 				   			<div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12 slider-text">
 				   				<div class="slider-text-inner text-center">
-				   					<h1>Enter your Billing Adress</h1>
+				   					<h1>Enter your Billing Details</h1>
 				   				</div>
 				   			</div>
 				   		</div>
@@ -81,7 +89,7 @@
           </ul>
 		  	</div>
     </aside>
-              
+              <script>console.log('checkpt 1')</script>
 		<div id="colorlib-reservation">
      
 						<div class="tab-content">
@@ -139,7 +147,7 @@
 				              </div>
 				            </form>
 				         </div>
-
+						 <script>console.log('checkpt 2h')</script>
 				                
 				         
 	<div class="gototop js-top">
@@ -167,46 +175,47 @@
 	<script src="js/jquery.stellar.min.js"></script>
 	<!-- Main -->
 	<script src="js/main.js"></script>
-
-	</body>
-    <script>
-      $(document).ready(function () {
-      $("#checkout").click(function () {
-
-        let serviceURL = "";  //----------->FILL THIS 
-        let payment = $("#payment").val();
-    });
-    $(async () => {
-                    try {
-                        const response =
-                            await fetch(
-                                serviceURL, {
-                                    headers: {"Content-Type": "application/json"},
-                                    method: 'POST',
-                                    mode: 'cors',
-                                    body: JSON.stringify({payment_type:payment})
-                                }
-                           );
-            const data = await response.json();
-
-            if (data.result == true) {
-                            $.post("personal_details.php", {
-                                "payment_type": data.payment,
-        
-                              });
-            console.log(data) 
-        }
-        catch (e) {
-            console.log(e);
-
-        }
-    }
-  }
-  }
-  </script>
-
+	<script>console.log('checkpt 3')</script>
 
 </body>
+<script>
+    $(document).ready(function () {
+      $("#checkout").click(function () {
+        let serviceURL = "http://127.0.0.1:8300/payment/check";
+        let payment = $("#payment").val();
+        let firstname=<?php echo $_POST['firstname']?>;
+        let midname=<?php echo $_POST['midname']?>;
+        let lastname=<?php echo $_POST['lastname']?>;
+        let title=<?php echo $_POST['title']?>;
+		console.log();
+	  })
+    	$(async () => {
+			let requestParam = {
+						headers: {"Content-Type": "application/json"},
+						method: 'POST',
+						mode: 'cors',
+						body: JSON.stringify({first_name:firstname,last_name:lastname,middle_name:midname,prefix:title,payment_type:payment})
+		};
+		try{
+			const response = await fetch(serviceURL, requestParam);
+            const data = await response.json();
+
+      if (data.result == true) {
+					"first_name": data.first_name,
+					"middle_name":data.middle_name
+				  "last_name": data.last_name,
+			 		"prefix": data.prefix,
+				  "payment_type": data.payment,
+			
+			});
+    }
+      console.log(data)
+	});
+			catch (e) {
+				console.log(e);
+			}
+		});
+  </script>
 
 </html>
 
