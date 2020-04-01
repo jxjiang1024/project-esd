@@ -146,6 +146,7 @@ def check_payment():
             if(month < 10):
                 month = "0"+str(month)
             day = today.day
+            day = str(day).zfill(2)
             last_booking = Booking.query.filter(Booking.booking_date == today).order_by(Booking.booking_id.desc()).first()
             if(last_booking != None):
                 bookingID = last_booking.booking_id[11:]

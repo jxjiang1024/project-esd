@@ -11,6 +11,7 @@ import os
 import random
 import pika
 from datetime import date
+import booking
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
@@ -84,20 +85,32 @@ def create_ticket(details):
         tickCode = "SA"
         data = json.loads(details)
         flight_details_id = data['flight_details_id']
+        flight_details_id = str(flight_details_id).zfill(3)
         today = date.today()
         year = today.year
         month = today.month
         if(month < 10):
             month = "0"+str(month)
         day = today.day
+        day = str(day).zfill(2)
         last_tickets = Ticket.query.filter(Ticket.issued_date == today).order_by(Ticket.ticket_id.desc()).first()
-        ticketID = last_tickets.booking_id[10:]
-        #ticket = Ticket(str(size+1),int(data['booking_id']), str(data['prefix']),str(data['first_name']), str(data['last_name']), str(data['middle_name']),str(data['suffix']),str(data['ff_id']))
-
-        #db.session.add(ticket)
-        #db.session.commit()
+        if(last_tickets != None):
+            ticketID = last_tickets.booking_id[10:]
+            ticketID = int(ticketID)+1
+            ticketID = str(ticketID).zfill(5)
+            ticketID = tickCode+flight_details_id+str(day)+str(month)+str(year)+ticketID
+        else:
+            ticketID = 1
+            ticketID = str(ticketID).zfill(5)
+            ticketID = tickCode+flight_details_id+str(day)+str(month)+str(year)+ticketID
+        ticketDetails = Ticket(ticketID,data['booking_id'],data['prefix'],data['first_name'],data['last_name'],data['middle_name'],data['suffix'],data['ff_id'],str(today))
+        db.session.add(ticketDetails)
+        db.session.commit()
+        db.session.close()
         return {"result":True}
     except Exception:
+        db.session.rollback()
+        db.session.close()
         traceback.print_exc()
         return {"result":False}
 
