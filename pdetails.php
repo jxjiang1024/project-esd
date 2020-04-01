@@ -75,6 +75,10 @@ session_start();
             integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
             crossorigin="anonymous"></script>
 </head>
+<form action="checkout.php" method="post">
+  <input type="text" name="try">
+  <input type="submit">
+</form>
 	<body>
 	<div class="colorlib-loader"></div>
   
@@ -111,9 +115,9 @@ session_start();
                  <label for="title"> TTILE:</label>
                       <div class="form-field">
                         <select name="title" id="title" class="form-control">
-                          <option value="#">MR</option>
-                          <option value="#">MRS</option>
-                          <option value="#">MS</option>
+                          <option value="MR">MR</option>
+                          <option value="MRS">MRS</option>
+                          <option value="MS">MS</option>
                         </select>
                       </div>
                     </div>
@@ -126,7 +130,7 @@ session_start();
 				              	 	<div class="form-group">
 				                    <label for="fname">First Name:</label>
 				                    <div class="form-field">
-				                      <input type="text" id="firstname" class="form-control" placeholder="First Name">
+				                      <input type="text" name="firstname"id="firstname" class="form-control" placeholder="First Name">
 				                    </div>
 				                  </div>
                          </div>
@@ -134,7 +138,7 @@ session_start();
                           <div class="form-group">
                            <label for="mname">Middle Name:</label>
                            <div class="form-field">
-                             <input type="text" id="midname" class="form-control" placeholder="Middle Name">
+                             <input type="text" name="midname" id="midname" class="form-control" placeholder="Middle Name">
                            </div>
                          </div>
                         </div>
@@ -142,7 +146,7 @@ session_start();
                           <div class="form-group">
                            <label for="lname">Last Name:</label>
                            <div class="form-field">
-                             <input type="text" id="lastname" class="form-control" placeholder="Last Name">
+                             <input type="text" name="lastname" id="lastname" class="form-control" placeholder="Last Name">
                            </div>
                          </div>
                         </div>
@@ -219,7 +223,7 @@ session_start();
                          </div>
                         </div>
 				                <div class="col-md-2">
-                          <a href="checkout.php" id="details_submit" class="btn btn-primary btn-block">Proceed to checkout<a>
+                          <input type="submit" name="details_submit" id="details_submit" value="Proceed to checkout" class="btn btn-primary btn-block">
 				                </div>
 				              </div>
 				            </form>

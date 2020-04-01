@@ -1,5 +1,19 @@
 <!DOCTYPE HTML>
 <html>
+  <?php
+  if(isset($_POST['title'])){
+    $t=$_POST['title'];
+  }
+  if(isset($_POST['firstname'])){
+    $f=$_POST['firstname'];
+  }
+  if(isset($_POST['midname'])){
+    $m=$_POST['midname'];
+  }
+  if(isset($_POST['lastname'])){
+    $l=$_POST['lastname'];
+  }
+  ?>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -90,7 +104,9 @@
 		  	</div>
     </aside>
               <script>console.log('checkpt 1')</script>
-		<div id="colorlib-reservation">
+
+		
+  <div id="colorlib-reservation">
      
 						<div class="tab-content">
 							<div id="flight" class="tab-pane fade in active">
@@ -142,12 +158,11 @@
                                   </div>
                                 </div>
 				                <div class="col-md-2">
-                          <a href="" id="checkout "class="btn btn-primary btn-block">Confirm Booking!</a>
+                          <input type=submit name="checkout" id="checkout "class="btn btn-primary btn-block"value="Confirm booking!">
 				                </div>
 				              </div>
 				            </form>
 				         </div>
-						 <script>console.log('checkpt 2h')</script>
 				                
 				         
 	<div class="gototop js-top">
@@ -180,13 +195,14 @@
 </body>
 <script>
     $(document).ready(function () {
+
       $("#checkout").click(function () {
         let serviceURL = "http://127.0.0.1:8300/payment/check";
         let payment = $("#payment").val();
-        let firstname=<?php echo $_POST['firstname']?>;
-        let midname=<?php echo $_POST['midname']?>;
-        let lastname=<?php echo $_POST['lastname']?>;
-        let title=<?php echo $_POST['title']?>;
+        let title=$t;
+        let firstname=$f;
+        let midname=$m;
+        let lastname=$l;
 		console.log();
 	  })
     	$(async () => {
@@ -194,27 +210,25 @@
 						headers: {"Content-Type": "application/json"},
 						method: 'POST',
 						mode: 'cors',
-						body: JSON.stringify({first_name:firstname,last_name:lastname,middle_name:midname,prefix:title,payment_type:payment})
+						body: JSON.stringify({
+            first_name:firstname,
+            last_name:lastname,
+            middle_name:midname,
+            prefix:title,
+            payment_type:payment})
 		};
 		try{
 			const response = await fetch(serviceURL, requestParam);
             const data = await response.json();
-
-      if (data.result == true) {
-					"first_name": data.first_name,
-					"middle_name":data.middle_name
-				  "last_name": data.last_name,
-			 		"prefix": data.prefix,
-				  "payment_type": data.payment,
-			
-			});
-    }
-      console.log(data)
-	});
+      console.log(data);
+      }
+      
 			catch (e) {
 				console.log(e);
-			}
-		});
+      }
+    })
+    });
+		
   </script>
 
 </html>
