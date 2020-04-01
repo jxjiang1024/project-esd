@@ -7,9 +7,11 @@ import sys
 import os
 import random
 
+
 # Communication patterns:
 # Use a message-broker with 'direct' exchange to enable interaction
 import pika
+
 
 hostname = "localhost" # default hostname
 port = 5672 # default port
@@ -46,7 +48,7 @@ def callback(channel, method, properties, body): # required signature for the ca
     print() # print a new line feed
 
 def processOrder(order):
-    print("Processing an order:")
+    print("Processing an booking:")
     print(order)
     # Can do anything here. E.g., publish a message to the error handler when processing fails.
     resultstatus = bool(random.getrandbits(1)) # simulate success/failure with a random True or False
