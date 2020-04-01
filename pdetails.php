@@ -76,9 +76,8 @@ session_start();
             crossorigin="anonymous"></script>
 </head>
 	<body>
-		
 	<div class="colorlib-loader"></div>
-
+  
 	<div id="personal_details">
 		<aside id="colorlib-hero">
 			<div class="flexslider">
@@ -101,9 +100,13 @@ session_start();
     </aside>
               
 		<div id="colorlib-reservation">
+      
 						<div class="tab-content">
+            <div id="title"class="colorlib-form">
+            <form method="post" action="checkout.php"> 
+              <div class="row">
               <div class="col-md-1">
-                <div class="colorlib-form">
+              <div class="form-group">
                   <br>
                  <label for="title"> TTILE:</label>
                       <div class="form-field">
@@ -216,7 +219,7 @@ session_start();
                          </div>
                         </div>
 				                <div class="col-md-2">
-                          <a href="checkout.html" id="details_submit" class="btn btn-primary btn-block">Proceed to checkout<a>
+                          <a href="checkout.php" id="details_submit" class="btn btn-primary btn-block">Proceed to checkout<a>
 				                </div>
 				              </div>
 				            </form>
@@ -251,48 +254,4 @@ session_start();
 	<script src="js/main.js"></script>
 
   </body>
-  <script>
-    $(document).ready(function () {
-      $("#details_submit").click(function () {
-
-        let serviceURL = "";  //----------->FILL THIS 
-        let firstname = $("#firsname").val();
-        let midname = $("#midname").val();
-        let lastname = $("#lastname").val();
-        let title = $("#title").val();
-
-    });
-    $(async () => {
-                    try {
-                        const response =
-                            await fetch(
-                                serviceURL, {
-                                    headers: {"Content-Type": "application/json"},
-                                    method: 'POST',
-                                    mode: 'cors',
-                                    body: JSON.stringify({first_name:firstname,last_name:lastname,middle_name:midname,prefix:title})
-                                }
-                           );
-            const data = await response.json();
-
-            if (data.result == true) {
-                            $.post("personal_details.php", {
-                                "first_name": data.first_name,
-                                "middle_name":data.middle_name
-                                "last_name": data.last_name,
-                                "prefix": data.prefix,
-                              });
-            console.log(data) 
-        }
-        catch (e) {
-            console.log(e);
-
-        }
-    }
-  }
-  }
-
-
-</script>
-
 </html>
