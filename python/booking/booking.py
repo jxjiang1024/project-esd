@@ -128,6 +128,7 @@ def create_ticketing(data,id):
         ticket['ff_id'] = ""
     else:
         ticket['ff_id'] = data['ff_id']
+    ticket["flight_details_id"] = data['flight_details_id']
     return ticket
 
 
