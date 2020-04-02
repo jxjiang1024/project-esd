@@ -117,11 +117,13 @@
                 <table id="go-flight" class='table table-striped' border='1'>
                     <thead class='thread-dark'>
                     <tr>
-                        <th>Depature Date</th>
-                        <th>Arrival Date</th>
+                        <th>Flight No</th>
+                        <th>Depature time</th>
+                        <th>Arrival time</th>
                         <th>Price</th>
                         <th>Availability</th>
                         <th>Selection</th>
+                    
                     </tr>
 
                     </thead>
