@@ -7,8 +7,10 @@ import requests
 import traceback
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://esd:456852@database-1.cbchzgfp3eq7.us-east-1.rds.amazonaws.com:3306/fms'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config["SQLALCHEMY_POOL_RECYCLE"] = 299
+app.config['CONN_MAX_AGE'] = None
 db = SQLAlchemy(app)
 CORS(app)
 
@@ -75,7 +77,7 @@ def check_user(emails):
     try:
         records = Staff.query.filter(Staff.email == email).first()
         if(str(records.password) == password['password']):
-            countryURL = "http://127.0.0.1:8002/country/"+str(records.country_code)
+            countryURL = "https://countryesd.azurewebsites.net/country/"+str(records.country_code)
             for x in range(2):
                 r = requests.get(countryURL)
             result = json.loads(r.text.lower())
