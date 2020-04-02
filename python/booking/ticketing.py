@@ -112,8 +112,8 @@ def create_ticket(details):
         # addData2 = {"today": str(today)}
         # data.update(addData1)
         # data.update(addData2)
-        # data["ticketID"] = ticketID
-        # data["today"] = str(today)
+        data["ticketID"] = ticketID
+        data["today"] = str(today)
         headers = {'Content-type': 'application/json'}
         r = requests.post('http://127.0.0.1:8302/ticket/email', json = data, headers=headers)
         print(r.text)
