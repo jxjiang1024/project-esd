@@ -207,18 +207,12 @@
 </script>
 <script>
     $(document).ready(function () {
-
-      $("#checkout").click(function () {
         let serviceURL = "http://127.0.0.1:8300/payment/check";
-        //let payment = $("#payment").val();
-        //let title=<?php echo $_POST['title']?>;
-        //let firstname=<?php echo $_POST['firstname']?>;
-        //let midname=<?php echo $_POST['midname']?>;
-        //let lastname=<?php echo $_POST['lastname']?>;
+        
         });
 
       async function check_payment(){
-        try {\
+        try {
           const response =
             await fetch(
               serviceURL, {
@@ -231,21 +225,21 @@
               first_name: "Naomi",
               last_name: "Tan",
               middle_name: "Liu",
-              amount: "213.21",
+              amount: "950",
               status: "Success",
               last_4_digit: "1212",
-              staff_id: "100",
-              flight_details_id: "3",
+              staff_id: "",
+              flight_details_id: "1",
               suffix: "MD",
               email: "naomi.yeo.2018@sis.smu.edu.sg",
               comments: "Refund applicable",
-              ff_id: "1092837",
+              ff_id: "",
               flight_no: "SFL802",
               departureAirport: "Singapore Changi Airport",
               arrivalAirport:"Narita Changi Airport",
-              departDate:"2020-05-14",
-              arrivalTime: "15:35:00",
-              departureTime: "08:50:00",
+              departDate:"2020-05-12",
+              arrivalTime: "23:20:00",
+              departureTime: "01:45:00",
               isReturn: true
                 
               })
@@ -259,8 +253,7 @@
 			catch (e) {
 				console.log(e);
       }
-    })
-    });
+      };
 		
   </script>
 
