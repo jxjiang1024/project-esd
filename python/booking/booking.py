@@ -13,7 +13,7 @@ import payment
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["SQLALCHEMY_POOL_RECYCLE"] = 299
 app.config['CONN_MAX_AGE'] = None
@@ -112,7 +112,7 @@ def add_booking():
         traceback.print_exc()
         return {"result":"Error"}
 
-def create_ticketing(data,id):
+def create_ticketing(data,id, today):
     ticket = dict()
     ticket['booking_id'] = id
     ticket['prefix'] = data['prefix']
@@ -129,6 +129,14 @@ def create_ticketing(data,id):
     else:
         ticket['ff_id'] = data['ff_id']
     ticket["flight_details_id"] = data['flight_details_id']
+    ticket["email"] = data['email']
+    ticket["today"] = str(today)
+    ticket["flight_no"] = data['flight_no']
+    ticket["departureAirport"] = data['departureAirport']
+    ticket["departDate"] = data['departDate']
+    ticket["departureTime"] = data['departureTime']
+    ticket["arrivalAirport"] = data['arrivalAirport']
+    ticket["arrivalTime"] = data['arrivalTime']
     return ticket
 
 
@@ -162,7 +170,7 @@ def check_payment():
             bookingDetails = Booking(bookingID,data['flight_details_id'],str(today),result['id'],data['prefix'],data['first_name'],data['suffix'],data['last_name'],data['middle_name'],data['email'],staff_id,data['comments'])
             db.session.add(bookingDetails)
             db.session.commit()
-            tickets = create_ticketing(data,bookingID)
+            tickets = create_ticketing(data,bookingID,today)
             hostname = "localhost"
             port = 5672
             # # connect to the broker and set up a communication channel in the connection
