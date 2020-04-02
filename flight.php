@@ -182,7 +182,7 @@
     </div>
 
 
-    </footer> -->
+    </footer> 
 </div>
 
 <div class="gototop js-top">
