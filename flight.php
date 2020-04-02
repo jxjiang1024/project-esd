@@ -241,7 +241,7 @@
             // only showing econs standard
             for (const flight of flights) {
                 eachRow = "<td>" + flight.flight_no + "</td>" +
-                    "<td>" + flight.flight_depature + "</td>" +
+                    "<td>" + flight.flight_departure + "</td>" +
                     "<td>" + flight.flight_arrival + "</td>" +
                     "<td>" + flight.econ_stnd_price + "</td>" +
                     "<td>" + flight.econ_stnd_seat + "</td>";
