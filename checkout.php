@@ -135,9 +135,9 @@
                                     <div class="form-field">
                                       <i class="icon icon-arrow-down3"></i>
                                       <select name="payment" id="payment" class="form-control">
-                                        <option value="#">Credit Card</option>
-                                        <option value="#">Paypal</option>
-                                        <option value="#">Voucher</option>
+                                        <option style="color:black;" value="#">Credit Card</option>
+                                        <option style="color:black;" value="#">Paypal</option>
+                                        <option style="color:black;" value="#">Voucher</option>
                                       </select>
                                     </div>
                                   </div>

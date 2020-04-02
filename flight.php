@@ -101,9 +101,16 @@
             <div>
                 <?php
                 if (isset($_POST["from"]) && isset($_POST["to"]) && isset($_POST["start_date"]) && $_POST["end_date"] != "") {
+                    $departcty = $_POST["from"];
+                    $arrcty = $_POST["to"];
+                    $departdate = $_POST["start_date"];
+                    $arrdate = $_POST["end_date"];
                     echo "<h2>You have searched a flight from " . $_POST["from"] . " to " . $_POST["to"] . "</h2>";
                     echo "<h2>From " . $_POST["start_date"] . " to " . $_POST["end_date"] . "</h2>";
                 } elseif (isset($_POST["from"]) && isset($_POST["to"]) && isset($_POST["start_date"])) {
+                    $departcty = $_POST["from"];
+                    $arrcty = $_POST["to"];
+                    $departdate = $_POST["start_date"];
                     echo "<h2>You have searched a flight from " . $_POST["from"] . " to " . $_POST["to"] . " on " . $_POST["start_date"] . "</h2>";
                 } else {
                     header("Location: index.html");
@@ -123,7 +130,7 @@
                         <th>Arrival time</th>
                         <th>Price</th>
                         <th>Availability</th>
-                        <th>Selection</th>
+                        <!--<th>Selection</th>-->
                     
                     </tr>
 
@@ -150,8 +157,10 @@
                     </tbody>
                 </table>
             </div>
-
-
+            
+            <div style="align:left;">
+            <a class="btn btn-warning" href="pdetails.php" role="button">Proceed to Personal Details</a>
+            </div>
         </div>
 
 
