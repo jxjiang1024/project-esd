@@ -71,7 +71,6 @@ if (!isset($_SESSION['staff_id'])) {
             const response = await fetch(serviceURL, requestParam);
             const data = await response.json();
             let route = data.route;
-
             if (data.result == true) {
                 var rows = "";
                 for (const listRoute of route) {

@@ -116,6 +116,29 @@ def check_userRights(emails):
     except:
         replymessage = json.dumps({"message":"Error" , "result":False}, default=str)
         return replymessage, 501
+
+@app.route('/update/phone', methods=['POST'])
+def updatePhone():
+    try:
+        if request.is_json:
+            staff = request.get_json()
+            user = Staff.query.filter(Staff.email == staff['email']).first()
+            user.contact_hp = str(staff['contact_hp'])
+            db.session.commit()
+            db.session.close()
+            replymessage = json.dumps({"message": "record Updated", "result":True}, default=str)
+            return replymessage, 200
+        else:
+            staff = request.get_data()
+            replymessage = json.dumps({"message": "Order should be in JSON", "data": staff, "result":False}, default=str)
+            return replymessage, 400 # Bad Request
+    except Exception:
+        traceback.print_exc()
+        replymessage = json.dumps({"message":traceback.print_exc() , "result":False}, default=str)
+        db.session.rollback()
+        db.session.close()
+        return replymessage, 501
+
     
     
 if __name__ == "__main__":

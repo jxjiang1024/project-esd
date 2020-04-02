@@ -1,11 +1,11 @@
 from flask import Flask,request,jsonify
 from flask_sqlalchemy import SQLAlchemy
+import traceback
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config["SQLALCHEMY_POOL_RECYCLE"] = 299
-app.config['CONN_MAX_AGE'] = None
+
 db = SQLAlchemy(app)
 
 class Roles(db.Model):
@@ -19,10 +19,11 @@ class Roles(db.Model):
         return{"role_id":self.role_id,"type":self.type}
 
 def userRoles(role_id):
-    db = SQLAlchemy(app)
     try:
-        role_type =Roles.query.filter(Roles.role_id == role_id).first()
+        role_type =Roles.query.filter(Roles.role_id == str(role_id)).first()
         return jsonify({"role_id":role_type.role_id,"type":role_type.type,"result":True})
-    except:
-        return jsonify({"result":False})
+        db.session.close()
+    except Exception:
+        return jsonify({"result":False,"message":traceback.print_exc()})
+        db.session.close()
 
