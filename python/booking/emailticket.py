@@ -16,8 +16,8 @@ app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
 # app.config['MAIL_DEBUG'] = True
-app.config['MAIL_USERNAME'] = emaillogin.MAIL_USERNAME
-app.config['MAIL_PASSWORD'] = emaillogin.MAIL_PASSWORD
+app.config['MAIL_USERNAME'] = email_login.MAIL_USERNAME
+app.config['MAIL_PASSWORD'] = email_login.MAIL_PASSWORD
 app.config['MAIL_DEFAULT_SENDER'] = 'gotrip.esd@gmail.com'
 app.config['MAIL_MAX_EMAILS'] = None
 # app.config['MAIL_SUPPRESS_SEND'] = False
@@ -33,7 +33,8 @@ def sendmsg():
         data = request.get_json()
         print(request.is_json)
         # print('got data:',data)
-        msg = Message(recipients=[data['email']])
+        subject = 'Ticket issue #'+str(data['ticketID'])
+        msg = Message(subject,recipients=[data['email']])
         msg.html = render_template('msg.html', prefix=data['prefix'], last_name=data['last_name'], ticket_id=data['ticketID'], issue_date=data['today'], first_name=data['first_name'], middle_name=data['middle_name'], flight_no=data['flight_no'], dep_airport_name=data['departureAirport'], dep_date=data['departDate'], departure_time=data['departureTime'], arr_airport_name=data['arrivalAirport'], arrival_time=data['arrivalTime'])
         mail.send(msg)
         return {"result":True, "message":"Email sent successfully"}
