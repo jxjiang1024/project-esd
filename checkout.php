@@ -1,23 +1,9 @@
 <!DOCTYPE HTML>
 <html>
-  <?php
-  if(isset($_POST['title'])){
-    $t=$_POST['title'];
-  }
-  if(isset($_POST['firstname'])){
-    $f=$_POST['firstname'];
-  }
-  if(isset($_POST['midname'])){
-    $m=$_POST['midname'];
-  }
-  if(isset($_POST['lastname'])){
-    $l=$_POST['lastname'];
-  }
-  ?>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>View Flights</title>
+    <title>Checkout</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content=""/>
     <meta name="keywords" content=""/>
@@ -103,14 +89,13 @@
           </ul>
 		  	</div>
     </aside>
-              <script>console.log('checkpt 1')</script>
 
 		
   <div id="colorlib-reservation">
      
 						<div class="tab-content">
 							<div id="flight" class="tab-pane fade in active">
-								<form method="post" class="colorlib-form">
+								<div class="colorlib-form">
 				              	<div class="row">
 				              	 <div class="col-md-3">
 				              	 	<div class="form-group">
@@ -158,7 +143,7 @@
                                   </div>
                                 </div>
 				                <div class="col-md-2">
-                          <input type=submit name="checkout" id="checkout "class="btn btn-primary btn-block"value="Confirm booking!">
+                          <input type="button" name="checkout" onclick="clickAlert()" id="checkout "class="btn btn-primary btn-block"value="Confirm booking!">
 				                </div>
 				              </div>
 				            </form>
@@ -190,21 +175,23 @@
 	<script src="js/jquery.stellar.min.js"></script>
 	<!-- Main -->
 	<script src="js/main.js"></script>
-	<script>console.log('checkpt 3')</script>
-
 </body>
+<script>
+  function clickAlert() {
+    alert("Thank you for booking with us!");
+  }
+  </script>
 <script>
     $(document).ready(function () {
 
       $("#checkout").click(function () {
         let serviceURL = "http://127.0.0.1:8300/payment/check";
         let payment = $("#payment").val();
-        let title=$t;
-        let firstname=$f;
-        let midname=$m;
-        let lastname=$l;
-		console.log();
-	  })
+        let title=<?php echo $_POST['title']?>;
+        let firstname=<?php echo $_POST['firstname']?>;
+        let midname=<?php echo $_POST['midname']?>;
+        let lastname=<?php echo $_POST['lastname']?>;
+        })
     	$(async () => {
 			let requestParam = {
 						headers: {"Content-Type": "application/json"},
@@ -217,9 +204,10 @@
             prefix:title,
             payment_type:payment})
 		};
-		try{
+		try
+    {
 			const response = await fetch(serviceURL, requestParam);
-            const data = await response.json();
+      const data = await response.json();
       console.log(data);
       }
       
