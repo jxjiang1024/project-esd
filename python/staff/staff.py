@@ -1,7 +1,6 @@
 from flask import Flask,request,jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-import roles
 import json
 import requests
 import traceback
@@ -69,6 +68,16 @@ class Staff(db.Model):
     def json(self):
         return{"staff_id":self.staff_id,"prefix":self.prefix,"first_name":self.first_name,"last_name":self.last_name,"middle_name":self.middle_name,"suffix":self.suffix,"email":self.email,"contact_hp":self.contact_hp,"contact_home":self.contact_home,"country_code":self.country_code,"address_1":self.address_1 ,"address_2":self.address_2 ,"state":self.state,"city":self.city ,"postal_code":self.postal_code ,"ispilot":self.ispilot,"isFlightCrew":self.isFlightCrew,"password":self.password,"isactive":self.isactive,"hourly_rate":self.hourly_rate,"roles":self.roles}
 
+class Roles(db.Model):
+    __tablename__ = 'roles'
+    role_id =  db.Column(db.Integer, primary_key=True)
+    type = db.Column(db.String(255),nullable = False)
+    def __init__(self,role_id,type):
+        self.role_id = role_id
+        self.type = type
+    def json(self):
+        return{"role_id":self.role_id,"type":self.type}
+
 @app.route("/staff/login/<string:emails>" ,methods=['POST'])
 def check_user(emails):
 
@@ -92,7 +101,7 @@ def check_user(emails):
 
 @app.route("/staff/roles/<string:role>" ,methods=['GET'])
 def getUserRoleName(role):
-    role_out = roles.userRoles(role)
+    role_out = userRoles(role)
     return role_out
 
 @app.route("/staff/check/<string:emails>", methods=['POST'])
@@ -116,6 +125,13 @@ def check_userRights(emails):
     except:
         replymessage = json.dumps({"message":"Error" , "result":False}, default=str)
         return replymessage, 501
+
+def userRoles(role_id):
+    try:
+        role_type =Roles.query.filter(Roles.role_id == role_id).first()
+        return jsonify({"role_id":role_type.role_id,"type":role_type.type,"result":True})
+    except:
+        return jsonify({"result":False})
     
     
 if __name__ == "__main__":
