@@ -133,7 +133,7 @@
                         <td>
                             <input type="radio" name="radioGroup" value ="1"checked>
                         </td>
-                        <td></td>
+                        <td>SFL802</td>
                         <td>
                             2020-05-12
                         </td>
