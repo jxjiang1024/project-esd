@@ -149,8 +149,8 @@
                   <div class="form-group">
                     <label for="bday"> Expiration Date:</label>
                     <div class="form-field">
-                      <input type="date" id="edate" name="edate" 
-                        class="form-control" placeholder="Select Date">
+                      <input type="text" id="edate" name="edate" 
+                        class="form-control" placeholder="mm/yy">
                     </div>
                   </div>
                 </div>
