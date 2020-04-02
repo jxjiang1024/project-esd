@@ -117,6 +117,7 @@
                 <table id="go-flight" class='table table-striped' border='1'>
                     <thead class='thread-dark'>
                     <tr>
+                        <th></th>
                         <th>Depature Date</th>
                         <th>Arrival Date</th>
                         <th>Price</th>
@@ -244,17 +245,17 @@
             var flights = data.flights;
             // only showing econs standard
             let rows = "";
-            for (const flight of flights) {
-                eachRow = "<td>" + flight.flight_no + "</td>" +
-                    "<td>" + flight.flight_departure + "</td>" +
-                    "<td>" + flight.flight_arrival + "</td>" +
-                    "<td>" + flight.econ_stnd_price + "</td>" +
-                    "<td>" + flight.econ_stnd_seat + "</td>";
+            /* for (const flight of flights) {
+                 eachRow = "<td>" + flight.flight_no + "</td>" +
+                     "<td>" + flight.flight_departure + "</td>" +
+                     "<td>" + flight.flight_arrival + "</td>" +
+                     "<td>" + flight.econ_stnd_price + "</td>" +
+                     "<td>" + flight.econ_stnd_seat + "</td>";
 
-                rows += "<tbody><tr>" + eachRow + "</tr></tbody>";
+                 rows += "<tbody><tr>" + eachRow + "</tr></tbody>";
 
-            }
-            $('#go-flight').append(rows);
+             }
+             $('#go-flight').append(rows);*/
 
         } catch (e) {
             console.log(e);
