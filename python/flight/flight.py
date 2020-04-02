@@ -7,6 +7,7 @@ import aircraft
 import requests
 import json
 import traceback
+from datetime import datetime
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
@@ -367,9 +368,11 @@ def get_all_airport_names():
     iata = iataCode.query.all()
     return jsonify({"airport names":[airport.airportName for airport in iata], "result":True})
     
-@app.route("/flight/findFlights")
+@app.route("/flight/findFlights", methods=['POST'])
 def findFlights():
     data = request.get_json()
+    departDate = str(data['departDate'])
+    print(departDate)
     try:
         departureAirport = iataCode.query.filter(iataCode.airportName == data['departureAirport']).first()
         arrivalAirport = iataCode.query.filter(iataCode.airportName == data['arrivalAirport']).first()
