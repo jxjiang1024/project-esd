@@ -89,11 +89,15 @@ if (!isset($_SESSION['staff_id'])) {
             } else {
                 $("#tableError").show();
                 $("#routeListTable").hide();
+                $("#routes").hide();
+
+
             }
         } catch (e) {
             console.error(e)
             $("#tableError").show();
             $("#routeListTable").hide();
+            $("#routes").hide();
         }
 
 
@@ -135,11 +139,13 @@ if (!isset($_SESSION['staff_id'])) {
             } else {
                 $("#errorFlight").show();
                 $("#flightTable").hide();
+                $("#addFlight").hide();
             }
         } catch (e) {
             console.error(e);
             $("#errorFlight").show();
             $("#flightTable").hide();
+            $("#addFlight").hide();
         }
     }
 </script>
@@ -307,7 +313,7 @@ if (!isset($_SESSION['staff_id'])) {
                                     </thead>
 
                                 </table>
-                                <a style="float: right;" href="add_route.php" class="btn btn-success">
+                                <a style="float: right;" id="routes" href="add_route.php" class="btn btn-success">
                                     Add More Routes</a>
                             </div>
                         </div>
@@ -340,7 +346,7 @@ if (!isset($_SESSION['staff_id'])) {
                                     </thead>
 
                                 </table>
-                                <a style="float: right;" href="addflights.php" class="btn btn-success">
+                                <a style="float: right;" id = "addFlight" href="addflights.php" class="btn btn-success">
                                     Add More Flights</a>
                             </div>
                         </div>
