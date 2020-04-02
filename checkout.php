@@ -89,61 +89,85 @@
           </ul>
 		  	</div>
     </aside>
-
-		
-  <div id="colorlib-reservation">
-     
-						<div class="tab-content">
-							<div id="flight" class="tab-pane fade in active">
-								<div class="colorlib-form">
-				              	<div class="row">
-				              	 <div class="col-md-3">
-				              	 	<div class="form-group">
-				                    <label for="street">Street Address:</label>
-				                    <div class="form-field">
-				                      <input type="text" id="street" class="form-control" placeholder="Street Name">
-				                    </div>
-				                  </div>
-				              	 </div>
-                         <div class="col-md-2">
-                          <div class="form-group">
-                           <label for="town">Town/City:</label>
-                           <div class="form-field">
-                             <input type="text" id="town" class="form-control" placeholder="Town/City">
-                           </div>
-                         </div>
-                        </div>
-                        <div class="col-md-2">
-                          <div class="form-group">
-                           <label for="country">Country:</label>
-                           <div class="form-field">
-                             <input type="text" id="country" class="form-control" placeholder="Country">
-                           </div>
-                         </div>
-                        </div>
-                        <div class="col-md-2">
-                          <div class="form-group">
-                           <label for="state">Zip/State Code:</label>
-                           <div class="form-field">
-                             <input type="text" id="zip" class="form-control" placeholder="Zip/State Code">
-                           </div>
-                         </div>
-                        </div>
-                            <div class="col-md-2">
-                              <div class="form-group">
-                               <label for="payment"> Choose Payment Method:</label>
-                                    <div class="form-field">
-                                      <i class="icon icon-arrow-down3"></i>
-                                      <select name="payment" id="payment" class="form-control">
-                                        <option style="color:black;" value="#">Credit Card</option>
-                                        <option style="color:black;" value="#">Paypal</option>
-                                        <option style="color:black;" value="#">Voucher</option>
-                                      </select>
-                                    </div>
-                                  </div>
-                                </div>
+    <div id="colorlib-reservation">
+      
+      <div class="tab-content">
+        <div id="title"class="colorlib-form">
+          <form method="post" action="checkout.php">
+            <div class="container"> 
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="payment"> Choose Payment Method:</label>
+                      <div class="form-field">
+                        <select name="payment" id="payment" class="form-control">
+                          <option style="color:black;" value="CC">Credit Card</option>
+                          <option style="color:black;" value="Paypal">PayPal</option>
+                          <option style="color:black;" value="Voucher">Voucher</option>
+                        </select>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="ctype"> Choose Card Type:</label>
+                      <div class="form-field">
+                        <select name="ctype" id="ctype" class="form-control">
+                          <option style="color:black;" value="Visa">VISA</option>
+                          <option style="color:black;" value="mastercard">MasterCard</option>
+                          <option style="color:black;" value="aexpress">American Express</option>
+                        </select>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="lname">Name on Card:</label>
+                    <div class="form-field">
+                      <input type="text" name="cname" id="cname" class="form-control" placeholder="Enter Name">
+                    </div>
+                  </div>
+                </div>
+              </div>
+                  
+                
+              <!--Card Number-->
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    &nbsp;&nbsp;<label for="cno"> Card Number:</label>
+                    <div class="form-field">
+                      <input type="text" id="cno" name="cno" 
+                        class="form-control" placeholder="Enter Card.No">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--date/cvv-->
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="bday"> Expiration Date:</label>
+                    <div class="form-field">
+                      <input type="date" id="edate" name="edate" 
+                        class="form-control" placeholder="Select Date">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="cvv"> CVV:</label>
+                    <div class="form-field">
+                      <input type="text" id="cvv" name="cvv" 
+                        class="form-control" placeholder="Enter CVV">
+                    </div>
+                  </div>
+                </div>
+              </div>     
 				                <div class="col-md-2">
-                          <input type="button" name="checkout" onclick="clickAlert()" id="checkout "class="btn btn-primary btn-block"value="Confirm booking!">
+                          <input type="button" onclick="showalert()" name="checkout" id="checkout "class="btn btn-primary btn-block"value="Confirm booking!">
 				                </div>
 				              </div>
 				            </form>
@@ -177,36 +201,57 @@
 	<script src="js/main.js"></script>
 </body>
 <script>
-  function clickAlert() {
-    alert("Thank you for booking with us!");
-  }
-  </script>
+ function showalert() {
+  alert("Payment Success! Thank you for booking with us!");
+}
+</script>
 <script>
     $(document).ready(function () {
 
       $("#checkout").click(function () {
         let serviceURL = "http://127.0.0.1:8300/payment/check";
-        let payment = $("#payment").val();
-        let title=<?php echo $_POST['title']?>;
-        let firstname=<?php echo $_POST['firstname']?>;
-        let midname=<?php echo $_POST['midname']?>;
-        let lastname=<?php echo $_POST['lastname']?>;
-        })
-    	$(async () => {
-			let requestParam = {
-						headers: {"Content-Type": "application/json"},
-						method: 'POST',
-						mode: 'cors',
-						body: JSON.stringify({
-            first_name:firstname,
-            last_name:lastname,
-            middle_name:midname,
-            prefix:title,
-            payment_type:payment})
-		};
-		try
-    {
-			const response = await fetch(serviceURL, requestParam);
+        //let payment = $("#payment").val();
+        //let title=<?php echo $_POST['title']?>;
+        //let firstname=<?php echo $_POST['firstname']?>;
+        //let midname=<?php echo $_POST['midname']?>;
+        //let lastname=<?php echo $_POST['lastname']?>;
+        });
+
+      async function check_payment(){
+        try {\
+          const response =
+            await fetch(
+              serviceURL, {
+              headers: {"Content-Type": "application/json"},
+						  method: 'POST',
+						  mode: 'cors',
+						  body: JSON.stringify({
+              payment_type:"Credit Card",
+              prefix: "Ms",
+              first_name: "Naomi",
+              last_name: "Tan",
+              middle_name: "Liu",
+              amount: "213.21",
+              status: "Success",
+              last_4_digit: "1212",
+              staff_id: "100",
+              flight_details_id: "3",
+              suffix: "MD",
+              email: "naomi.yeo.2018@sis.smu.edu.sg",
+              comments: "Refund applicable",
+              ff_id: "1092837",
+              flight_no: "SFL802",
+              departureAirport: "Singapore Changi Airport",
+              arrivalAirport:"Narita Changi Airport",
+              departDate:"2020-05-14",
+              arrivalTime: "15:35:00",
+              departureTime: "08:50:00",
+              isReturn: true
+                
+              })
+              }
+
+            );
       const data = await response.json();
       console.log(data);
       }
