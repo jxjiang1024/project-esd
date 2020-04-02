@@ -6,7 +6,7 @@ session_start();
 if (!isset($_SESSION['staff_id'])) {
     header("location:../login.php");
 }
-	
+
 ?>
 <head>
     <meta charset="utf-8">
@@ -52,102 +52,6 @@ if (!isset($_SESSION['staff_id'])) {
             integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
             crossorigin="anonymous"></script>
 </head>
-
-<!--
-<script>
-    $(document).ready(function () {
-        $("#tableError").hide();
-        $("#errorFlight").hide();
-        let serviceURL = "http://127.0.0.1:8003/flight/route";
-        getRoutesData(serviceURL);
-        serviceURL = "http://127.0.0.1:8003/flight/details";
-        getFlights(serviceURL);
-    });
-
-    async function getRoutesData(serviceURL) {
-        let requestParam = {
-            headers: {"content-type": "charset=UTF-8"},
-            mode: 'cors', // allow cross-origin resource sharing
-            method: 'GET',
-
-        }
-        try {
-            const response = await fetch(serviceURL, requestParam);
-            const data = await response.json();
-            let route = data.route;
-
-            if (data.result == true) {
-                var rows = "";
-                for (const listRoute of route) {
-                    eachRow =
-                        "<td>" + listRoute.flight_no + "</td>" +
-                        "<td>" + listRoute.departure_airport_id + "</td>" +
-                        "<td>" + listRoute.arrival_airport_id + "</td>" +
-                        "<td>" + listRoute.departure_time + "</td>" +
-                        "<td>" + listRoute.arrival_time + "</td>";
-                    rows += "<tbody><tr>" + eachRow + "</tr></tbody>";
-
-                }
-                // add all the rows to the table
-                $('#routeListTable').append(rows);
-            } else {
-                $("#tableError").show();
-                $("#routeListTable").hide();
-            }
-        } catch (e) {
-            console.error(e)
-            $("#tableError").show();
-            $("#routeListTable").hide();
-        }
-
-
-    }
-
-    async function getFlights(serviceURL) {
-        let requestParam = {
-            headers: {"content-type": "charset=UTF-8"},
-            mode: 'cors', // allow cross-origin resource sharing
-            method: 'GET',
-
-        }
-        try {
-            const response = await fetch(serviceURL, requestParam);
-            const data = await response.json();
-            let flight = data.flight;
-            if (data.result == true) {
-
-                let rows = "";
-                for (const listFlight of flight) {
-                    let departureDate = new Date(listFlight.flight_departure);
-                    let arrivalDate =  new Date(listFlight.flight_arrival);
-                    let departureMonth = departureDate.getMonth()+1;
-                    let arrivalMonth = arrivalDate.getMonth()+1;
-                    eachRow =
-                        "<td>" + listFlight.aircraft_tail_no + "</td>" +
-                        "<td>" + listFlight.economy_seats + "</td>" +
-                        "<td>" + listFlight.premium_economy_seats + "</td>" +
-                        "<td>" + listFlight.business_seats + "</td>" +
-                        "<td>" + listFlight.first_class_seats + "</td>" +
-                        "<td>" + departureDate.getDate().toString() + "/" + departureMonth.toString()  + "/" + departureDate.getFullYear().toString() + "</td>" +
-                        "<td>" + arrivalDate.getDate().toString() + "/" + arrivalMonth.toString()  + "/" + arrivalDate.getFullYear().toString() + "</td>" +
-                        "<td>" + listFlight.status + "</td>";
-                    rows += "<tbody><tr>" + eachRow + "</tr></tbody>";
-                }
-                // add all the rows to the table
-                $('#flightTable').append(rows);
-
-            } else {
-                $("#errorFlight").show();
-                $("#flightTable").hide();
-            }
-        } catch (e) {
-            console.error(e);
-            $("#errorFlight").show();
-            $("#flightTable").hide();
-        }
-    }
-</script>
--->
 
 <body class="fix-header fix-sidebar card-no-border">
 <!-- ============================================================== -->
@@ -246,17 +150,8 @@ if (!isset($_SESSION['staff_id'])) {
                                     class="mdi mdi-earth"></i><span class="hide-menu">Add More Routes</span></a>
                     </li>
                     <li><a class="waves-effect waves-dark" href="addflights.php" aria-expanded="false"><i
-                                    class="mdi mdi-airplane-takeoff"></i><span class="hide-menu">Add Flight Details</span></a>
-                    </li>
-                    <li><a class="waves-effect waves-dark" href="icon-material.html" aria-expanded="false"><i
-                                    class="mdi mdi-emoticon"></i><span class="hide-menu">Icons</span></a>
-                    </li>
-                    <li><a class="waves-effect waves-dark" href="pages-blank.html" aria-expanded="false"><i
-                                    class="mdi mdi-book-open-variant"></i><span class="hide-menu">Blank Page</span></a>
-                    </li>
-                    <li><a class="waves-effect waves-dark" href="pages-error-404.html" aria-expanded="false"><i
-                                    class="mdi mdi-help-circle"></i><span class="hide-menu">Error 404</span></a>
-                    </li>
+                                    class="mdi mdi-airplane-takeoff"></i><span
+                                    class="hide-menu">Add Flight Details</span></a>
                 </ul>
             </nav>
             <!-- End Sidebar navigation -->
@@ -307,79 +202,78 @@ if (!isset($_SESSION['staff_id'])) {
                     <div class="card">
                         <div class="card-block">
                             <h4 class="card-title">Add New Route</h4>
-                          
-<!--Return messages-->
-<?php
 
-if (!empty($_SESSION["messages"])) {
-	echo "<h5>Notice</h5>";
-	echo "<ul>";
-		foreach ($_SESSION["messages"] as $message){
-			echo "<li>".$message."</li>";
-		}
-	echo "</ul>";
-}
-unset($_SESSION["messages"]);
-?>
+                            <!--Return messages-->
+                            <?php
 
-    <form id='route-details' method ='get' action='add_route_process.php'>
+                            if (!empty($_SESSION["messages"])) {
+                                echo "<h5>Notice</h5>";
+                                echo "<ul>";
+                                foreach ($_SESSION["messages"] as $message) {
+                                    echo "<li>" . $message . "</li>";
+                                }
+                                echo "</ul>";
+                            }
+                            unset($_SESSION["messages"]);
+                            ?>
 
-      <div class="form-group">
-        Flight Number
-        <input type="text" id="flight_no" name="flight_no">
-        <br/><br/>
-        Arrival Airport
-        <input type="text" id="arrival_airport_id" name="arrival_airport_id">
-        <br/><br/>
-        Departure Airport
-        <input type="text" id="departure_airport_id" name="departure_airport_id">
-        <br/><br/>
-        Departure Time
-        <input type="time" id="departure_time" name="departure_time">
-        <br/><br/>
-        Arrival Time
-        <input type="time" id="arrival_time" name="arrival_time">
-        <br/><br/>
-        
-		<!--
-		Next Day
-        <input type="number" id="next_day" name="next_day"  min="0" max="10">
-                <br/><br/>
-				-->
+                            <form id='route-details' method='get' action='add_route_process.php'>
 
-        <input id="submit-route"class="btn btn-primary" type="submit" value="Submit">
-      </div>
+                                <div class="form-group">
+                                    Flight Number
+                                    <input type="text" id="flight_no" name="flight_no">
+                                    <br/><br/>
+                                    Arrival Airport
+                                    <input type="text" id="arrival_airport_id" name="arrival_airport_id">
+                                    <br/><br/>
+                                    Departure Airport
+                                    <input type="text" id="departure_airport_id" name="departure_airport_id">
+                                    <br/><br/>
+                                    Departure Time
+                                    <input type="time" id="departure_time" name="departure_time">
+                                    <br/><br/>
+                                    Arrival Time
+                                    <input type="time" id="arrival_time" name="arrival_time">
+                                    <br/><br/>
 
-    </form>
+                                    <!--
+                                    Next Day
+                                    <input type="number" id="next_day" name="next_day"  min="0" max="10">
+                                            <br/><br/>
+                                            -->
+
+                                    <input id="submit-route" class="btn btn-primary" type="submit" value="Submit">
+                                </div>
+
+                            </form>
 
 
-  
                         </div>
                     </div>
                 </div>
 
             </div>
 
-        <!-- Row -->
+            <!-- Row -->
 
+            <!-- ============================================================== -->
+            <!-- End PAge Content -->
+            <!-- ============================================================== -->
+        </div>
         <!-- ============================================================== -->
-        <!-- End PAge Content -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+        <footer class="footer"> © 2017 Material Pro Admin by wrappixel.com</footer>
+        <!-- ============================================================== -->
+        <!-- End footer -->
         <!-- ============================================================== -->
     </div>
     <!-- ============================================================== -->
-    <!-- End Container fluid  -->
+    <!-- End Page wrapper  -->
     <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- footer -->
-    <!-- ============================================================== -->
-    <footer class="footer"> © 2017 Material Pro Admin by wrappixel.com</footer>
-    <!-- ============================================================== -->
-    <!-- End footer -->
-    <!-- ============================================================== -->
-</div>
-<!-- ============================================================== -->
-<!-- End Page wrapper  -->
-<!-- ============================================================== -->
 </div>
 <!-- ============================================================== -->
 <!-- End Wrapper -->

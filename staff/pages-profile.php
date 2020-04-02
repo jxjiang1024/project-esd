@@ -164,16 +164,8 @@ if (!isset($_SESSION['staff_id'])) {
                                     class="mdi mdi-earth"></i><span class="hide-menu">Add More Routes</span></a>
                     </li>
                     <li><a class="waves-effect waves-dark" href="addflights.php" aria-expanded="false"><i
-                                    class="mdi mdi-airplane-takeoff"></i><span class="hide-menu">Add Flight Details</span></a>
-                    </li>
-                    <li><a class="waves-effect waves-dark" href="icon-material.html" aria-expanded="false"><i
-                                    class="mdi mdi-emoticon"></i><span class="hide-menu">Icons</span></a>
-                    </li>
-                    <li><a class="waves-effect waves-dark" href="pages-blank.html" aria-expanded="false"><i
-                                    class="mdi mdi-book-open-variant"></i><span class="hide-menu">Blank Page</span></a>
-                    </li>
-                    <li><a class="waves-effect waves-dark" href="pages-error-404.html" aria-expanded="false"><i
-                                    class="mdi mdi-help-circle"></i><span class="hide-menu">Error 404</span></a>
+                                    class="mdi mdi-airplane-takeoff"></i><span
+                                    class="hide-menu">Add Flight Details</span></a>
                     </li>
                 </ul>
 
