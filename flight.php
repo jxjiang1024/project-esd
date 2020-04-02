@@ -204,7 +204,6 @@
         let isReturn = true;
         let end_date = "<?php if ($_POST['check'] == 1) {
             echo "None";
-
         } else {
             echo $_POST['end_date'];
         }?>";
@@ -262,32 +261,6 @@
 
         }
     }
-
-
-    // $(document).ready(function () {
-    //     let serviceURL = "";// Input your Microservice URL
-    //     getRoutes(serviceURL);
-
-    // });
-
-    // async function getRoutes(serviceURL) {
-    //     let requestParam = {
-    //         headers: {"content-type": "charset=UTF-8"},
-    //         mode: 'cors', // allow cross-origin resource sharing
-    //         method: 'POST',
-    //         body: JSON.stringify({password: password}) //Please prepare your json body string
-    //     }
-    //     try{
-    //         const response = await fetch(serviceURL, requestParam);
-    //         const data = await response.json();
-    //         console.log(data) // Check for return
-    //     }catch (e) {
-    //         console.log(e);
-
-    //     }
-    // }
-
-
 </script>
 </html>
 
