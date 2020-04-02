@@ -102,14 +102,14 @@
           <form method="post" action="checkout.php">
             <div class="container"> 
               <div class="row">
-                <div class="col-md-1">
+                <div class="col-md-2">
                   <div class="form-group">
                     <label for="title"> Title:</label>
                       <div class="form-field">
-                        <select style="color: white;" name="title" id="title" class="form-control">
-                          <option style="color: black;" value="MR">MR</option>
-                          <option style="color: black;" value="MRS">MRS</option>
-                          <option style="color: black;" value="MS">MS</option>
+                        <select name="title" id="title" class="form-control">
+                          <option style="color:black;" value="MR">MR</option>
+                          <option style="color:black;" value="MRS">MRS</option>
+                          <option style="color:black;" value="MS">MS</option>
                         </select>
                       </div>
                   </div>
@@ -140,7 +140,7 @@
                   </div>
                 </div>
               </div>
-
+              <!--Birthday-->
               <div class="row">
                 <div class="col-md-3">
                   <div class="form-group">
@@ -152,6 +152,7 @@
                   </div>
                 </div>
               </div>
+              <!--Email-->
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
@@ -159,6 +160,41 @@
                     <div class="form-field">
                       <input type="text" id="email" name="email" 
                         class="form-control" placeholder="Enter Email Address">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--Address-->
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="street">Street Address:</label>
+                    <div class="form-field">
+                      <input type="text" id="street" class="form-control" placeholder="Street Name">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="town">Town/City:</label>
+                    <div class="form-field">
+                      <input type="text" id="town" class="form-control" placeholder="Town/City">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="country">Country:</label>
+                    <div class="form-field">
+                      <input type="text" id="country" class="form-control" placeholder="Country">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="state">Zip/State Code:</label>
+                    <div class="form-field">
+                      <input type="text" id="zip" class="form-control" placeholder="Zip/State Code">
                     </div>
                   </div>
                 </div>
