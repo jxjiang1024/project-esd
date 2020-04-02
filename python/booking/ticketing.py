@@ -12,9 +12,10 @@ import random
 import pika
 from datetime import date
 import booking
+import requests
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["SQLALCHEMY_POOL_RECYCLE"] = 299
 app.config['CONN_MAX_AGE'] = None
@@ -107,6 +108,14 @@ def create_ticket(details):
         db.session.add(ticketDetails)
         db.session.commit()
         db.session.close()
+        data = json.dumps(data, default=str)
+        data = json.loads(data)
+        addData1 = {"ticketID": ticketID}
+        addData2 = {"today": str(today)}
+        data.update(addData1)
+        data.update(addData2)
+        print('data after update:',data)
+        requests.post('http://127.0.0.1:8302/ticket/email', data = data)
         return {"result":True}
     except Exception:
         db.session.rollback()
