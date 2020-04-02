@@ -118,10 +118,13 @@
                     <thead class='thread-dark'>
                     <tr>
                         <th data-field="state" data-radio="true"></th>
-                        <th>Depature Date</th>
-                        <th>Arrival Date</th>
+                        <th>Flight No</th>
+                        <th>Depature time</th>
+                        <th>Arrival time</th>
                         <th>Price</th>
                         <th>Availability</th>
+                        <th>Selection</th>
+                    
                     </tr>
 
                     </thead>
@@ -130,6 +133,7 @@
                         <td>
                             <input type="radio" name="radioGroup" value ="1"checked>
                         </td>
+                        <td></td>
                         <td>
                             2020-05-12
                         </td>
@@ -263,17 +267,17 @@
             var flights = data.flights;
             // only showing econs standard
             let rows = "";
-            /* for (const flight of flights) {
-                 eachRow = "<td>" + flight.flight_no + "</td>" +
-                     "<td>" + flight.flight_departure + "</td>" +
-                     "<td>" + flight.flight_arrival + "</td>" +
-                     "<td>" + flight.econ_stnd_price + "</td>" +
-                     "<td>" + flight.econ_stnd_seat + "</td>";
+            for (const flight of flights) {
+                eachRow = "<td>" + flight.flight_no + "</td>" +
+                    "<td>" + flight.flight_departure + "</td>" +
+                    "<td>" + flight.flight_arrival + "</td>" +
+                    "<td>" + flight.econ_stnd_price + "</td>" +
+                    "<td>" + flight.econ_stnd_seat + "</td>";
 
-                 rows += "<tbody><tr>" + eachRow + "</tr></tbody>";
+                rows += "<tbody><tr>" + eachRow + "</tr></tbody>";
 
-             }
-             $('#go-flight').append(rows);*/
+            }
+            $('#go-flight').append(rows);
 
         } catch (e) {
             console.log(e);

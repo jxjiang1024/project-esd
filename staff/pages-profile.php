@@ -42,8 +42,6 @@ if (!isset($_SESSION['staff_id'])) {
             integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
             crossorigin="anonymous"></script>
     <script>
-        let cell_phone = '<?php echo $_SESSION['contact_hp']?>';
-        let email = '<?php echo $_SESSION['email']?>';
         $(async () => {
             try {
                 let serviceURL = "https://staffesd.azurewebsites.net/staff/roles/" +<?php echo $_SESSION['roles']?>;
@@ -66,45 +64,6 @@ if (!isset($_SESSION['staff_id'])) {
             }
 
         });
-        $(document).ready(function () {
-            $("#success").hide();
-            $("#phone").keyup(function () {
-                cell_phone = $(this).val();
-            });
-
-            $("#update").click(function () {
-                let URL = "https://staffesd.azurewebsites.net/update/phone";
-                updateDetails(URL);
-            });
-
-        });
-
-        async function updateDetails(serviceURL) {
-            let requestParam = {
-                headers: {"Content-Type": "application/json"},
-                method: 'POST',
-                mode: 'cors',
-                body: JSON.stringify({email: email, contact_hp: cell_phone})
-            }
-            try {
-                const response = await fetch(serviceURL, requestParam);
-                const data = await response.json();
-                console.log(data);
-                if (data.result == true) {
-                    $("#success").show();
-                } else {
-                    $("#fail").text("Error Updating your Contact");
-                    $("#fail").show();
-                }
-
-            } catch (e) {
-                console.error(e);
-                $("#fail").text("Database Error");
-                $("#fail").show();
-
-            }
-        }
-
     </script>
 </head>
 
@@ -299,8 +258,7 @@ if (!isset($_SESSION['staff_id'])) {
                                 <div class="form-group">
                                     <label class="col-md-12">Phone No</label>
                                     <div class="col-md-12">
-                                        <input type="text" name="phone" id="phone"
-                                               placeholder="<?php echo $_SESSION['contact_hp']; ?>"
+                                        <input type="text" placeholder="<?php echo $_SESSION['contact_hp']; ?>"
                                                class="form-control form-control-line">
                                     </div>
                                 </div>
@@ -313,13 +271,9 @@ if (!isset($_SESSION['staff_id'])) {
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
-                                        <input type="button" id="update" class="btn btn-success"
-                                               value="Update Contact Number">
+                                        <button class="btn btn-success">Update Contact Number</button>
                                     </div>
                                 </div>
-                                <label style="float: right; color: #00aa88;" id="success"
-                                       class="col-sm-12">Success</label>
-                                <label style="float: right; color:red;" id="fail" class="col-sm-12"></label>
                             </form>
                         </div>
                     </div>
