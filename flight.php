@@ -117,15 +117,33 @@
                 <table id="go-flight" class='table table-striped' border='1'>
                     <thead class='thread-dark'>
                     <tr>
-                        <th></th>
+                        <th data-field="state" data-radio="true"></th>
                         <th>Depature Date</th>
                         <th>Arrival Date</th>
                         <th>Price</th>
                         <th>Availability</th>
-                        <th>Selection</th>
                     </tr>
 
                     </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <input type="radio" name="radioGroup" value ="1"checked>
+                        </td>
+                        <td>
+                            2020-05-12
+                        </td>
+                        <td>
+                            2020-05-12
+                        </td>
+                        <td>
+                            $950.00
+                        </td>
+                        <td>
+                            120
+                        </td>
+                    </tr>
+                    </tbody>
                 </table>
             </div>
 
