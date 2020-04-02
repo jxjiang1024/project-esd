@@ -153,7 +153,7 @@ if (!isset($_SESSION['staff_id'])) {
 <!-- ============================================================== -->
 <!-- Preloader - style you can find in spinners.css -->
 <!-- ============================================================== -->
-<div class="preloader">
+<div class="preloader" id="preloader">
     <svg class="circular" viewBox="25 25 50 50">
         <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
     </svg>
@@ -346,7 +346,7 @@ if (!isset($_SESSION['staff_id'])) {
                                     </thead>
 
                                 </table>
-                                <a style="float: right;" id = "addFlight" href="addflights.php" class="btn btn-success">
+                                <a style="float: right;" id="addFlight" href="addflights.php" class="btn btn-success">
                                     Add More Flights</a>
                             </div>
                         </div>
