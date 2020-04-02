@@ -195,34 +195,33 @@
     $("subscribe").click(function () {
         alert("Thank you for your subsription");
     });
+       
 
     $(document).ready(function () {
         let serviceURL = "http://127.0.0.1:8003/flight/findFlights";// Input your Microservice URL
-        // getRoutes(serviceURL);
-
-        let check = <?php echo $_POST['check']?>;
-        let start_date = <?php echo $_POST['start_date']?>;
+        let check = "<?php echo $_POST['check']?>";
+        let start_date = "<?php echo $_POST['start_date']?>";
+        let isReturn = true;
         let end_date = "<?php if ($_POST['check'] == 1) {
             echo "None";
+            
         } else {
             echo $_POST['end_date'];
         }?>";
         if (end_date == "None") {
             let isReturn = false;
-        } else {
-            let isReturn = true;
-        }
-        let from = <?php echo $_POST['from']?>;
-        let to = <?php echo $_POST['to']?>;
-        let NoTravellers = <?php echo $_POST['travellers']?>;
-        console.log(isReturn);
+        } 
+        let from = "<?php echo $_POST['from']?>";
+        let to = "<?php echo $_POST['to']?>";
+        let NoTravellers = "<?php echo $_POST['travellers']?>";
+        getRoutes(serviceURL,from,to,isReturn,start_date,end_date);
 
     });
-    async function getRoutes(serviceURL) {
+    async function getRoutes(serviceURL,from,to,isReturn,start_date,end_date) {
         let requestParam = {
             headers: {"content-type": "charset=UTF-8"},
             mode: 'cors', // allow cross-origin resource sharing
-            method: 'POST',
+            method: 'GET',
             body: JSON.stringify({
                 departureAirport: from,
                 arrivalAirport: to,
@@ -230,14 +229,14 @@
                 isReturn: isReturn,
                 returnDate: end_date
             })
-        };
+        }
         try {
 
             const response = await fetch(serviceURL, requestParam);
             const data = await response.json();
 
             console.log(data); // Check for return
-            var flights = data.flights;
+           /* var flights = data.flights;
             // only showing econs standard
             for (const flight of flights) {
                 eachRow = "<td>" + flight.flight_no + "</td>" +
@@ -250,6 +249,7 @@
 
             }
             $('#go-flight').append(rows);
+            */
         } catch (e) {
             console.log(e);
 
