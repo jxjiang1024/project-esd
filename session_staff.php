@@ -14,5 +14,5 @@ if (isset($_POST['suffix'])) {
     $_SESSION['suffix'] = $_POST['suffix'];
 }
 $_SESSION['roles'] = $_POST['roles'];
-
+$_SESSION['contact_hp'] = $_POST['contact_hp'];
 ?>

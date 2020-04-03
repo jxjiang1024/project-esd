@@ -44,7 +44,7 @@ if (!isset($_SESSION['staff_id'])) {
     <script>
         $(async () => {
             try {
-                let serviceURL = "http://127.0.0.1:8001/staff/roles/" +<?php echo $_SESSION['roles']?>;
+                let serviceURL = "https://staffesd.azurewebsites.net/staff/roles/" +<?php echo $_SESSION['roles']?>;
                 const response = await fetch(serviceURL, {
                     headers: {"Content-Type": "application/json"},
                     method: 'GET',
@@ -164,16 +164,8 @@ if (!isset($_SESSION['staff_id'])) {
                                     class="mdi mdi-earth"></i><span class="hide-menu">Add More Routes</span></a>
                     </li>
                     <li><a class="waves-effect waves-dark" href="addflights.php" aria-expanded="false"><i
-                                    class="mdi mdi-airplane-takeoff"></i><span class="hide-menu">Add Flight Details</span></a>
-                    </li>
-                    <li><a class="waves-effect waves-dark" href="icon-material.html" aria-expanded="false"><i
-                                    class="mdi mdi-emoticon"></i><span class="hide-menu">Icons</span></a>
-                    </li>
-                    <li><a class="waves-effect waves-dark" href="pages-blank.html" aria-expanded="false"><i
-                                    class="mdi mdi-book-open-variant"></i><span class="hide-menu">Blank Page</span></a>
-                    </li>
-                    <li><a class="waves-effect waves-dark" href="pages-error-404.html" aria-expanded="false"><i
-                                    class="mdi mdi-help-circle"></i><span class="hide-menu">Error 404</span></a>
+                                    class="mdi mdi-airplane-takeoff"></i><span
+                                    class="hide-menu">Add Flight Details</span></a>
                     </li>
                 </ul>
 
@@ -259,37 +251,27 @@ if (!isset($_SESSION['staff_id'])) {
                                 <div class="form-group">
                                     <label class="col-md-12">Password</label>
                                     <div class="col-md-12">
-                                        <input type="password" value="password" class="form-control form-control-line">
+                                        <input type="password" value="password" class="form-control form-control-line"
+                                               disabled>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Phone No</label>
                                     <div class="col-md-12">
-                                        <input type="text" placeholder="123 456 7890"
+                                        <input type="text" placeholder="<?php echo $_SESSION['contact_hp']; ?>"
                                                class="form-control form-control-line">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-12">Message</label>
-                                    <div class="col-md-12">
-                                        <textarea rows="5" class="form-control form-control-line"></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-12">Select Country</label>
+                                    <label class="col-sm-12">Country</label>
                                     <div class="col-sm-12">
-                                        <select class="form-control form-control-line">
-                                            <option>London</option>
-                                            <option>India</option>
-                                            <option>Usa</option>
-                                            <option>Canada</option>
-                                            <option>Thailand</option>
-                                        </select>
+                                        <input type="text" placeholder="Singapore"
+                                               class="form-control form-control-line" disabled>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
-                                        <button class="btn btn-success">Update Profile</button>
+                                        <button class="btn btn-success">Update Contact Number</button>
                                     </div>
                                 </div>
                             </form>

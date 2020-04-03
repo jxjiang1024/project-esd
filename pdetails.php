@@ -97,129 +97,119 @@
               
 		<div id="colorlib-reservation">
       
-						<div class="tab-content">
-            <div id="title"class="colorlib-form">
-            <form method="post" action="checkout.php"> 
+      <div class="tab-content">
+        <div id="title"class="colorlib-form">
+          <form method="post" action="checkout.php">
+            <div class="container"> 
               <div class="row">
-              <div class="col-md-1">
-              <div class="form-group">
-                  <br>
-                 <label for="title"> TTILE:</label>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="title"> Title:</label>
                       <div class="form-field">
                         <select name="title" id="title" class="form-control">
-                          <option value="MR">MR</option>
-                          <option value="MRS">MRS</option>
-                          <option value="MS">MS</option>
+                          <option style="color:black;" value="MR">MR</option>
+                          <option style="color:black;" value="MRS">MRS</option>
+                          <option style="color:black;" value="MS">MS</option>
                         </select>
                       </div>
+                  </div>
+                </div>
+                  
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="fname">First Name:</label>
+                      <div class="form-field">
+                        <input type="text" name="fname"id="firstname" class="form-control" placeholder="First Name">
+                      </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="mname">Middle Name:</label>
+                      <div class="form-field">
+                        <input type="text" name="midname" id="midname" class="form-control" placeholder="Middle Name">
+                      </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="lname">Last Name:</label>
+                    <div class="form-field">
+                      <input type="text" name="lastname" id="lastname" class="form-control" placeholder="Last Name">
                     </div>
                   </div>
-              
-							<div id="flight" class="tab-pane fade in active">
-								<form method="post" class="colorlib-form">
-				              	<div class="row">
-				              	 <div class="col-md-3">
-				              	 	<div class="form-group">
-				                    <label for="fname">First Name:</label>
-				                    <div class="form-field">
-				                      <input type="text" name="firstname"id="firstname" class="form-control" placeholder="First Name">
-				                    </div>
-				                  </div>
-                         </div>
-                         <div class="col-md-3">
-                          <div class="form-group">
-                           <label for="mname">Middle Name:</label>
-                           <div class="form-field">
-                             <input type="text" name="midname" id="midname" class="form-control" placeholder="Middle Name">
-                           </div>
-                         </div>
-                        </div>
-                         <div class="col-md-3">
-                          <div class="form-group">
-                           <label for="lname">Last Name:</label>
-                           <div class="form-field">
-                             <input type="text" name="lastname" id="lastname" class="form-control" placeholder="Last Name">
-                           </div>
-                         </div>
-                        </div>
-				                <div class="col-md-2">
-                          <div class="form-group">
-                           <label for="bday"> BIRTHDAY:</label>
-                                <div class="form-field">
-                                  <i class="icon icon-arrow-down3"></i>
-                                  <select name="day" id="day" class="form-control">
-                                    <option value="#">1</option>
-                                    <option value="#">2</option>
-                                    <option value="#">3</option>
-                                    <option value="#">4</option>
-                                    <option value="#">5</option>
-                                    <option value="#">6</option>
-                                    <option value="#">7</option>
-                                    <option value="#">8</option>
-                                    <option value="#">9</option>
-                                    <option value="#">10</option>
-                                    <option value="#">11</option>
-                                    <option value="#">12</option>
-                                    <option value="#">13</option>
-                                    <option value="#">14</option>
-                                    <option value="#">15</option>
-                                    <option value="#">16</option>
-                                    <option value="#">17</option>
-                                    <option value="#">18</option>
-                                    <option value="#">19</option>
-                                    <option value="#">20</option>
-                                    <option value="#">21</option>
-                                    <option value="#">22</option>
-                                    <option value="#">23</option>
-                                    <option value="#">24</option>
-                                    <option value="#">25</option>
-                                    <option value="#">26</option>
-                                    <option value="#">27</option>
-                                    <option value="#">28</option>
-                                    <option value="#">29</option>
-                                    <option value="#">30</option>
-                                    <option value="#">31</option>
-
-                                  </select>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="col-md-2">
-                              <div class="form-group">
-                               <label for="month"> MONTH:</label>
-                                    <div class="form-field">
-                                      <i class="icon icon-arrow-down3"></i>
-                                      <select name="month" id="month" class="form-control">
-                                        <option value="#">1</option>
-                                        <option value="#">2</option>
-                                        <option value="#">3</option>
-                                        <option value="#">4</option>
-                                        <option value="#">5</option>
-                                        <option value="#">6</option>
-                                        <option value="#">7</option>
-                                        <option value="#">8</option>
-                                        <option value="#">9</option>
-                                        <option value="#">10</option>
-                                        <option value="#">11</option>
-                                        <option value="#">12</option>
-                                      </select>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-md-2">
-                                  <div class="form-group">
-                                   <label for="year"> YEAR:</label>
-                                        <div class="form-field">
-                             <input type="text" id="year" class="form-control" placeholder="YYYY">
-                           </div>
-                         </div>
-                        </div>
-				                <div class="col-md-2">
-                          <input type="submit" name="details_submit" id="details_submit" value="Proceed to checkout" class="btn btn-primary btn-block">
-				                </div>
-				              </div>
-				            </form>
-				         </div>
+                </div>
+              </div>
+              <!--Birthday-->
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="bday"> Birthday:</label>
+                    <div class="form-field">
+                      <input type="date" id="birthday" name="birthday" 
+                        class="form-control" placeholder="Select Date">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--Email-->
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="bday"> Email:</label>
+                    <div class="form-field">
+                      <input type="text" id="email" name="email" 
+                        class="form-control" placeholder="Enter Email Address">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--Address-->
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="street">Street Address:</label>
+                    <div class="form-field">
+                      <input type="text" id="street" class="form-control" placeholder="Street Name">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="town">Town/City:</label>
+                    <div class="form-field">
+                      <input type="text" id="town" class="form-control" placeholder="Town/City">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="country">Country:</label>
+                    <div class="form-field">
+                      <input type="text" id="country" class="form-control" placeholder="Country">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="state">Zip/State Code:</label>
+                    <div class="form-field">
+                      <input type="text" id="zip" class="form-control" placeholder="Zip/State Code">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <input type="submit" name="details_submit" id="details_submit" value="Proceed to checkout" class="btn btn-primary btn-block">
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+				         
 
 				                
 				         

@@ -70,7 +70,7 @@ if (isset($_SESSION["staff_id"])) {
                 $("#loadingwheel").show();
                 let email = $("#email").val();
                 let password = $("#password").val();
-                let serviceURL = "http://127.0.0.1:8001/staff/login/" + email;
+                let serviceURL = "https://staffesd.azurewebsites.net/staff/login/" + email;
                 // anonymous async function
                 // - using await requires the function that calls it to be async
                 $(async () => {
@@ -97,7 +97,8 @@ if (isset($_SESSION["staff_id"])) {
                                 "email": email,
                                 "roles": data.roles,
                                 "country": data.country_name,
-                                "country_code": data.country_code
+                                "country_code": data.country_code,
+                                "contact_hp":data.contact_hp
                             });
 
                             location.reload();

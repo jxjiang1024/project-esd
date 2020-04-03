@@ -101,9 +101,16 @@
             <div>
                 <?php
                 if (isset($_POST["from"]) && isset($_POST["to"]) && isset($_POST["start_date"]) && $_POST["end_date"] != "") {
+                    $departcty = $_POST["from"];
+                    $arrcty = $_POST["to"];
+                    $departdate = $_POST["start_date"];
+                    $arrdate = $_POST["end_date"];
                     echo "<h2>You have searched a flight from " . $_POST["from"] . " to " . $_POST["to"] . "</h2>";
                     echo "<h2>From " . $_POST["start_date"] . " to " . $_POST["end_date"] . "</h2>";
                 } elseif (isset($_POST["from"]) && isset($_POST["to"]) && isset($_POST["start_date"])) {
+                    $departcty = $_POST["from"];
+                    $arrcty = $_POST["to"];
+                    $departdate = $_POST["start_date"];
                     echo "<h2>You have searched a flight from " . $_POST["from"] . " to " . $_POST["to"] . " on " . $_POST["start_date"] . "</h2>";
                 } else {
                     header("Location: index.html");
@@ -117,18 +124,43 @@
                 <table id="go-flight" class='table table-striped' border='1'>
                     <thead class='thread-dark'>
                     <tr>
-                        <th>Depature Date</th>
-                        <th>Arrival Date</th>
+                        <th data-field="state" data-radio="true"></th>
+                        <th>Flight No</th>
+                        <th>Depature time</th>
+                        <th>Arrival time</th>
                         <th>Price</th>
                         <th>Availability</th>
-                        <th>Selection</th>
+                        <!--<th>Selection</th>-->
+                    
                     </tr>
 
                     </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <input type="radio" name="radioGroup" value ="1"checked>
+                        </td>
+                        <td>SFL802</td>
+                        <td>
+                            2020-05-12 01:45 AM
+                        </td>
+                        <td>
+                            2020-05-12 11:20 PM
+                        </td>
+                        <td>
+                            $950.00
+                        </td>
+                        <td>
+                            120
+                        </td>
+                    </tr>
+                    </tbody>
                 </table>
             </div>
-
-
+            
+            <div style="align:left;">
+            <a class="btn btn-warning" href="pdetails.php" role="button">Proceed to Personal Details</a>
+            </div>
         </div>
 
 
@@ -159,7 +191,7 @@
     </div>
 
 
-    </footer> -->
+    </footer> 
 </div>
 
 <div class="gototop js-top">
@@ -195,7 +227,7 @@
     $("subscribe").click(function () {
         alert("Thank you for your subsription");
     });
-       
+
 
     $(document).ready(function () {
         let serviceURL = "http://127.0.0.1:8003/flight/findFlights";// Input your Microservice URL
@@ -204,40 +236,46 @@
         let isReturn = true;
         let end_date = "<?php if ($_POST['check'] == 1) {
             echo "None";
-            
         } else {
             echo $_POST['end_date'];
         }?>";
         if (end_date == "None") {
-            let isReturn = false;
-        } 
+            isReturn = false;
+        }
         let from = "<?php echo $_POST['from']?>";
         let to = "<?php echo $_POST['to']?>";
         let NoTravellers = "<?php echo $_POST['travellers']?>";
-        getRoutes(serviceURL,from,to,isReturn,start_date,end_date);
+        start_date = new Date(start_date);
+        console.log(start_date.getDate());
+        let month = start_date.getMonth() + 1
+        start_date = start_date.getFullYear() + "-" + month.toString() + "-" + start_date.getDate();
+        getRoutes(serviceURL, from, to, isReturn, start_date, end_date);
 
     });
-    async function getRoutes(serviceURL,from,to,isReturn,start_date,end_date) {
-        let requestParam = {
-            headers: {"content-type": "charset=UTF-8"},
-            mode: 'cors', // allow cross-origin resource sharing
-            method: 'GET',
-            body: JSON.stringify({
-                departureAirport: from,
-                arrivalAirport: to,
-                depatureDate: start_date,
-                isReturn: isReturn,
-                returnDate: end_date
-            })
-        }
+
+    async function getRoutes(serviceURL, from, to, isReturn, start_date, end_date) {
         try {
-
-            const response = await fetch(serviceURL, requestParam);
+            const response =
+                await fetch(
+                    serviceURL, {
+                        headers: {"Content-Type": "application/json"},
+                        method: 'POST',
+                        mode: 'cors',
+                        body: JSON.stringify({
+                            departureAirport: from,
+                            arrivalAirport: to,
+                            departDate: start_date,
+                            isReturn: isReturn,
+                            returnDate: end_date
+                        })
+                    }
+                );
             const data = await response.json();
-
-            console.log(data); // Check for return
-           /* var flights = data.flights;
+            console.log(data);
+            // Check for return
+            var flights = data.flights;
             // only showing econs standard
+            let rows = "";
             for (const flight of flights) {
                 eachRow = "<td>" + flight.flight_no + "</td>" +
                     "<td>" + flight.flight_departure + "</td>" +
@@ -249,38 +287,12 @@
 
             }
             $('#go-flight').append(rows);
-            */
+
         } catch (e) {
             console.log(e);
 
         }
     }
-
-
-    // $(document).ready(function () {
-    //     let serviceURL = "";// Input your Microservice URL
-    //     getRoutes(serviceURL);
-
-    // });
-
-    // async function getRoutes(serviceURL) {
-    //     let requestParam = {
-    //         headers: {"content-type": "charset=UTF-8"},
-    //         mode: 'cors', // allow cross-origin resource sharing
-    //         method: 'POST',
-    //         body: JSON.stringify({password: password}) //Please prepare your json body string
-    //     }
-    //     try{
-    //         const response = await fetch(serviceURL, requestParam);
-    //         const data = await response.json();
-    //         console.log(data) // Check for return
-    //     }catch (e) {
-    //         console.log(e);
-
-    //     }
-    // }
-
-
 </script>
 </html>
 

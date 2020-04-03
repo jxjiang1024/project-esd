@@ -48,6 +48,16 @@ if (!isset($_SESSION['staff_id'])) {
             getTail(serviceURL);
             serviceURL = "http://127.0.0.1:8003/flight/route";
             getFlight(serviceURL);
+            check = '<?php if (isset($_SESSION['spiderweb'])) {
+                echo "1";
+            } else {
+                echo "0";
+            }?>'
+            if (parseInt(check) === 0) {
+                $('#message').hide();
+            } else {
+                $('#message').show();
+            }
         });
 
         async function getTail(serviceURL) {
@@ -62,15 +72,17 @@ if (!isset($_SESSION['staff_id'])) {
                 let aircrafts = data.aircraft;
                 console.log(aircrafts);
                 var optrow = "";
-                for(const aircraft of aircrafts){
+                for (const aircraft of aircrafts) {
                     optrow += "<option value='" + aircraft.tail_no + "'>" + aircraft.tail_no + "</option>";
                 }
                 $("#tail_no").append(optrow);
 
             } catch (e) {
-                var errmsg = '<h6 style="color: #c80000;">' + "Error Loading Page" +'</h6>';
-                    $("#msg_error").append(errmsg);
-                    $("#error_msg").show();
+                var errmsg = '<h6 style="color: #c80000;">' + "Error Loading Page" + '</h6>';
+                $("#msg_error").append(errmsg);
+                $("#error_msg").show();
+                $('#hide_form').hide();
+
             }
         }
 
@@ -86,72 +98,21 @@ if (!isset($_SESSION['staff_id'])) {
                 let flights = data.route;
                 console.log(flights);
                 var row = "";
-                for(const flight of flights){
+                for (const flight of flights) {
                     row += "<option value='" + flight.flight_no + "'>" + flight.flight_no + "</option>";
                 }
                 $("#flight_no").append(row);
 
             } catch (e) {
-                var errmsg = '<h6 style="color: #c80000;">' + "Error Loading Page" +'</h6>';
-                    $("#msg_error").append(errmsg);
-                    $("#error_msg").show();
+                var errmsg = '<h6 style="color: #c80000;">' + "Error Loading Page" + '</h6>';
+                $("#msg_error").append(errmsg);
+                $("#error_msg").show();
             }
         }
-        
 
-        // async function submitForm(serviceURL){
-        //     let requestParam = {
-        //         headers: {"content-type": "charset=UTF-8"},
-        //         mode: 'cors',
-        //         method: 'POST',
-        //         body: JSON.stringify({
-        //             flight_no: flight_no,
-        //             flight_departure: flight_departure,
-        //             flight_arrival: flight_arrival,
-        //             tail_no: tail_no,
-        //             econ_sv_price: econ_sv_price,
-        //             econ_sv_seat: econ_sv_seat,
-        //             econ_stnd_price: econ_stnd_price,
-        //             econ_stnd_seat: econ_stnd_seat,
-        //             econ_plus_price: econ_plus_price,
-        //             econ_plus_seat: econ_plus_seat,
-        //             pr_econ_sv_price: pr_econ_sv_price,
-        //             pr_econ_sv_seat: pr_econ_sv_seat,
-        //             pr_econ_stnd_price: pr_econ_stnd_price,
-        //             pr_econ_stnd_seat: pr_econ_stnd_seat,
-        //             pr_econ_plus_price: pr_econ_plus_price,
-        //             pr_econ_plus_seat: pr_econ_plus_seat,
-        //             bus_sv_price: bus_sv_price,
-        //             bus_sv_seat: bus_sv_seat,
-        //             bus_stnd_price: bus_stnd_price,
-        //             bus_stnd_seat: bus_stnd_seat,
-        //             bus_plus_price: bus_plus_price,
-        //             bus_plus_seat: bus_plus_seat,
-        //             first_stnd_price: first_stnd_price,
-        //             first_stnd_seat: first_stnd_seat,
-        //         })
-        //     }
-        //     try {
-        //         const response = await fetch(serviceURL, requestParam);
-        //         const data = await response.json();
-        //         console.log(data);
-        //         if(data.result==true){
-        //             location.href = "addflights-success.php";
-        //         } else {
-        //             var errmsg = '<h6 class="col-md-12" style="color: #c80000;">' +data.message+'</h6>';
-        //             $("#msg_error").append(errmsg);
-        //             $("#error_msg").show();
-        //         }
-        //     } catch(e){
-        //         var errmsg = '<h6 class="col-md-12" style="color: #c80000;">' +data.message+'</h6>';
-        //         $("#msg_error").append(errmsg);
-        //         $("#error_msg").show();
-        //     }
-        // }
-           
 
     </script>
-    
+
 </head>
 
 <body class="fix-header fix-sidebar card-no-border">
@@ -255,15 +216,6 @@ if (!isset($_SESSION['staff_id'])) {
                                     class="mdi mdi-airplane-takeoff"></i><span
                                     class="hide-menu">Add Fight Details</span></a>
                     </li>
-                    <li><a class="waves-effect waves-dark" href="../icon-material.html" aria-expanded="false"><i
-                                    class="mdi mdi-emoticon"></i><span class="hide-menu">Icons</span></a>
-                    </li>
-                    <li><a class="waves-effect waves-dark" href="../pages-blank.html" aria-expanded="false"><i
-                                    class="mdi mdi-book-open-variant"></i><span class="hide-menu">Blank Page</span></a>
-                    </li>
-                    <li><a class="waves-effect waves-dark" href="../pages-error-404.html" aria-expanded="false"><i
-                                    class="mdi mdi-help-circle"></i><span class="hide-menu">Error 404</span></a>
-                    </li>
                 </ul>
 
             </nav>
@@ -310,199 +262,212 @@ if (!isset($_SESSION['staff_id'])) {
             <!-- Start Page Content -->
             <!-- ============================================================== -->
             <!-- Row -->
-            <div class="row">
+            <div class="row" id="message">
                 <div class="col-lg-12">
-                    <div class= "card">
+                    <div class="card">
                         <div class="card-block">
                             <div class="form-horizontal form-material">
-                            <?php
-                                    if (!empty($_SESSION['spiderweb'])){
-                                        echo "<h5 style='color: #c80000;'>ERROR!</h5>";
-                                        echo "<ul style='color: #c80000;'>";
-                                        foreach($_SESSION["spiderweb"] as $spiders){
-                                            echo "<li>".$spiders."</li";
-                                        } echo "</ul>";
+                                <?php
+                                if (!empty($_SESSION['spiderweb'])) {
+                                    echo "<h5 style='color: #c80000;'>ERROR!</h5>";
+                                    echo "<ul style='color: #c80000;'>";
+                                    foreach ($_SESSION["spiderweb"] as $spiders) {
+                                        echo "<li>" . $spiders . "</li";
                                     }
-                                    unset($_SESSION["spiderweb"]);
-                                    ?>
+                                    echo "</ul>";
+                                }
+                                unset($_SESSION["spiderweb"]);
+                                ?>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <form id="comeon" method="post" action="addflightprocess.php">
-            
-            <div class="row">
-                <!-- Column -->
-                <!-- Column -->
-                <!-- Column -->
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-block">
-                            <form class="form-horizontal form-material">
-                                <div class="form-group">
-                                    <div class="col-md-12" id="error_msg">
-                                        <P style="color: #c80000;" id="msg_error">Error!</P>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="flight_no" class="col-md-12">Flight Number</label>
-                                    <div class="col-md-12">
-                                        <select placeholder="SFLXXX" id="flight_no"
-                                               class="form-control form-control-line" name="flight_no">
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-inline">
-                                    <div class="form-group col-md-6">
-                                        <label for="flight_departure">Flight Departure Date: </label>&nbsp;&nbsp;&nbsp;
-                                        <input type="date" id="flight_departure" name="flight_departure"
-                                               class="form-control form-control-line">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="flight_arrival">Flight Arrival Date: </label>&nbsp;&nbsp;&nbsp;
-                                        <input type="date" id="flight_arrival" name="flight_arrival"
-                                               class="form-control form-control-line">
-                                    </div>
-                                </div>
-                                </br>
 
-                                <div class="form-group">
-                                    <label class="col-md-12">Aircraft Tail Number</label>
-                                    <div class="col-md-12" id="dropdown" >
-                                        <select id="tail_no" name ="tail_no" placeholder="SFXXXX"
-                                                class="form-control form-control-line">
-                                            <option disabled>Select Aircraft Tail Number</option>
-                                        </select>
-                                    </div>
-                                </div>
+                <div class="row">
+                    <!-- Column -->
+                    <!-- Column -->
+                    <!-- Column -->
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-block">
 
-                                <div class="form-group">
-                                    <h4 class="col-md-12">Pricing Table</h4>
-                                    <h5 class="col-md-12">Economy</h5>
-                                    <table class="table">
-                                        <thead>
-                                        <tr>
-                                            <th>Category</th>
-                                            <th>Saver</th>
-                                            <th>Standard</th>
-                                            <th>Plus</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td style="vertical-align:middle">Economy</td>
-                                            <td>
-                                                <input class="col-md" type="number" placeholder="Price"
-                                                       id="econ_sv_price" name="econ_sv_price" min="0.00"
-                                                       step="any"></br>
-                                                <input class="col-md" type="number" placeholder="# of Seats"
-                                                       id="econ_sv_seat" name="econ_sv_seat" min="0">
-                                            </td>
-                                            <td>
-                                                <input class="col-md" type="number" placeholder="Price"
-                                                       id="econ_stnd_price" name="econ_stnd_price" min="0.00"
-                                                       step="any"></br>
-                                                <input class="col-md" type="number" placeholder="# of Seats"
-                                                       id="econ_stnd_seat" name="econ_stnd_seat" min="0">
-                                            </td>
-                                            <td>
-                                                <input class="col-md" type="number" placeholder="Price"
-                                                       id="econ_plus_price" name="econ_plus_price" min="0.00"
-                                                       step="any"></br>
-                                                <input class="col-md" type="number" placeholder="# of Seats"
-                                                       id="econ_plus_seat" name="econ_plus_seat" min="0">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="vertical-align:middle">Premium Economy</td>
-                                            <td>
-                                                <input class="col-md" type="number" placeholder="Price"
-                                                       id="pr_econ_sv_price" name="pr_econ_sv_price" min="0.00"
-                                                       step="any"></br>
-                                                <input class="col-md" type="number" placeholder="# of Seats"
-                                                       id="pr_econ_sv_seat" name="pr_econ_sv_seat" min="0">
-                                            </td>
-                                            <td>
-                                                <input class="col-md" type="number" placeholder="Price"
-                                                       id="pr_econ_stnd_price" name="pr_econ_stnd_price" min="0.00"
-                                                       step="any"></br>
-                                                <input class="col-md" type="number" placeholder="# of Seats"
-                                                       id="pr_econ_stnd_seat" name="pr_econ_stnd_seat" min="0">
-                                            </td>
-                                            <td>
-                                                <input class="col-md" type="number" placeholder="Price"
-                                                       id="pr_econ_plus_price" name="pr_econ_plus_price" min="0.00"
-                                                       step="any"></br>
-                                                <input class="col-md" type="number" placeholder="# of Seats"
-                                                       id="pr_econ_plus_seat" name="pr_econ_plus_seat" min="0">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="vertical-align:middle">Business</td>
-                                            <td>
-                                                <input class="col-md" type="number" placeholder="Price"
-                                                       id="bus_sv_price" name="bus_sv_price" min="0.00" step="any"></br>
-                                                <input class="col-md" type="number" placeholder="# of Seats"
-                                                       id="bus_sv_seat" name="bus_sv_seat" min="0">
-                                            </td>
-                                            <td>
-                                                <input class="col-md" type="number" placeholder="Price"
-                                                       id="bus_stnd_price" name="bus_stnd_price" min="0.00"
-                                                       step="any"></br>
-                                                <input class="col-md" type="number" placeholder="# of Seats"
-                                                       id="bus_stnd_seat" name="bus_stnd_seat" min="0">
-                                            </td>
-                                            <td>
-                                                <input class="col-md" type="number" placeholder="Price"
-                                                       id="bus_plus_price" name="bus_plus_price" min="0.00"
-                                                       step="any"></br>
-                                                <input class="col-md" type="number" placeholder="# of Seats"
-                                                       id="bus_plus_seat" name="bus_plus_seat" min="0">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="vertical-align:middle">First Class</td>
-                                            <td>
-                                                <input class="col-md" type="number" placeholder="NA" id="first_sv_price"
-                                                       name="first_sv_price" min="0.00" step="any" disabled></br>
-                                                <input class="col-md" type="number" placeholder="NA" id="first_sv_seat"
-                                                       name="first_sv_seat" min="0" disabled>
-                                            </td>
-                                            <td>
-                                                <input class="col-md" type="number" placeholder="Price"
-                                                       id="first_stnd_price" name="first_stnd_price" min="0.00"
-                                                       step="any"></br>
-                                                <input class="col-md" type="number" placeholder="# of Seats"
-                                                       id="first_stnd_seat" name="first_stnd_seat" min="0">
-                                            </td>
-                                            <td>
-                                                <input class="col-md" type="number" placeholder="NA"
-                                                       id="first_plus_price" name="first_plus_price" min="0.00"
-                                                       step="any" disabled></br>
-                                                <input class="col-md" type="number" placeholder="NA"
-                                                       id="first_plus_seat" name="first_plus_seat" min="0" disabled>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-
-                                </div>
-                                </br>
-                                <div class="form-group">
-                                    <div class="col-sm-12">
-                                        <input type="submit" id="fdsubmit" value="Add Flight" class="btn btn-success">
+                                <form class="form-horizontal form-material">
+                                    <div class="form-group">
+                                        <div class="col-md-12" id="error_msg">
+                                            <P style="color: #c80000;" id="msg_error">Error!</P>
+                                        </div>
                                     </div>
-                                </div>
-                            </form>
+                                    <div id="hide_form">
+                                        <div class="form-group">
+                                            <label for="flight_no" class="col-md-12">Flight Number</label>
+                                            <div class="col-md-12">
+                                                <select placeholder="SFLXXX" id="flight_no"
+                                                        class="form-control form-control-line" name="flight_no">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-inline">
+                                            <div class="form-group col-md-6">
+                                                <label for="flight_departure">Flight Departure Date: </label>&nbsp;&nbsp;&nbsp;
+                                                <input type="date" id="flight_departure" name="flight_departure"
+                                                       class="form-control form-control-line">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="flight_arrival">Flight Arrival Date: </label>&nbsp;&nbsp;&nbsp;
+                                                <input type="date" id="flight_arrival" name="flight_arrival"
+                                                       class="form-control form-control-line">
+                                            </div>
+                                        </div>
+                                        </br>
+
+                                        <div class="form-group">
+                                            <label class="col-md-12">Aircraft Tail Number</label>
+                                            <div class="col-md-12" id="dropdown">
+                                                <select id="tail_no" name="tail_no" placeholder="SFXXXX"
+                                                        class="form-control form-control-line">
+                                                    <option disabled>Select Aircraft Tail Number</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <h4 class="col-md-12">Pricing Table</h4>
+                                            <h5 class="col-md-12">Economy</h5>
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th>Category</th>
+                                                    <th>Saver</th>
+                                                    <th>Standard</th>
+                                                    <th>Plus</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td style="vertical-align:middle">Economy</td>
+                                                    <td>
+                                                        <input class="col-md" type="number" placeholder="Price"
+                                                               id="econ_sv_price" name="econ_sv_price" min="0.00"
+                                                               step="any"></br>
+                                                        <input class="col-md" type="number" placeholder="# of Seats"
+                                                               id="econ_sv_seat" name="econ_sv_seat" min="0">
+                                                    </td>
+                                                    <td>
+                                                        <input class="col-md" type="number" placeholder="Price"
+                                                               id="econ_stnd_price" name="econ_stnd_price" min="0.00"
+                                                               step="any"></br>
+                                                        <input class="col-md" type="number" placeholder="# of Seats"
+                                                               id="econ_stnd_seat" name="econ_stnd_seat" min="0">
+                                                    </td>
+                                                    <td>
+                                                        <input class="col-md" type="number" placeholder="Price"
+                                                               id="econ_plus_price" name="econ_plus_price" min="0.00"
+                                                               step="any"></br>
+                                                        <input class="col-md" type="number" placeholder="# of Seats"
+                                                               id="econ_plus_seat" name="econ_plus_seat" min="0">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="vertical-align:middle">Premium Economy</td>
+                                                    <td>
+                                                        <input class="col-md" type="number" placeholder="Price"
+                                                               id="pr_econ_sv_price" name="pr_econ_sv_price" min="0.00"
+                                                               step="any"></br>
+                                                        <input class="col-md" type="number" placeholder="# of Seats"
+                                                               id="pr_econ_sv_seat" name="pr_econ_sv_seat" min="0">
+                                                    </td>
+                                                    <td>
+                                                        <input class="col-md" type="number" placeholder="Price"
+                                                               id="pr_econ_stnd_price" name="pr_econ_stnd_price"
+                                                               min="0.00"
+                                                               step="any"></br>
+                                                        <input class="col-md" type="number" placeholder="# of Seats"
+                                                               id="pr_econ_stnd_seat" name="pr_econ_stnd_seat" min="0">
+                                                    </td>
+                                                    <td>
+                                                        <input class="col-md" type="number" placeholder="Price"
+                                                               id="pr_econ_plus_price" name="pr_econ_plus_price"
+                                                               min="0.00"
+                                                               step="any"></br>
+                                                        <input class="col-md" type="number" placeholder="# of Seats"
+                                                               id="pr_econ_plus_seat" name="pr_econ_plus_seat" min="0">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="vertical-align:middle">Business</td>
+                                                    <td>
+                                                        <input class="col-md" type="number" placeholder="Price"
+                                                               id="bus_sv_price" name="bus_sv_price" min="0.00"
+                                                               step="any"></br>
+                                                        <input class="col-md" type="number" placeholder="# of Seats"
+                                                               id="bus_sv_seat" name="bus_sv_seat" min="0">
+                                                    </td>
+                                                    <td>
+                                                        <input class="col-md" type="number" placeholder="Price"
+                                                               id="bus_stnd_price" name="bus_stnd_price" min="0.00"
+                                                               step="any"></br>
+                                                        <input class="col-md" type="number" placeholder="# of Seats"
+                                                               id="bus_stnd_seat" name="bus_stnd_seat" min="0">
+                                                    </td>
+                                                    <td>
+                                                        <input class="col-md" type="number" placeholder="Price"
+                                                               id="bus_plus_price" name="bus_plus_price" min="0.00"
+                                                               step="any"></br>
+                                                        <input class="col-md" type="number" placeholder="# of Seats"
+                                                               id="bus_plus_seat" name="bus_plus_seat" min="0">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="vertical-align:middle">First Class</td>
+                                                    <td>
+                                                        <input class="col-md" type="number" placeholder="NA"
+                                                               id="first_sv_price"
+                                                               name="first_sv_price" min="0.00" step="any"
+                                                               disabled></br>
+                                                        <input class="col-md" type="number" placeholder="NA"
+                                                               id="first_sv_seat"
+                                                               name="first_sv_seat" min="0" disabled>
+                                                    </td>
+                                                    <td>
+                                                        <input class="col-md" type="number" placeholder="Price"
+                                                               id="first_stnd_price" name="first_stnd_price" min="0.00"
+                                                               step="any"></br>
+                                                        <input class="col-md" type="number" placeholder="# of Seats"
+                                                               id="first_stnd_seat" name="first_stnd_seat" min="0">
+                                                    </td>
+                                                    <td>
+                                                        <input class="col-md" type="number" placeholder="NA"
+                                                               id="first_plus_price" name="first_plus_price" min="0.00"
+                                                               step="any" disabled></br>
+                                                        <input class="col-md" type="number" placeholder="NA"
+                                                               id="first_plus_seat" name="first_plus_seat" min="0"
+                                                               disabled>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                        </br>
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <input type="submit" id="fdsubmit" value="Add Flight"
+                                                       class="btn btn-success">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
                         </div>
                     </div>
+                    <!-- Column -->
                 </div>
-                <!-- Column -->
-            </div>
             </form>
-            
+
             <!-- Row -->
             <!-- ============================================================== -->
             <!-- End PAge Content -->

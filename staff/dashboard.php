@@ -71,7 +71,6 @@ if (!isset($_SESSION['staff_id'])) {
             const response = await fetch(serviceURL, requestParam);
             const data = await response.json();
             let route = data.route;
-
             if (data.result == true) {
                 var rows = "";
                 for (const listRoute of route) {
@@ -89,11 +88,15 @@ if (!isset($_SESSION['staff_id'])) {
             } else {
                 $("#tableError").show();
                 $("#routeListTable").hide();
+                $("#routes").hide();
+
+
             }
         } catch (e) {
             console.error(e)
             $("#tableError").show();
             $("#routeListTable").hide();
+            $("#routes").hide();
         }
 
 
@@ -115,17 +118,17 @@ if (!isset($_SESSION['staff_id'])) {
                 let rows = "";
                 for (const listFlight of flight) {
                     let departureDate = new Date(listFlight.flight_departure);
-                    let arrivalDate =  new Date(listFlight.flight_arrival);
-                    let departureMonth = departureDate.getMonth()+1;
-                    let arrivalMonth = arrivalDate.getMonth()+1;
+                    let arrivalDate = new Date(listFlight.flight_arrival);
+                    let departureMonth = departureDate.getMonth() + 1;
+                    let arrivalMonth = arrivalDate.getMonth() + 1;
                     eachRow =
                         "<td>" + listFlight.tail_no + "</td>" +
                         "<td>" + listFlight.economy_seats + "</td>" +
                         "<td>" + listFlight.premium_economy_seats + "</td>" +
                         "<td>" + listFlight.business_seats + "</td>" +
                         "<td>" + listFlight.first_class_seats + "</td>" +
-                        "<td>" + departureDate.getDate().toString() + "/" + departureMonth.toString()  + "/" + departureDate.getFullYear().toString() + "</td>" +
-                        "<td>" + arrivalDate.getDate().toString() + "/" + arrivalMonth.toString()  + "/" + arrivalDate.getFullYear().toString() + "</td>" +
+                        "<td>" + departureDate.getDate().toString() + "/" + departureMonth.toString() + "/" + departureDate.getFullYear().toString() + "</td>" +
+                        "<td>" + arrivalDate.getDate().toString() + "/" + arrivalMonth.toString() + "/" + arrivalDate.getFullYear().toString() + "</td>" +
                         "<td>" + listFlight.status + "</td>";
                     rows += "<tbody><tr>" + eachRow + "</tr></tbody>";
                 }
@@ -135,11 +138,13 @@ if (!isset($_SESSION['staff_id'])) {
             } else {
                 $("#errorFlight").show();
                 $("#flightTable").hide();
+                $("#addFlight").hide();
             }
         } catch (e) {
             console.error(e);
             $("#errorFlight").show();
             $("#flightTable").hide();
+            $("#addFlight").hide();
         }
     }
 </script>
@@ -147,7 +152,7 @@ if (!isset($_SESSION['staff_id'])) {
 <!-- ============================================================== -->
 <!-- Preloader - style you can find in spinners.css -->
 <!-- ============================================================== -->
-<div class="preloader">
+<div class="preloader" id="preloader">
     <svg class="circular" viewBox="25 25 50 50">
         <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
     </svg>
@@ -240,16 +245,8 @@ if (!isset($_SESSION['staff_id'])) {
                                     class="mdi mdi-earth"></i><span class="hide-menu">Add More Routes</span></a>
                     </li>
                     <li><a class="waves-effect waves-dark" href="addflights.php" aria-expanded="false"><i
-                                    class="mdi mdi-airplane-takeoff"></i><span class="hide-menu">Add Flight Details</span></a>
-                    </li>
-                    <li><a class="waves-effect waves-dark" href="icon-material.html" aria-expanded="false"><i
-                                    class="mdi mdi-emoticon"></i><span class="hide-menu">Icons</span></a>
-                    </li>
-                    <li><a class="waves-effect waves-dark" href="pages-blank.html" aria-expanded="false"><i
-                                    class="mdi mdi-book-open-variant"></i><span class="hide-menu">Blank Page</span></a>
-                    </li>
-                    <li><a class="waves-effect waves-dark" href="pages-error-404.html" aria-expanded="false"><i
-                                    class="mdi mdi-help-circle"></i><span class="hide-menu">Error 404</span></a>
+                                    class="mdi mdi-airplane-takeoff"></i><span
+                                    class="hide-menu">Add Flight Details</span></a>
                     </li>
                 </ul>
             </nav>
@@ -315,7 +312,7 @@ if (!isset($_SESSION['staff_id'])) {
                                     </thead>
 
                                 </table>
-                                <a style="float: right;" href="add_route.php" class="btn btn-success">
+                                <a style="float: right;" id="routes" href="add_route.php" class="btn btn-success">
                                     Add More Routes</a>
                             </div>
                         </div>
@@ -348,7 +345,7 @@ if (!isset($_SESSION['staff_id'])) {
                                     </thead>
 
                                 </table>
-                                <a style="float: right;" href="addflights.php" class="btn btn-success">
+                                <a style="float: right;" id="addFlight" href="addflights.php" class="btn btn-success">
                                     Add More Flights</a>
                             </div>
                         </div>

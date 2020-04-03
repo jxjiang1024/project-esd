@@ -108,14 +108,15 @@ def create_ticket(details):
         db.session.add(ticketDetails)
         db.session.commit()
         db.session.close()
-        data = json.dumps(data, default=str)
-        data = json.loads(data)
-        addData1 = {"ticketID": ticketID}
-        addData2 = {"today": str(today)}
-        data.update(addData1)
-        data.update(addData2)
-        print('data after update:',data)
-        requests.post('http://127.0.0.1:8302/ticket/email', data = data)
+        # addData1 = {"ticketID": ticketID}
+        # addData2 = {"today": str(today)}
+        # data.update(addData1)
+        # data.update(addData2)
+        data["ticketID"] = ticketID
+        data["today"] = str(today)
+        headers = {'Content-type': 'application/json'}
+        r = requests.post('http://127.0.0.1:8302/ticket/email', json = data, headers=headers)
+        print(r.text)
         return {"result":True}
     except Exception:
         db.session.rollback()

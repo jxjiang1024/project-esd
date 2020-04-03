@@ -83,7 +83,7 @@ def check_user(emails):
             result = json.loads(r.text.lower())
             up = str(records.country_code)
             prep_country = result['country_name']+ " ("+ up.upper() +")"
-            return jsonify({"result":True,"staff_id":records.staff_id,"prefix":records.prefix,"first_name":records.first_name,"last_name":records.last_name,"middle_name":records.middle_name,"suffix":records.suffix,"roles":records.roles,"country":prep_country.capitalize(),"country_code":records.country_code})
+            return jsonify({"result":True,"staff_id":records.staff_id,"prefix":records.prefix,"first_name":records.first_name,"last_name":records.last_name,"middle_name":records.middle_name,"suffix":records.suffix,"roles":records.roles,"country":prep_country.capitalize(),"country_code":records.country_code,"contact_hp":records.contact_hp})
         else:
             return jsonify({"result":False})
     except Exception:
@@ -119,4 +119,4 @@ def check_userRights(emails):
     
     
 if __name__ == "__main__":
-     app.run( port=8001, debug=True)
+     app.run(host='0.0.0.0', port=80, debug=True)
