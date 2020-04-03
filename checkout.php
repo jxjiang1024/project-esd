@@ -148,10 +148,37 @@
                 <div class="col-md-3">
                   <div class="form-group">
                     <label for="cvv"> Expiration Date:</label>
-                    <div class="form-field">
-                      <input type="text" id="edate" name="edate" 
-                        class="form-control" placeholder="mm/yy">
-                    </div>
+                    <div class="form-inline">
+                      <select id="edate-month" class="form-control">
+                        <option selected hidden>MM</option>
+                        <option style="color:black;" value="1">01</option>
+                        <option style="color:black;" value="2">02</option>
+                        <option style="color:black;" value="3">03</option>
+                        <option style="color:black;" value="4">04</option>
+                        <option style="color:black;" value="5">05</option>
+                        <option style="color:black;" value="6">06</option>
+                        <option style="color:black;" value="7">07</option>
+                        <option style="color:black;" value="8">08</option>
+                        <option style="color:black;" value="9">09</option>
+                        <option style="color:black;" value="10">10</option>
+                        <option style="color:black;" value="11">11</option>
+                        <option style="color:black;" value="12">12</option>
+                      </select> /
+                      <select id="edate-year" class="form-control" placeholder="YY">
+                        <option selected hidden>YYYY</option>
+                        <option style="color:black;" value="2020">2020</option>
+                        <option style="color:black;" value="2021">2021</option>
+                        <option style="color:black;" value="2022">2022</option>
+                        <option style="color:black;" value="2023">2023</option>
+                        <option style="color:black;" value="2024">2024</option>
+                        <option style="color:black;" value="2025">2025</option>
+                        <option style="color:black;" value="2026">2026</option>
+                        <option style="color:black;" value="2027">2027</option>
+                        <option style="color:black;" value="2028">2028</option>
+                        <option style="color:black;" value="2029">2029</option>
+                        <option style="color:black;" value="2030">2030</option>
+                      </select>
+                      </div>
                   </div>
                 </div>
               </div>     
