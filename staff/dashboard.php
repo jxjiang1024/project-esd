@@ -54,9 +54,9 @@ if (!isset($_SESSION['staff_id'])) {
     $(document).ready(function () {
         $("#tableError").hide();
         $("#errorFlight").hide();
-        let serviceURL = "http://127.0.0.1:8003/flight/route";
-        getRoutesData(serviceURL);
-        serviceURL = "http://127.0.0.1:8003/flight/details";
+        let routeURL = "http://127.0.0.1:8003/flight/route";
+        getRoutesData(routeURL);
+        let serviceURL = "http://127.0.0.1:8003/flight/details";
         getFlights(serviceURL);
     });
 
@@ -92,6 +92,7 @@ if (!isset($_SESSION['staff_id'])) {
 
 
             }
+            console.log(data);
         } catch (e) {
             console.error(e)
             $("#tableError").show();
