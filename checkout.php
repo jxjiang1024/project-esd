@@ -146,19 +146,15 @@
               <!--date/cvv-->
               <div class="row">
                 <div class="col-md-3">
-                <div class="form-field">
-                  <label for="bday"> Expiration Date:</label>
-                      <input type="text" id="edate" name="edate" class="form-control date" placeholder="Select date">
-                </div>                 
-                  <!-- <div class="form-group">
-                    <label for="bday"> Expiration Date:</label>
+                  <div class="form-group">
+                    <label for="cvv"> Expiration Date:</label>
                     <div class="form-field">
                       <input type="text" id="edate" name="edate" 
                         class="form-control" placeholder="mm/yy">
                     </div>
-                  </div> -->
+                  </div>
                 </div>
-              </div>
+              </div>     
               <div class="row">
                 <div class="col-md-3">
                   <div class="form-group">
