@@ -249,7 +249,6 @@ if (!isset($_POST["from"])) {
         let to = "<?php echo $_POST['to']?>";
         let NoTravellers = "<?php echo $_POST['travellers']?>";
         start_date = new Date(start_date);
-        console.log(start_date.getDate());
         let month = start_date.getMonth() + 1
         start_date = start_date.getFullYear() + "-" + month.toString() + "-" + start_date.getDate();
         getRoutes(serviceURL, from, to, isReturn, start_date, end_date);
