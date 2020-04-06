@@ -73,29 +73,22 @@ if (!isset($_POST["from"])) {
     <!--[if lt IE 9]>
     <script src="js/respond.min.js"></script>
     <![endif]-->
-
     <!-- Latest compiled and minified JavaScript -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script
             src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
     <script
             src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
             integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
             crossorigin="anonymous"></script>
-
     <script
             src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
             integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
             crossorigin="anonymous"></script>
 </head>
-
 <body>
-
 <div class="colorlib-loader"></div>
-
 <div id="page">
-
     <aside id="colorlib-hero">
         <div class="flexslider">
             <ul class="slides">
@@ -115,7 +108,6 @@ if (!isset($_POST["from"])) {
             </ul>
         </div>
     </aside>
-
     <div class="colorlib-wrap">
         <div class="container">
             <div>
@@ -172,7 +164,6 @@ if (!isset($_POST["from"])) {
                         </div>
                     </div>
                 </div>
-
                 <div style="align:left;">
                     <input type="submit" name="details_submit" id="details_submit" value="Proceed to checkout"
                            class="btn btn-warning">
@@ -180,7 +171,6 @@ if (!isset($_POST["from"])) {
             </form>
         </div>
     </div>
-
     <div id="colorlib-subscribe" style="background-image: url(images/img_bg_2.jpg);"
          data-stellar-background-ratio="0.5">
         <div class="overlay"></div>
@@ -193,8 +183,6 @@ if (!isset($_POST["from"])) {
             </div>
         </div>
     </div>
-
-
     </footer>
 </div>
 
@@ -231,8 +219,6 @@ if (!isset($_POST["from"])) {
     $("subscribe").click(function () {
         alert("Thank you for your subsription");
     });
-
-
     $(document).ready(function () {
         $('#form_data').hide();
         $('#error').hide();
