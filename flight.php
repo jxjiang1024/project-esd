@@ -22,6 +22,16 @@
 
     <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet">
 
+
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
+    <!--===============================================================================================-->
+
     <!-- Animate.css -->
     <link rel="stylesheet" href="css/animate.css">
     <!-- Icomoon Icon Fonts-->
@@ -43,6 +53,10 @@
     <link rel="stylesheet" href="css/bootstrap-datepicker.css">
     <!-- Flaticons  -->
     <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="stylesheet" type="text/css" href="css/table_flight.css">
+    <!--===============================================================================================-->
 
     <!-- Theme style  -->
     <link rel="stylesheet" href="css/style.css">
@@ -119,47 +133,212 @@
                 ?>
             </div>
 
-            <div id="main-container" class="container">
+            <div class="limiter">
+                <div class="container-table100">
+                    <div class="wrap-table100">
+                        <div class="table100 ver1 m-b-110">
+                            <div class="table100-head">
+                                <table>
+                                    <thead>
+                                    <tr class="row100 head">
+                                        <th class="cell100 column1">Class name</th>
+                                        <th class="cell100 column2">Type</th>
+                                        <th class="cell100 column3">Hours</th>
+                                        <th class="cell100 column4">Trainer</th>
+                                        <th class="cell100 column5">Spots</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
 
-                <table id="go-flight" class='table table-striped' border='1'>
-                    <thead class='thread-dark'>
-                    <tr>
-                        <th data-field="state" data-radio="true"></th>
-                        <th>Flight No</th>
-                        <th>Depature time</th>
-                        <th>Arrival time</th>
-                        <th>Price</th>
-                        <th>Availability</th>
-                        <!--<th>Selection</th>-->
-                    
-                    </tr>
+                            <div class="table100-body js-pscroll">
+                                <table>
+                                    <tbody>
+                                    <tr class="row100 body">
+                                        <td class="cell100 column1">Like a butterfly</td>
+                                        <td class="cell100 column2">Boxing</td>
+                                        <td class="cell100 column3">9:00 AM - 11:00 AM</td>
+                                        <td class="cell100 column4">Aaron Chapman</td>
+                                        <td class="cell100 column5">10</td>
+                                    </tr>
 
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>
-                            <input type="radio" name="radioGroup" value ="1"checked>
-                        </td>
-                        <td>SFL802</td>
-                        <td>
-                            2020-05-12 01:45 AM
-                        </td>
-                        <td>
-                            2020-05-12 11:20 PM
-                        </td>
-                        <td>
-                            $950.00
-                        </td>
-                        <td>
-                            120
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                                    <tr class="row100 body">
+                                        <td class="cell100 column1">Mind & Body</td>
+                                        <td class="cell100 column2">Yoga</td>
+                                        <td class="cell100 column3">8:00 AM - 9:00 AM</td>
+                                        <td class="cell100 column4">Adam Stewart</td>
+                                        <td class="cell100 column5">15</td>
+                                    </tr>
+
+                                    <tr class="row100 body">
+                                        <td class="cell100 column1">Crit Cardio</td>
+                                        <td class="cell100 column2">Gym</td>
+                                        <td class="cell100 column3">9:00 AM - 10:00 AM</td>
+                                        <td class="cell100 column4">Aaron Chapman</td>
+                                        <td class="cell100 column5">10</td>
+                                    </tr>
+
+                                    <tr class="row100 body">
+                                        <td class="cell100 column1">Wheel Pose Full Posture</td>
+                                        <td class="cell100 column2">Yoga</td>
+                                        <td class="cell100 column3">7:00 AM - 8:30 AM</td>
+                                        <td class="cell100 column4">Donna Wilson</td>
+                                        <td class="cell100 column5">15</td>
+                                    </tr>
+
+                                    <tr class="row100 body">
+                                        <td class="cell100 column1">Playful Dancer's Flow</td>
+                                        <td class="cell100 column2">Yoga</td>
+                                        <td class="cell100 column3">8:00 AM - 9:00 AM</td>
+                                        <td class="cell100 column4">Donna Wilson</td>
+                                        <td class="cell100 column5">10</td>
+                                    </tr>
+
+                                    <tr class="row100 body">
+                                        <td class="cell100 column1">Zumba Dance</td>
+                                        <td class="cell100 column2">Dance</td>
+                                        <td class="cell100 column3">5:00 PM - 7:00 PM</td>
+                                        <td class="cell100 column4">Donna Wilson</td>
+                                        <td class="cell100 column5">20</td>
+                                    </tr>
+
+                                    <tr class="row100 body">
+                                        <td class="cell100 column1">Cardio Blast</td>
+                                        <td class="cell100 column2">Gym</td>
+                                        <td class="cell100 column3">5:00 PM - 7:00 PM</td>
+                                        <td class="cell100 column4">Randy Porter</td>
+                                        <td class="cell100 column5">10</td>
+                                    </tr>
+
+                                    <tr class="row100 body">
+                                        <td class="cell100 column1">Pilates Reformer</td>
+                                        <td class="cell100 column2">Gym</td>
+                                        <td class="cell100 column3">8:00 AM - 9:00 AM</td>
+                                        <td class="cell100 column4">Randy Porter</td>
+                                        <td class="cell100 column5">10</td>
+                                    </tr>
+
+                                    <tr class="row100 body">
+                                        <td class="cell100 column1">Supple Spine and Shoulders</td>
+                                        <td class="cell100 column2">Yoga</td>
+                                        <td class="cell100 column3">6:30 AM - 8:00 AM</td>
+                                        <td class="cell100 column4">Randy Porter</td>
+                                        <td class="cell100 column5">15</td>
+                                    </tr>
+
+                                    <tr class="row100 body">
+                                        <td class="cell100 column1">Yoga for Divas</td>
+                                        <td class="cell100 column2">Yoga</td>
+                                        <td class="cell100 column3">9:00 AM - 11:00 AM</td>
+                                        <td class="cell100 column4">Donna Wilson</td>
+                                        <td class="cell100 column5">20</td>
+                                    </tr>
+
+                                    <tr class="row100 body">
+                                        <td class="cell100 column1">Virtual Cycle</td>
+                                        <td class="cell100 column2">Gym</td>
+                                        <td class="cell100 column3">8:00 AM - 9:00 AM</td>
+                                        <td class="cell100 column4">Randy Porter</td>
+                                        <td class="cell100 column5">20</td>
+                                    </tr>
+
+                                    <tr class="row100 body">
+                                        <td class="cell100 column1">Like a butterfly</td>
+                                        <td class="cell100 column2">Boxing</td>
+                                        <td class="cell100 column3">9:00 AM - 11:00 AM</td>
+                                        <td class="cell100 column4">Aaron Chapman</td>
+                                        <td class="cell100 column5">10</td>
+                                    </tr>
+
+                                    <tr class="row100 body">
+                                        <td class="cell100 column1">Mind & Body</td>
+                                        <td class="cell100 column2">Yoga</td>
+                                        <td class="cell100 column3">8:00 AM - 9:00 AM</td>
+                                        <td class="cell100 column4">Adam Stewart</td>
+                                        <td class="cell100 column5">15</td>
+                                    </tr>
+
+                                    <tr class="row100 body">
+                                        <td class="cell100 column1">Crit Cardio</td>
+                                        <td class="cell100 column2">Gym</td>
+                                        <td class="cell100 column3">9:00 AM - 10:00 AM</td>
+                                        <td class="cell100 column4">Aaron Chapman</td>
+                                        <td class="cell100 column5">10</td>
+                                    </tr>
+
+                                    <tr class="row100 body">
+                                        <td class="cell100 column1">Wheel Pose Full Posture</td>
+                                        <td class="cell100 column2">Yoga</td>
+                                        <td class="cell100 column3">7:00 AM - 8:30 AM</td>
+                                        <td class="cell100 column4">Donna Wilson</td>
+                                        <td class="cell100 column5">15</td>
+                                    </tr>
+
+                                    <tr class="row100 body">
+                                        <td class="cell100 column1">Playful Dancer's Flow</td>
+                                        <td class="cell100 column2">Yoga</td>
+                                        <td class="cell100 column3">8:00 AM - 9:00 AM</td>
+                                        <td class="cell100 column4">Donna Wilson</td>
+                                        <td class="cell100 column5">10</td>
+                                    </tr>
+
+                                    <tr class="row100 body">
+                                        <td class="cell100 column1">Zumba Dance</td>
+                                        <td class="cell100 column2">Dance</td>
+                                        <td class="cell100 column3">5:00 PM - 7:00 PM</td>
+                                        <td class="cell100 column4">Donna Wilson</td>
+                                        <td class="cell100 column5">20</td>
+                                    </tr>
+
+                                    <tr class="row100 body">
+                                        <td class="cell100 column1">Cardio Blast</td>
+                                        <td class="cell100 column2">Gym</td>
+                                        <td class="cell100 column3">5:00 PM - 7:00 PM</td>
+                                        <td class="cell100 column4">Randy Porter</td>
+                                        <td class="cell100 column5">10</td>
+                                    </tr>
+
+                                    <tr class="row100 body">
+                                        <td class="cell100 column1">Pilates Reformer</td>
+                                        <td class="cell100 column2">Gym</td>
+                                        <td class="cell100 column3">8:00 AM - 9:00 AM</td>
+                                        <td class="cell100 column4">Randy Porter</td>
+                                        <td class="cell100 column5">10</td>
+                                    </tr>
+
+                                    <tr class="row100 body">
+                                        <td class="cell100 column1">Supple Spine and Shoulders</td>
+                                        <td class="cell100 column2">Yoga</td>
+                                        <td class="cell100 column3">6:30 AM - 8:00 AM</td>
+                                        <td class="cell100 column4">Randy Porter</td>
+                                        <td class="cell100 column5">15</td>
+                                    </tr>
+
+                                    <tr class="row100 body">
+                                        <td class="cell100 column1">Yoga for Divas</td>
+                                        <td class="cell100 column2">Yoga</td>
+                                        <td class="cell100 column3">9:00 AM - 11:00 AM</td>
+                                        <td class="cell100 column4">Donna Wilson</td>
+                                        <td class="cell100 column5">20</td>
+                                    </tr>
+
+                                    <tr class="row100 body">
+                                        <td class="cell100 column1">Virtual Cycle</td>
+                                        <td class="cell100 column2">Gym</td>
+                                        <td class="cell100 column3">8:00 AM - 9:00 AM</td>
+                                        <td class="cell100 column4">Randy Porter</td>
+                                        <td class="cell100 column5">20</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            
+
             <div style="align:left;">
-            <a class="btn btn-warning" href="pdetails.php" role="button">Proceed to Personal Details</a>
+                <a class="btn btn-warning" href="pdetails.php" role="button">Proceed to Personal Details</a>
             </div>
         </div>
 
@@ -175,35 +354,22 @@
                 <div class="col-md-6 col-md-offset-3 text-center colorlib-heading animate-box">
                     <h2>Sign Up for a Newsletter</h2>
                     <p>Sign up for our mailing list to get latest updates and offers.</p>
-                    <form class="form-inline qbstp-header-subscribe">
-                        <div class="row">
-                            <div class="col-md-12 col-md-offset-0">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="email" placeholder="Enter your email">
-                                    <button type="submit" class="btn btn-primary" id="subscribe">Subscribe</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
     </div>
 
 
-    </footer> 
+    </footer>
 </div>
 
 <div class="gototop js-top">
     <a href="#" class="js-gotop"><i class="icon-arrow-up2"></i></a>
 </div>
 
-<!-- jQuery -->
-<script src="js/jquery.min.js"></script>
+
 <!-- jQuery Easing -->
 <script src="js/jquery.easing.1.3.js"></script>
-<!-- Bootstrap -->
-<script src="js/bootstrap.min.js"></script>
 <!-- Waypoints -->
 <script src="js/jquery.waypoints.min.js"></script>
 <!-- Flexslider -->
@@ -218,10 +384,13 @@
 <!-- Stellar Parallax -->
 <script src="js/jquery.stellar.min.js"></script>
 
+<!--===============================================================================================-->
+<script src="vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+
 <!-- Main -->
 <script src="js/main.js"></script>
-
-</body>
 <script>
 
     $("subscribe").click(function () {
@@ -293,6 +462,19 @@
 
         }
     }
+
+    $('.js-pscroll').each(function () {
+        var ps = new PerfectScrollbar(this);
+
+        $(window).on('resize', function () {
+            ps.update();
+        })
+    });
+
 </script>
+<script src="js/table_flight.js"></script>
+
+</body>
+
 </html>
 
