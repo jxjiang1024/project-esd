@@ -163,6 +163,11 @@ if (!isset($_POST["from"])) {
                             </div>
                         </div>
                     </div>
+                    <?php if ($_POST['check'] == "0") {
+                        ?>
+                        <p>Test</p>
+                        <?php
+                    } ?>
                 </div>
                 <div style="align:left;">
                     <input type="submit" name="details_submit" id="details_submit" value="Proceed to checkout"
