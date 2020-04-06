@@ -138,7 +138,10 @@ if (!isset($_POST["from"])) {
 
                 ?>
             </div>
-            <form method="GET" action="pdetails.php">
+            <br/>
+            <h2 id="loading">Retriving Flight List. Please Wait.</h2>
+            <h2 id="error">Unable to retrieve Flight Listing.<br/>Please Try Again.</h2>
+            <form method="GET" action="pdetails.php" id="form_data">
                 <input type="hidden" name="departure_airport" value="<?php echo $_POST["from"]; ?>"/>
                 <input type="hidden" name="arrival_airport" value="<?php echo $_POST["to"]; ?>"/>
                 <div class="limiter">
@@ -175,10 +178,7 @@ if (!isset($_POST["from"])) {
                 </div>
             </form>
         </div>
-
-
     </div>
-
 
     <div id="colorlib-subscribe" style="background-image: url(images/img_bg_2.jpg);"
          data-stellar-background-ratio="0.5">
@@ -233,6 +233,9 @@ if (!isset($_POST["from"])) {
 
 
     $(document).ready(function () {
+        $('#form_data').hide();
+        $('#error').hide();
+
         let serviceURL = "http://127.0.0.1:8003/flight/findFlights";// Input your Microservice URL
         let check = "<?php echo $_POST['check']?>";
         let start_date = "<?php echo $_POST['start_date']?>";
@@ -289,10 +292,11 @@ if (!isset($_POST["from"])) {
                 rows += "<tbody><tr class=\"row100 body\">" + eachRow + "</tr></tbody>";
             }
             $('#data').append(rows);
-
+            $('#form_data').show();
+            $('#loading').hide();
         } catch (e) {
-            console.log(e);
-
+            $('#error').show();
+            $('#loading').hide();
         }
     }
 
