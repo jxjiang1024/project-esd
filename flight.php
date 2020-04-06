@@ -138,7 +138,7 @@ if (!isset($_POST["from"])) {
 
                 ?>
             </div>
-            <form>
+            <form method="GET" action="pdetails.php">
                 <div class="limiter">
                     <div class="container-table100">
                         <div class="wrap-table100">
@@ -168,7 +168,7 @@ if (!isset($_POST["from"])) {
                 </div>
 
                 <div style="align:left;">
-                    <a class="btn btn-warning" href="pdetails.php" role="button">Proceed to Personal Details</a>
+                    <input type="submit" name="details_submit" id="details_submit" value="Proceed to checkout" class="btn btn-warning">
                 </div>
             </form>
         </div>

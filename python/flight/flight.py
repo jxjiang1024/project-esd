@@ -371,7 +371,6 @@ def get_all_airport_names():
 @app.route("/flight/findFlights", methods=['POST'])
 def findFlights():
     data = request.get_json()
-    departDate = str(data['departDate'])
     try:
         departureAirport = iataCode.query.filter(iataCode.airportName == data['departureAirport']).first()
         arrivalAirport = iataCode.query.filter(iataCode.airportName == data['arrivalAirport']).first()
