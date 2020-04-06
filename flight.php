@@ -1,5 +1,11 @@
 <!DOCTYPE HTML>
 <html>
+<?php
+session_start();
+if (!isset($_POST["from"])) {
+    header("location:index.html");
+}
+?>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
