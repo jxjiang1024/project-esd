@@ -58,7 +58,6 @@
     <!--[if lt IE 9]>
     <script src="js/respond.min.js"></script>
     <![endif]-->
-
     <!-- Latest compiled and minified JavaScript -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script
@@ -101,7 +100,6 @@
     <div id="colorlib-reservation">
         <div class="tab-content">
             <div id="title" class="colorlib-form">
-
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12"><h2 style="color: white">Tickets Details</h2></div>
@@ -302,7 +300,6 @@
                     </form>
 
                 </div>
-
             </div>
         </div>
     </div>
