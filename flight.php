@@ -139,6 +139,8 @@ if (!isset($_POST["from"])) {
                 ?>
             </div>
             <form method="GET" action="pdetails.php">
+                <input type="hidden" name="departure_airport" value="<?php echo $_POST["from"]; ?>"/>
+                <input type="hidden" name="arrival_airport" value="<?php echo $_POST["to"]; ?>"/>
                 <div class="limiter">
                     <div class="container-table100">
                         <div class="wrap-table100">
@@ -168,7 +170,8 @@ if (!isset($_POST["from"])) {
                 </div>
 
                 <div style="align:left;">
-                    <input type="submit" name="details_submit" id="details_submit" value="Proceed to checkout" class="btn btn-warning">
+                    <input type="submit" name="details_submit" id="details_submit" value="Proceed to checkout"
+                           class="btn btn-warning">
                 </div>
             </form>
         </div>
@@ -279,11 +282,11 @@ if (!isset($_POST["from"])) {
             for (const flight of flights) {
                 eachRow =
                     "<td class=\"cell100 column1\"><input  TYPE=radio name='flight_id' value='" + flight.flight_details_id + "'/></td>" +
-                    "<td class=\"cell100 column2\">" + flight.flight_no + "<input type='hidden' name='flight_no' value='"+flight.flight_no+ "'/></td>" +
-                    "<td class=\"cell100 column3\">" + flight.flight_departure + "<input type='hidden' name='flight_departure' value='"+flight.flight_departure+ "'/></td>" +
-                    "<td class=\"cell100 column4\">" + flight.flight_arrival + "<input type='hidden' name='flight_arrival' value='"+flight.flight_arrival+ "'/></td>" +
-                    "<td class=\"cell100 column5\">" + flight.econ_stnd_price + "<input type='hidden' name='econ_stnd_price' value='"+flight.econ_stnd_price+ "'/></td>" +
-                    "<td class=\"cell100 column6\">" + flight.econ_stnd_seat + "<input type='hidden' name='econ_stnd_seat' value='"+flight.econ_stnd_seat+ "'/></td>";
+                    "<td class=\"cell100 column2\">" + flight.flight_no + "<input type='hidden' name='flight_no' value='" + flight.flight_no + "'/></td>" +
+                    "<td class=\"cell100 column3\">" + flight.flight_departure + "<input type='hidden' name='flight_departure' value='" + flight.flight_departure + "'/></td>" +
+                    "<td class=\"cell100 column4\">" + flight.flight_arrival + "<input type='hidden' name='flight_arrival' value='" + flight.flight_arrival + "'/></td>" +
+                    "<td class=\"cell100 column5\">" + flight.econ_stnd_price + "<input type='hidden' name='econ_stnd_price' value='" + flight.econ_stnd_price + "'/></td>" +
+                    "<td class=\"cell100 column6\">" + flight.econ_stnd_seat + "<input type='hidden' name='econ_stnd_seat' value='" + flight.econ_stnd_seat + "'/></td>";
                 rows += "<tbody><tr class=\"row100 body\">" + eachRow + "</tr></tbody>";
             }
             $('#data').append(rows);
