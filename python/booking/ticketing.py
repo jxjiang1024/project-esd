@@ -114,9 +114,20 @@ def create_ticket(details):
         # data.update(addData2)
         data["ticketID"] = ticketID
         data["today"] = str(today)
-        headers = {'Content-type': 'application/json'}
-        r = requests.post('http://127.0.0.1:8302/ticket/email', json = data, headers=headers)
-        print(r.text)
+
+        hostname = "localhost"
+        port = 5672
+        # # connect to the broker and set up a communication channel in the connection
+        connection = pika.BlockingConnection(pika.ConnectionParameters(host=hostname, port=port))
+        channel = connection.channel()
+        # # set up the exchange if the exchange doesn't exist
+        exchangename="booking"
+        data = json.dumps(data, default=str)
+        channel.basic_publish(exchange=exchangename, routing_key="booking.info", body=data)
+
+        # headers = {'Content-type': 'application/json'}
+        # r = requests.post('http://127.0.0.1:8302/ticket/email', json = data, headers=headers)
+        # print(r.text)
         return {"result":True}
     except Exception:
         db.session.rollback()
