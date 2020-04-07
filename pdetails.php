@@ -108,7 +108,7 @@ if (!isset($_GET['check'])) {
                         <div class="col-md-12"><h2 style="color: white">Tickets Details</h2></div>
                     </div>
                     <div class="row">
-                        <div class="col-md-7">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="flight_number"> Flight Number:</label>
                                 <div class="form-field">
@@ -117,7 +117,7 @@ if (!isset($_GET['check'])) {
                             </div>
                         </div>
                         <?php if ($_GET['check'] == "0") { ?>
-                            <div class="col-md-5">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="flight_number">Return Flight Number:</label>
                                     <div class="form-field">
@@ -129,7 +129,7 @@ if (!isset($_GET['check'])) {
 
                     </div>
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <label for="depart_date">Departure Airport:</label>
                                 <div class="form-field">
@@ -145,7 +145,7 @@ if (!isset($_GET['check'])) {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <label for="depart_date">Departure Time:</label>
                                 <div class="form-field">
@@ -153,9 +153,17 @@ if (!isset($_GET['check'])) {
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="depart_date">Departure Airport:</label>
+                                <div class="form-field">
+                                    <p><b><?php echo $_GET['arrival_airport']; ?></b></p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <label for="arrival_Date">Arrival Airport:</label>
                                 <div class="form-field">
@@ -171,7 +179,7 @@ if (!isset($_GET['check'])) {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <label for="arrival_Date">Arrival Time:</label>
                                 <div class="form-field">
@@ -179,6 +187,16 @@ if (!isset($_GET['check'])) {
                                 </div>
                             </div>
                         </div>
+                        <?php if ($_GET['check'] == "0") { ?>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="arrival_Date">Departure Airport:</label>
+                                    <div class="form-field">
+                                        <p><b><?php echo $_GET['departure_airport']; ?></b></p>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
