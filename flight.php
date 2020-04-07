@@ -189,7 +189,8 @@ if (!isset($_POST["from"])) {
                                     </div>
 
                                     <div class="table100-body js-pscroll">
-                                        <table id="return_data">
+                                        <table>
+                                            <tbody id="return_data"></tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -339,7 +340,7 @@ if (!isset($_POST["from"])) {
                             "<td class=\"cell100 column5\">" + flight.econ_stnd_price + "</td>" +
                             "<td class=\"cell100 column6\">" + flight.econ_stnd_seat + "</td>" +
                             "<input type='hidden' name='arrival_date' value='" + end + "'/>";
-                        rows += "<tbody><tr class=\"row100 body\">" + eachRow + "</tr></tbody>";
+                        rows += "<tr class=\"row100 body\">" + eachRow + "</tr>";
                     }
                 }
                 $('#return_data').append(rows);

@@ -344,7 +344,7 @@ if (!isset($_GET['check'])) {
         let end_date = "<?php if ($_GET['check'] == 1) {
             echo "None";
         } else {
-            echo $_GET['end_date'];
+            echo $_GET['arrival_date'];
         }?>";
         if (end_date == "None") {
             isReturn = false;
