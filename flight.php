@@ -158,6 +158,14 @@ if (!isset($_POST["from"])) {
 
                                 <div class="table100-body js-pscroll">
                                     <table id="data">
+                                    <tr class="row100 head">
+                                            <th class="cell100 column1">Selection</th>
+                                            <th class="cell100 column2">Flight No</th>
+                                            <th class="cell100 column3">Departure Time</th>
+                                            <th class="cell100 column4">Arrival Time</th>
+                                            <th class="cell100 column5">Price</th>
+                                            <th class="cell100 column5">Availability</th>
+                                        </tr>
                                     </table>
                                 </div>
                             </div>
