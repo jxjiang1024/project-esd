@@ -247,6 +247,11 @@ if (!isset($_GET['check'])) {
                 <br/>
                 <div class="container">
                     <form method="post" action="checkout.php">
+                        <input type="hidden" name="dep_flight_id" value="<?php echo $_GET['flight_id']; ?>"/>
+                        <?php if ($_GET['check'] == "0") { ?>
+                            <input type="hidden" name="return_flight_id"
+                                   value="<?php echo $_GET["return_flight_id"]; ?>"/>
+                        <?php } ?>
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-12"><h2 style="color: white">Personal Details</h2></div>
