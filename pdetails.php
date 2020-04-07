@@ -235,7 +235,7 @@ if (!isset($_GET['check'])) {
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="price">Ticket Price:</label>
+                                <label for="price">Total Ticket Price:</label>
                                 <div class="form-field">
                                     <p><b id="ticket_price"></b></p>
                                 </div>
@@ -452,12 +452,14 @@ if (!isset($_GET['check'])) {
             const data = await response.json();
             // Check for return
             let flights = data.flights;
+            let ticket_price = 0;
             for (const flight of flights) {
                 if (flight.return == false && flight.flight_details_id == flight_details_id.toString()) {
                     $("#flight_number").text(flight.flight_no.toString());
                     $("#departure_time").text(flight.departure_time.toString());
                     $("#arrival_time").text(flight.arrival_time.toString());
-                    $("#ticket_price").text("S$ " + flight.econ_stnd_price.toString());
+                    ticket_price = ticket_price + flight.econ_stnd_price;
+
                 }
             }
             if (check.toString() === "0") {
@@ -466,9 +468,11 @@ if (!isset($_GET['check'])) {
                         $("#return_flight_number").text(flight.flight_no.toString());
                         $("#return_departure_time").text(flight.departure_time.toString());
                         $("#return_arrival_time").text(flight.arrival_time.toString());
+                        ticket_price = (ticket_price + flight.econ_stnd_price) * 0.8;
                     }
                 }
             }
+            $("#ticket_price").text("S$ " + ticket_price.toString());
         } catch (e) {
 
         }

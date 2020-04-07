@@ -313,12 +313,16 @@ if (!isset($_POST["from"])) {
                     end = new Date(flight.flight_arrival.toString());
                     let end_month = end.getMonth() + 1
                     end = end_month.toString() + "/" + end.getDate() + "/" + end.getFullYear();
+                    let ticket_price = flight.econ_stnd_price;
+                    if (check.toString() == "0") {
+                        ticket_price = ticket_price * 0.8;
+                    }
                     eachRow =
                         "<td class=\"cell100 column1\"><input  TYPE=radio name='flight_id' value='" + flight.flight_details_id + "'/></td>" +
                         "<td class=\"cell100 column2\">" + flight.flight_no + "</td>" +
                         "<td class=\"cell100 column3\">" + flight.departure_time + "</td>" +
                         "<td class=\"cell100 column4\">" + flight.arrival_time + "</td>" +
-                        "<td class=\"cell100 column5\">" + flight.econ_stnd_price + "</td>" +
+                        "<td class=\"cell100 column5\">" + ticket_price + "</td>" +
                         "<td class=\"cell100 column6\">" + flight.econ_stnd_seat + "</td>" +
                         "<input type='hidden' name='arrival_date' value='" + end + "'/>";
                     rows += "<tr class=\"row100 body\">" + eachRow + "</tr>";
@@ -332,12 +336,16 @@ if (!isset($_POST["from"])) {
                         end = new Date(flight.flight_arrival.toString());
                         let end_month = end.getMonth() + 1
                         end = end_month.toString() + "/" + end.getDate() + "/" + end.getFullYear();
+                        let ticket_price = flight.econ_stnd_price;
+                        if (check.toString() == "0") {
+                            ticket_price = ticket_price * 0.8;
+                        }
                         eachRow =
                             "<td class=\"cell100 column1\"><input  TYPE=radio name='return_flight_id' value='" + flight.flight_details_id + "'/></td>" +
                             "<td class=\"cell100 column2\">" + flight.flight_no + "</td>" +
                             "<td class=\"cell100 column3\">" + flight.departure_time + "</td>" +
                             "<td class=\"cell100 column4\">" + flight.arrival_time + "</td>" +
-                            "<td class=\"cell100 column5\">" + flight.econ_stnd_price + "</td>" +
+                            "<td class=\"cell100 column5\">" + ticket_price + "</td>" +
                             "<td class=\"cell100 column6\">" + flight.econ_stnd_seat + "</td>" +
                             "<input type='hidden' name='arrival_date' value='" + end + "'/>";
                         rows += "<tr class=\"row100 body\">" + eachRow + "</tr>";
