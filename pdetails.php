@@ -1,7 +1,10 @@
 <!DOCTYPE HTML>
 
 <html>
-<?php if (!isset($_GET["flight_no"])) {
+<?php if (!isset($_GET["flight_id"])) {
+    header("location:index.html");
+}
+if (!isset($_GET['check'])) {
     header("location:index.html");
 }
 ?>
@@ -109,7 +112,7 @@
                             <div class="form-group">
                                 <label for="flight_number"> Flight Number:</label>
                                 <div class="form-field">
-                                    <p><b><?php echo $_GET['flight_no']; ?></b></p>
+                                    <p><b></b></p>
                                 </div>
                             </div>
                         </div>
@@ -135,7 +138,7 @@
                             <div class="form-group">
                                 <label for="depart_date">Departure Time:</label>
                                 <div class="form-field">
-                                    <p><b><?php echo $_GET['flight_departure']; ?></b></p>
+                                    <p><b></b></p>
                                 </div>
                             </div>
                         </div>
@@ -161,7 +164,7 @@
                             <div class="form-group">
                                 <label for="arrival_Date">Arrival Time:</label>
                                 <div class="form-field">
-                                    <p><b><?php echo $_GET['flight_arrival']; ?></b></p>
+                                    <p><b></b></p>
                                 </div>
                             </div>
                         </div>
@@ -171,7 +174,7 @@
                             <div class="form-group">
                                 <label for="price">Ticket Price:</label>
                                 <div class="form-field">
-                                    <p><b>$S <?php echo $_GET['econ_stnd_price']; ?></b></p>
+                                    <p><b></b></p>
                                 </div>
                             </div>
                         </div>
@@ -331,6 +334,28 @@
 <script src="js/jquery.stellar.min.js"></script>
 <!-- Main -->
 <script src="js/main.js"></script>
+<script>
+    $(document).ready(function () {
+        let serviceURL = "http://127.0.0.1:8003/flight/findFlights";
+        let check = "<?php echo $_GET['check']?>";
+        let start_date = "<?php echo $_GET['departure_date']?>";
+        let isReturn = true;
+        let end_date = "<?php if ($_GET['check'] == 1) {
+            echo "None";
+        } else {
+            echo $_GET['end_date'];
+        }?>";
+        if (end_date == "None") {
+            isReturn = false;
+        } else {
+            end_date = new Date(end_date);
+            let end_month = end_date.getMonth() + 1
+            end_date = end_date.getFullYear() + '-' + end_month.toString() + '-' + end_date.getDate();
+        }
+        let from = "<?php echo $_GET['departure_airport']?>";
+        let to = "<?php echo $_GET['arrival_airport']?>";
 
+    });
+</script>
 </body>
 </html>

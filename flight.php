@@ -138,6 +138,7 @@ if (!isset($_POST["from"])) {
                 <input type="hidden" name="departure_airport" value="<?php echo $_POST["from"]; ?>"/>
                 <input type="hidden" name="arrival_airport" value="<?php echo $_POST["to"]; ?>"/>
                 <input type="hidden" name="departure_date" value="<?php echo $_POST["start_date"]; ?>"/>
+                <input type="hidden" name="check" value="<?php echo $_POST['check']; ?>"/>
                 <div class="limiter">
                     <h3>Flights From <?php echo $_POST["from"]; ?> to <?php echo $_POST["to"]; ?></h3>
                     <div class="container-table100">
@@ -159,7 +160,8 @@ if (!isset($_POST["from"])) {
                                 </div>
 
                                 <div class="table100-body js-pscroll">
-                                    <table id="data">
+                                    <table>
+                                        <tbody id="data"></tbody>
                                     </table>
                                 </div>
                             </div>
@@ -312,13 +314,13 @@ if (!isset($_POST["from"])) {
                     end = end_month.toString() + "/" + end.getDate() + "/" + end.getFullYear();
                     eachRow =
                         "<td class=\"cell100 column1\"><input  TYPE=radio name='flight_id' value='" + flight.flight_details_id + "'/></td>" +
-                        "<td class=\"cell100 column2\">" + flight.flight_no + "<input type='hidden' name='flight_no' value='" + flight.flight_no + "'/></td>" +
-                        "<td class=\"cell100 column3\">" + flight.departure_time + "<input type='hidden' name='flight_departure' value='" + flight.departure_time + "'/></td>" +
-                        "<td class=\"cell100 column4\">" + flight.arrival_time + "<input type='hidden' name='flight_arrival' value='" + flight.arrival_time + "'/></td>" +
-                        "<td class=\"cell100 column5\">" + flight.econ_stnd_price + "<input type='hidden' name='econ_stnd_price' value='" + flight.econ_stnd_price + "'/></td>" +
-                        "<td class=\"cell100 column6\">" + flight.econ_stnd_seat + "<input type='hidden' name='econ_stnd_seat' value='" + flight.econ_stnd_seat + "'/></td>" +
+                        "<td class=\"cell100 column2\">" + flight.flight_no + "</td>" +
+                        "<td class=\"cell100 column3\">" + flight.departure_time + "</td>" +
+                        "<td class=\"cell100 column4\">" + flight.arrival_time + "</td>" +
+                        "<td class=\"cell100 column5\">" + flight.econ_stnd_price + "</td>" +
+                        "<td class=\"cell100 column6\">" + flight.econ_stnd_seat + "</td>" +
                         "<input type='hidden' name='arrival_date' value='" + end + "'/>";
-                    rows += "<tbody><tr class=\"row100 body\">" + eachRow + "</tr></tbody>";
+                    rows += "<tr class=\"row100 body\">" + eachRow + "</tr>";
                 }
             }
             $('#data').append(rows);
@@ -331,11 +333,11 @@ if (!isset($_POST["from"])) {
                         end = end_month.toString() + "/" + end.getDate() + "/" + end.getFullYear();
                         eachRow =
                             "<td class=\"cell100 column1\"><input  TYPE=radio name='return_flight_id' value='" + flight.flight_details_id + "'/></td>" +
-                            "<td class=\"cell100 column2\">" + flight.flight_no + "<input type='hidden' name='return_flight_no' value='" + flight.flight_no + "'/></td>" +
-                            "<td class=\"cell100 column3\">" + flight.departure_time + "<input type='hidden' name='return_flight_departure' value='" + flight.departure_time + "'/></td>" +
-                            "<td class=\"cell100 column4\">" + flight.arrival_time + "<input type='hidden' name='return_flight_arrival' value='" + flight.arrival_time + "'/></td>" +
-                            "<td class=\"cell100 column5\">" + flight.econ_stnd_price + "<input type='hidden' name='return_econ_stnd_price' value='" + flight.econ_stnd_price + "'/></td>" +
-                            "<td class=\"cell100 column6\">" + flight.econ_stnd_seat + "<input type='hidden' name='return_econ_stnd_seat' value='" + flight.econ_stnd_seat + "'/></td>" +
+                            "<td class=\"cell100 column2\">" + flight.flight_no + "</td>" +
+                            "<td class=\"cell100 column3\">" + flight.departure_time + "</td>" +
+                            "<td class=\"cell100 column4\">" + flight.arrival_time + "</td>" +
+                            "<td class=\"cell100 column5\">" + flight.econ_stnd_price + "</td>" +
+                            "<td class=\"cell100 column6\">" + flight.econ_stnd_seat + "</td>" +
                             "<input type='hidden' name='arrival_date' value='" + end + "'/>";
                         rows += "<tbody><tr class=\"row100 body\">" + eachRow + "</tr></tbody>";
                     }
