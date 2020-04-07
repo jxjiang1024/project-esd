@@ -228,17 +228,17 @@
 	<script src="js/main.js"></script>
 </body>
 <script>
- function showalert() {
-  alert("Payment Success! Thank you for booking with us!");
-}
-</script>
-<script>
     $(document).ready(function () {
         let serviceURL = "http://127.0.0.1:8300/payment/check";
-        
+        let title = "<?php echo $_POST['title']?>";
+        let firstname = "<?php echo $_POST['firstname']?>";
+        let midname = "<?php echo $_POST['midname']?>";
+        let lastname = "<?php echo $_POST['lastname']?>";
+        let email1 = "<?php echo $_POST['email']?>";
+
         });
 
-      async function check_payment(){
+      async function check_payment(serviceURL,title,firstname,midname,lastname,email){
         try {
           const response =
             await fetch(
@@ -247,34 +247,19 @@
 						  method: 'POST',
 						  mode: 'cors',
 						  body: JSON.stringify({
-              payment_type:"Credit Card",
-              prefix: "Ms",
-              first_name: "Naomi",
-              last_name: "Tan",
-              middle_name: "Liu",
-              amount: "950",
-              status: "Success",
-              last_4_digit: "1212",
-              staff_id: "",
-              flight_details_id: "1",
-              suffix: "MD",
-              email: "naomi.yeo.2018@sis.smu.edu.sg",
-              comments: "Refund applicable",
-              ff_id: "",
-              flight_no: "SFL802",
-              departureAirport: "Singapore Changi Airport",
-              arrivalAirport:"Narita Changi Airport",
-              departDate:"2020-05-12",
-              arrivalTime: "23:20:00",
-              departureTime: "01:45:00",
-              isReturn: true
+                prefix: title,
+                first_name:firstname,
+                mid_name:midname,
+                last_name:lastname,
+                email:email1              
                 
               })
               }
 
             );
       const data = await response.json();
-      console.log(data);
+      let details=data.details;
+      console.log(details);
       }
       
 			catch (e) {
