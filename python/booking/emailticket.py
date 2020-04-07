@@ -79,10 +79,15 @@ def sendmsg(data):
                 subject = 'Ticket issue #'+str(data['ticketID'])
                 msg = Message(subject,recipients=[data['email']])
                 msg.html = render_template(data['template']+'_msg.html', prefix=data['prefix'], last_name=data['last_name'], ticket_id=data['ticketID'], issue_date=data['today'], first_name=data['first_name'], middle_name=data['middle_name'], flight_no=data['flight_no'], dep_airport_name=data['departureAirport'], dep_date=data['departDate'], departure_time=data['departureTime'], arr_airport_name=data['arrivalAirport'], arrival_time=data['arrivalTime'])
-            else:
+            elif data['template'] == 'booking_success':
                 subject = 'Booking confirmation #'+str(data['bookingID'])
                 msg = Message(subject,recipients=[data['email']])
                 msg.html = render_template(data['template']+'_msg.html', prefix=data['prefix'], last_name=data['last_name'], bookingID=data['bookingID'], first_name=data['first_name'], middle_name=data['middle_name'], flight_no=data['flight_no'], dep_airport_name=data['departureAirport'], dep_date=data['departDate'], departure_time=data['departureTime'], arr_airport_name=data['arrivalAirport'], arrival_time=data['arrivalTime'])
+            else:
+                subject = 'Failed booking #'+str(data['transaction_id'])
+                msg = Message(subject,recipients=[data['email']])
+                msg.html = render_template(data['template']+'_msg.html', prefix=data['prefix'], last_name=data['last_name'], transaction_id=data['transaction_id'])
+            
             mail.send(msg)
         return {"result":True, "message":"Email sent successfully"}
     except Exception:
