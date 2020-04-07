@@ -31,6 +31,7 @@ app.config['MAIL_ASCII_ATTACHMENTS'] = False
 mail = Mail(app)
 # CORS(app)
 
+##################### AMQP #######################
 def receiveBookingLog():
     hostname = "localhost" # default host
     port = 5672 # default port
@@ -43,7 +44,7 @@ def receiveBookingLog():
     channel.exchange_declare(exchange=exchangename, exchange_type='direct')
 
     # prepare a queue for receiving messages
-    channelqueue = channel.queue_declare(queue='', exclusive=True) # '' indicates a random unique queue name; 'exclusive' indicates the queue is used only by this receiver and will be deleted if the receiver disconnects.
+    channelqueue = channel.queue_declare(queue='monitor', durable=True) # '' indicates a random unique queue name; 'exclusive' indicates the queue is used only by this receiver and will be deleted if the receiver disconnects.
         # If no need durability of the messages, no need durable queues, and can use such temp random queues.
     queue_name = channelqueue.method.queue
     channel.queue_bind(exchange=exchangename, queue=queue_name, routing_key='booking.info') # bind the queue to the exchange via the key
