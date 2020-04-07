@@ -112,7 +112,7 @@ if (!isset($_GET['check'])) {
                             <div class="form-group">
                                 <label for="flight_number"> Flight Number:</label>
                                 <div class="form-field">
-                                    <p><b></b></p>
+                                    <p><b id="flight_number"></b></p>
                                 </div>
                             </div>
                         </div>
@@ -138,7 +138,7 @@ if (!isset($_GET['check'])) {
                             <div class="form-group">
                                 <label for="depart_date">Departure Time:</label>
                                 <div class="form-field">
-                                    <p><b></b></p>
+                                    <p><b id="departure_time"></b></p>
                                 </div>
                             </div>
                         </div>
@@ -164,7 +164,7 @@ if (!isset($_GET['check'])) {
                             <div class="form-group">
                                 <label for="arrival_Date">Arrival Time:</label>
                                 <div class="form-field">
-                                    <p><b></b></p>
+                                    <p><b id="arrival_time"></b></p>
                                 </div>
                             </div>
                         </div>
@@ -174,7 +174,7 @@ if (!isset($_GET['check'])) {
                             <div class="form-group">
                                 <label for="price">Ticket Price:</label>
                                 <div class="form-field">
-                                    <p><b></b></p>
+                                    <p><b id="ticket_price"></b></p>
                                 </div>
                             </div>
                         </div>
@@ -340,6 +340,7 @@ if (!isset($_GET['check'])) {
         let check = "<?php echo $_GET['check']?>";
         let start_date = "<?php echo $_GET['departure_date']?>";
         let isReturn = true;
+        let flight_details_id = "<?php echo $_GET['flight_id'];?>";
         let end_date = "<?php if ($_GET['check'] == 1) {
             echo "None";
         } else {
@@ -354,8 +355,47 @@ if (!isset($_GET['check'])) {
         }
         let from = "<?php echo $_GET['departure_airport']?>";
         let to = "<?php echo $_GET['arrival_airport']?>";
+        start_date = new Date(start_date);
+        let month = start_date.getMonth() + 1
+        start_date = start_date.getFullYear() + "-" + month.toString() + "-" + start_date.getDate();
+
+        getRoutes(serviceURL, from, to, isReturn, start_date, end_date, check, flight_details_id);
 
     });
+
+    async function getRoutes(serviceURL, from, to, isReturn, start_date, end_date, check, flight_details_id) {
+        try {
+            const response =
+                await fetch(
+                    serviceURL, {
+                        headers: {"Content-Type": "application/json"},
+                        method: 'POST',
+                        mode: 'cors',
+                        body: JSON.stringify({
+                            departureAirport: from,
+                            arrivalAirport: to,
+                            departDate: start_date,
+                            isReturn: isReturn,
+                            returnDate: end_date
+                        })
+                    }
+                );
+            const data = await response.json();
+            // Check for return
+            let flights = data.flights;
+            console.log(flights);
+            for (const flight of flights) {
+                if (flight.return == false && flight.flight_details_id == flight_details_id.toString()) {
+                    $("#flight_number").text(flight.flight_no.toString());
+                    $("#departure_time").text(flight.departure_time.toString());
+                    $("#arrival_time").text(flight.arrival_time.toString());
+                    $("#ticket_price").text("S$ " + flight.econ_stnd_price.toString());
+                }
+            }
+        } catch (e) {
+
+        }
+    }
 </script>
 </body>
 </html>
