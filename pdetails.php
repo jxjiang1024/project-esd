@@ -121,7 +121,7 @@ if (!isset($_GET['check'])) {
                                 <div class="form-group">
                                     <label for="flight_number">Return Flight Number:</label>
                                     <div class="form-field">
-                                        <p><b></b></p>
+                                        <p><b id="return_flight_number"></b></p>
                                     </div>
                                 </div>
                             </div>
@@ -153,14 +153,32 @@ if (!isset($_GET['check'])) {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="depart_date">Departure Airport:</label>
-                                <div class="form-field">
-                                    <p><b><?php echo $_GET['arrival_airport']; ?></b></p>
+                        <?php if ($_GET['check'] == "0") { ?>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="depart_date">Departure Airport:</label>
+                                    <div class="form-field">
+                                        <p><b><?php echo $_GET['arrival_airport']; ?></b></p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="depart_date">Departure Date:</label>
+                                    <div class="form-field">
+                                        <p><b id="return_departure_date"></b></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="depart_date">Departure Time:</label>
+                                    <div class="form-field">
+                                        <p><b id="return_departure_time"></b></p>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
                     </div>
                     <div class="row">
                         <div class="col-md-2">
@@ -175,7 +193,7 @@ if (!isset($_GET['check'])) {
                             <div class="form-group">
                                 <label for="arrival_Date">Arrival Date:</label>
                                 <div class="form-field">
-                                    <p><b><?php echo $_GET['arrival_date']; ?></b></p>
+                                    <p><b></b></p>
                                 </div>
                             </div>
                         </div>
@@ -188,11 +206,27 @@ if (!isset($_GET['check'])) {
                             </div>
                         </div>
                         <?php if ($_GET['check'] == "0") { ?>
-                            <div class="col-md-6">
+                            <div class="col-md-2">
                                 <div class="form-group">
-                                    <label for="arrival_Date">Departure Airport:</label>
+                                    <label for="arrival_Date">Arrival Airport:</label>
                                     <div class="form-field">
                                         <p><b><?php echo $_GET['departure_airport']; ?></b></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="arrival_Date">Arrival Date:</label>
+                                    <div class="form-field">
+                                        <p><b></b></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="arrival_Date">Arrival Time:</label>
+                                    <div class="form-field">
+                                        <p><b id="return_arrival_time"></b></p>
                                     </div>
                                 </div>
                             </div>
@@ -370,11 +404,17 @@ if (!isset($_GET['check'])) {
         let start_date = "<?php echo $_GET['departure_date']?>";
         let isReturn = true;
         let flight_details_id = "<?php echo $_GET['flight_id'];?>";
-        let end_date = "<?php if ($_GET['check'] == 1) {
+        let return_flight_id = "<?php if ($_GET['check'] == 1) {
             echo "None";
         } else {
-            echo $_GET['arrival_date'];
+            echo $_GET['return_flight_id'];
         }?>";
+        let end_date = " <?php
+            if ($_GET['check'] == 1) {
+                echo "None";
+            } else {
+                echo $_GET['arrival_date'];
+            }?>";
         if (end_date == "None") {
             isReturn = false;
         } else {
@@ -388,11 +428,11 @@ if (!isset($_GET['check'])) {
         let month = start_date.getMonth() + 1
         start_date = start_date.getFullYear() + "-" + month.toString() + "-" + start_date.getDate();
 
-        getRoutes(serviceURL, from, to, isReturn, start_date, end_date, check, flight_details_id);
+        getRoutes(serviceURL, from, to, isReturn, start_date, end_date, check, flight_details_id, return_flight_id);
 
     });
 
-    async function getRoutes(serviceURL, from, to, isReturn, start_date, end_date, check, flight_details_id) {
+    async function getRoutes(serviceURL, from, to, isReturn, start_date, end_date, check, flight_details_id, return_flight_id) {
         try {
             const response =
                 await fetch(
@@ -418,6 +458,15 @@ if (!isset($_GET['check'])) {
                     $("#departure_time").text(flight.departure_time.toString());
                     $("#arrival_time").text(flight.arrival_time.toString());
                     $("#ticket_price").text("S$ " + flight.econ_stnd_price.toString());
+                }
+            }
+            if (check.toString() === "0") {
+                for (const flight of flights) {
+                    if (flight.return == true && flight.flight_details_id == return_flight_id) {
+                        $("#return_flight_number").text(flight.flight_no.toString());
+                        $("#return_departure_time").text(flight.departure_time.toString());
+                        $("#return_arrival_time").text(flight.arrival_time.toString());
+                    }
                 }
             }
         } catch (e) {
