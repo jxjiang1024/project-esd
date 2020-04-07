@@ -212,7 +212,7 @@ class Flight(db.Model):
         return {"flight_details_id": self.flight_details_id , "flight_no": self.flight_no,
         "flight_departure": self.flight_departure, "flight_arrival": self.flight_arrival,
         "tail_no": self.tail_no,"economy_seats":self.econ_sv_seat+self.econ_stnd_seat+self.econ_plus_seat,"premium_economy_seats":self.pr_econ_sv_seat+self.pr_econ_stnd_seat+self.pr_econ_plus_seat,"business_seats": self.bus_sv_seat+self.bus_stnd_seat+self.bus_plus_seat,"first_class_seats":self.first_stnd_seat,"status": stat.status }
-    def json_time(self,Route):
+    def json_time(self,Route,ret = False):
         departure_time = Route.query.filter(Route.flight_no == self.flight_no).first()
         return {"flight_details_id": self.flight_details_id, "flight_no": self.flight_no,
         "flight_departure": self.flight_departure, "flight_arrival": self.flight_arrival,
@@ -226,7 +226,7 @@ class Flight(db.Model):
         "bus_sv_seat": self.bus_sv_seat, "bus_stnd_price": self.bus_stnd_price,
         "bus_stnd_seat": self.bus_stnd_seat, "bus_plus_price": self.bus_plus_price,
         "bus_plus_seat": self.bus_plus_seat, "first_stnd_price": self.first_stnd_price,
-        "first_stnd_seat": self.first_stnd_seat, "status_code": self.status_code,"departure_time":str(departure_time.departure_time),"arrival_time":str(departure_time.arrival_time)}
+        "first_stnd_seat": self.first_stnd_seat, "status_code": self.status_code,"departure_time":str(departure_time.departure_time),"arrival_time":str(departure_time.arrival_time),"return":ret}
 
 
 # Route class
@@ -396,8 +396,9 @@ def findFlights():
         if data['isReturn']:
             flightNo = Route.query.filter(Route.arrival_airport_id == departureAirport.IATA_CODE).filter(Route.departure_airport_id == arrivalAirport.IATA_CODE).all()
             flightNoList = [flight.flight_no for flight in flightNo]
+            ret = True
             flights2 = Flight.query.filter(Flight.flight_departure == data['returnDate']).filter(Flight.flight_no.in_(flightNoList)).all()
-            return jsonify({"flights": [flight.json_time(Route) for flight in flights] + [flight.json_time(Route) for flight in flights2]})
+            return jsonify({"flights": [flight.json_time(Route) for flight in flights] + [flight.json_time(Route,ret) for flight in flights2]})
         return jsonify({"flights": [flight.json_time(Route) for flight in flights]})
     
     except Exception:

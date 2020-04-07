@@ -131,6 +131,7 @@ if (!isset($_POST["from"])) {
                 ?>
             </div>
             <br/>
+            <br/>
             <h2 id="loading">Retriving Flight List. Please Wait.</h2>
             <h2 id="error">Unable to retrieve Flight Listing.<br/>Please Try Again.</h2>
             <form method="GET" action="pdetails.php" id="form_data">
@@ -138,6 +139,7 @@ if (!isset($_POST["from"])) {
                 <input type="hidden" name="arrival_airport" value="<?php echo $_POST["to"]; ?>"/>
                 <input type="hidden" name="departure_date" value="<?php echo $_POST["start_date"]; ?>"/>
                 <div class="limiter">
+                    <h3>Flights From <?php echo $_POST["from"]; ?> to <?php echo $_POST["to"]; ?></h3>
                     <div class="container-table100">
                         <div class="wrap-table100">
                             <div class="table100 ver1 m-b-110">
@@ -165,7 +167,32 @@ if (!isset($_POST["from"])) {
                     </div>
                     <?php if ($_POST['check'] == "0") {
                         ?>
-                        <p>Test</p>
+                        <h3>Flights From <?php echo $_POST["to"]; ?> to <?php echo $_POST["from"]; ?></h3>
+                        <div class="container-table100">
+                            <div class="wrap-table100">
+                                <div class="table100 ver1 m-b-110">
+                                    <div class="table100-head">
+                                        <table>
+                                            <thead>
+                                            <tr class="row100 head">
+                                                <th class="cell100 column1">Selection</th>
+                                                <th class="cell100 column2">Flight No</th>
+                                                <th class="cell100 column3">Departure Time</th>
+                                                <th class="cell100 column4">Arrival Time</th>
+                                                <th class="cell100 column5">Price</th>
+                                                <th class="cell100 column5">Availability</th>
+                                            </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+
+                                    <div class="table100-body js-pscroll">
+                                        <table id="data">
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <?php
                     } ?>
                 </div>
