@@ -193,7 +193,7 @@ if (!isset($_GET['check'])) {
                             <div class="form-group">
                                 <label for="arrival_Date">Arrival Date:</label>
                                 <div class="form-field">
-                                    <p><b></b></p>
+                                    <p><b id="arrival_date"></b></p>
                                 </div>
                             </div>
                         </div>
@@ -218,7 +218,7 @@ if (!isset($_GET['check'])) {
                                 <div class="form-group">
                                     <label for="arrival_Date">Arrival Date:</label>
                                     <div class="form-field">
-                                        <p><b></b></p>
+                                        <p><b id="return_arrival_date"></b></p>
                                     </div>
                                 </div>
                             </div>
@@ -453,12 +453,22 @@ if (!isset($_GET['check'])) {
             // Check for return
             let flights = data.flights;
             let ticket_price = 0;
+            let arrival_date = end_date;
+            let departure_date = start_date;
             for (const flight of flights) {
                 if (flight.return == false && flight.flight_details_id == flight_details_id.toString()) {
                     $("#flight_number").text(flight.flight_no.toString());
                     $("#departure_time").text(flight.departure_time.toString());
                     $("#arrival_time").text(flight.arrival_time.toString());
                     ticket_price = ticket_price + flight.econ_stnd_price;
+                    if (check.toString() == "0") {
+                        arrival_date = new Date(flight.flight_arrival);
+                        let end_month = arrival_date.getMonth() + 1;
+                        arrival_date = end_month.toString() + "/" + arrival_date.getDate() + "/" + arrival_date.getFullYear();
+                        $('#arrival_date').text(arrival_date);
+                    } else {
+                        $('#arrival_date').text(arrival_date);
+                    }
 
                 }
             }
@@ -469,6 +479,17 @@ if (!isset($_GET['check'])) {
                         $("#return_departure_time").text(flight.departure_time.toString());
                         $("#return_arrival_time").text(flight.arrival_time.toString());
                         ticket_price = (ticket_price + flight.econ_stnd_price) * 0.8;
+                        if (check.toString() == "0") {
+                            arrival_date = new Date(flight.flight_departure.toString());
+                            let end_month = arrival_date.getMonth() + 1;
+                            arrival_date = end_month.toString() + "/" + arrival_date.getDate() + "/" + arrival_date.getFullYear();
+                            $('#return_departure_date').text(arrival_date.toString());
+                            departure_date = new Date(flight.flight_arrival.toString());
+                            let dept_end = departure_date.getMonth() + 1;
+                            departure_date = dept_end.toString() + "/" + departure_date.getDate() + "/" + departure_date.getFullYear();
+                            console.log(departure_date);
+                            $('#return_arrival_date').text(departure_date.toString());
+                        }
                     }
                 }
             }
