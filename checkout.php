@@ -149,7 +149,7 @@
                   <div class="form-group">
                     <label for="cvv"> Expiration Date:</label>
                     <div class="form-inline">
-                      <select id="edate-month" class="form-control">
+                      <select id="edate-month" name="edate-month"class="form-control">
                         <option selected hidden>MM</option>
                         <option style="color:black;" value="1">01</option>
                         <option style="color:black;" value="2">02</option>
@@ -164,7 +164,7 @@
                         <option style="color:black;" value="11">11</option>
                         <option style="color:black;" value="12">12</option>
                       </select> /
-                      <select id="edate-year" class="form-control" placeholder="YY">
+                      <select id="edate-year" name="edate-year" class="form-control" placeholder="YY">
                         <option selected hidden>YYYY</option>
                         <option style="color:black;" value="2020">2020</option>
                         <option style="color:black;" value="2021">2021</option>
@@ -227,6 +227,22 @@
 	<!-- Main -->
 	<script src="js/main.js"></script>
 </body>
+<script>
+ function showalert() {
+  var $cname=$("#cname").val();
+  var $cno=$("#cno").val();
+  var $date=$("#edate-month").val();
+  var $year=$("#edate-year").val();
+  var $cvv=$("#cvv").val();
+
+  if ($cname=="" || $cno=="" || $date=="" || $year=="" || $cvv=="" ){
+    window.location.href = "payment_failiure.html";
+  }
+  if($cname!="" && $cno!="" &&  $date!="" && $year!="" && $cvv!="" ) {
+    window.location.href = "payment_success.html";
+  }
+  }
+</script>
 <script>
     $(document).ready(function () {
         let serviceURL = "http://127.0.0.1:8300/payment/check";
