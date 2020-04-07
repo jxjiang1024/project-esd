@@ -108,7 +108,7 @@ if (!isset($_GET['check'])) {
                         <div class="col-md-12"><h2 style="color: white">Tickets Details</h2></div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-7">
                             <div class="form-group">
                                 <label for="flight_number"> Flight Number:</label>
                                 <div class="form-field">
@@ -116,6 +116,17 @@ if (!isset($_GET['check'])) {
                                 </div>
                             </div>
                         </div>
+                        <?php if ($_GET['check'] == "0") { ?>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label for="flight_number">Return Flight Number:</label>
+                                    <div class="form-field">
+                                        <p><b></b></p>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
+
                     </div>
                     <div class="row">
                         <div class="col-md-3">
@@ -126,7 +137,7 @@ if (!isset($_GET['check'])) {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <label for="depart_date">Departure Date:</label>
                                 <div class="form-field">
@@ -134,7 +145,7 @@ if (!isset($_GET['check'])) {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-5">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="depart_date">Departure Time:</label>
                                 <div class="form-field">
@@ -152,7 +163,7 @@ if (!isset($_GET['check'])) {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <label for="arrival_Date">Arrival Date:</label>
                                 <div class="form-field">
@@ -160,7 +171,7 @@ if (!isset($_GET['check'])) {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-5">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="arrival_Date">Arrival Time:</label>
                                 <div class="form-field">
@@ -383,7 +394,6 @@ if (!isset($_GET['check'])) {
             const data = await response.json();
             // Check for return
             let flights = data.flights;
-            console.log(flights);
             for (const flight of flights) {
                 if (flight.return == false && flight.flight_details_id == flight_details_id.toString()) {
                     $("#flight_number").text(flight.flight_no.toString());
