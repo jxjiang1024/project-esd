@@ -160,7 +160,7 @@ if (!isset($_POST["from"])) {
 
                                 <div class="table100-body js-pscroll">
                                     <table id="data">
-                                    <tr class="row100 head">
+                                        <tr class="row100 head">
                                             <th class="cell100 column1">Selection</th>
                                             <th class="cell100 column2">Flight No</th>
                                             <th class="cell100 column3">Departure Time</th>
@@ -195,7 +195,7 @@ if (!isset($_POST["from"])) {
                                     </div>
 
                                     <div class="table100-body js-pscroll">
-                                        <table id="data">
+                                        <table id="return_data">
                                         </table>
                                     </div>
                                 </div>
@@ -274,6 +274,10 @@ if (!isset($_POST["from"])) {
         }?>";
         if (end_date == "None") {
             isReturn = false;
+        } else {
+            end_date = new Date(end_date);
+            let end_month = end_date.getMonth() + 1
+            end_date = end_date.getFullYear() + '-' + end_month.toString() + '-' + end_date.getDate();
         }
         let from = "<?php echo $_POST['from']?>";
         let to = "<?php echo $_POST['to']?>";
@@ -281,6 +285,7 @@ if (!isset($_POST["from"])) {
         start_date = new Date(start_date);
         let month = start_date.getMonth() + 1
         start_date = start_date.getFullYear() + "-" + month.toString() + "-" + start_date.getDate();
+
         getRoutes(serviceURL, from, to, isReturn, start_date, end_date);
 
     });
@@ -303,26 +308,46 @@ if (!isset($_POST["from"])) {
                     }
                 );
             const data = await response.json();
-            console.log(data);
             // Check for return
-            var flights = data.flights;
+            let flights = data.flights;
+            console.log(flights)
             // only showing econs standard
             let rows = "";
             for (const flight of flights) {
-                end = new Date(flight.flight_arrival.toString());
-                let end_month = end.getMonth() + 1
-                end = end_month.toString() + "/" + end.getDate() + "/" + end.getFullYear();
-                eachRow =
-                    "<td class=\"cell100 column1\"><input  TYPE=radio name='flight_id' value='" + flight.flight_details_id + "'/></td>" +
-                    "<td class=\"cell100 column2\">" + flight.flight_no + "<input type='hidden' name='flight_no' value='" + flight.flight_no + "'/></td>" +
-                    "<td class=\"cell100 column3\">" + flight.departure_time + "<input type='hidden' name='flight_departure' value='" + flight.departure_time + "'/></td>" +
-                    "<td class=\"cell100 column4\">" + flight.arrival_time + "<input type='hidden' name='flight_arrival' value='" + flight.arrival_time + "'/></td>" +
-                    "<td class=\"cell100 column5\">" + flight.econ_stnd_price + "<input type='hidden' name='econ_stnd_price' value='" + flight.econ_stnd_price + "'/></td>" +
-                    "<td class=\"cell100 column6\">" + flight.econ_stnd_seat + "<input type='hidden' name='econ_stnd_seat' value='" + flight.econ_stnd_seat + "'/></td>" +
-                    "<input type='hidden' name='arrival_date' value='" + end + "'/>";
-                rows += "<tbody><tr class=\"row100 body\">" + eachRow + "</tr></tbody>";
+                if (flight.return == false) {
+                    end = new Date(flight.flight_arrival.toString());
+                    let end_month = end.getMonth() + 1
+                    end = end_month.toString() + "/" + end.getDate() + "/" + end.getFullYear();
+                    eachRow =
+                        "<td class=\"cell100 column1\"><input  TYPE=radio name='flight_id' value='" + flight.flight_details_id + "'/></td>" +
+                        "<td class=\"cell100 column2\">" + flight.flight_no + "<input type='hidden' name='flight_no' value='" + flight.flight_no + "'/></td>" +
+                        "<td class=\"cell100 column3\">" + flight.departure_time + "<input type='hidden' name='flight_departure' value='" + flight.departure_time + "'/></td>" +
+                        "<td class=\"cell100 column4\">" + flight.arrival_time + "<input type='hidden' name='flight_arrival' value='" + flight.arrival_time + "'/></td>" +
+                        "<td class=\"cell100 column5\">" + flight.econ_stnd_price + "<input type='hidden' name='econ_stnd_price' value='" + flight.econ_stnd_price + "'/></td>" +
+                        "<td class=\"cell100 column6\">" + flight.econ_stnd_seat + "<input type='hidden' name='econ_stnd_seat' value='" + flight.econ_stnd_seat + "'/></td>" +
+                        "<input type='hidden' name='arrival_date' value='" + end + "'/>";
+                    rows += "<tbody><tr class=\"row100 body\">" + eachRow + "</tr></tbody>";
+                }
             }
             $('#data').append(rows);
+            rows = "";
+            for (const flight of flights) {
+                if (flight.return == true) {
+                    end = new Date(flight.flight_arrival.toString());
+                    let end_month = end.getMonth() + 1
+                    end = end_month.toString() + "/" + end.getDate() + "/" + end.getFullYear();
+                    eachRow =
+                        "<td class=\"cell100 column1\"><input  TYPE=radio name='return_flight_id' value='" + flight.flight_details_id + "'/></td>" +
+                        "<td class=\"cell100 column2\">" + flight.flight_no + "<input type='hidden' name='return_flight_no' value='" + flight.flight_no + "'/></td>" +
+                        "<td class=\"cell100 column3\">" + flight.departure_time + "<input type='hidden' name='return_flight_departure' value='" + flight.departure_time + "'/></td>" +
+                        "<td class=\"cell100 column4\">" + flight.arrival_time + "<input type='hidden' name='return_flight_arrival' value='" + flight.arrival_time + "'/></td>" +
+                        "<td class=\"cell100 column5\">" + flight.econ_stnd_price + "<input type='hidden' name='return_econ_stnd_price' value='" + flight.econ_stnd_price + "'/></td>" +
+                        "<td class=\"cell100 column6\">" + flight.econ_stnd_seat + "<input type='hidden' name='return_econ_stnd_seat' value='" + flight.econ_stnd_seat + "'/></td>" +
+                        "<input type='hidden' name='arrival_date' value='" + end + "'/>";
+                    rows += "<tbody><tr class=\"row100 body\">" + eachRow + "</tr></tbody>";
+                }
+            }
+            $('#return_data').append(rows);
             $('#form_data').show();
             $('#loading').hide();
         } catch (e) {

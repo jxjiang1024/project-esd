@@ -398,7 +398,9 @@ def findFlights():
             flightNoList = [flight.flight_no for flight in flightNo]
             ret = True
             flights2 = Flight.query.filter(Flight.flight_departure == data['returnDate']).filter(Flight.flight_no.in_(flightNoList)).all()
-            return jsonify({"flights": [flight.json_time(Route) for flight in flights] + [flight.json_time(Route,ret) for flight in flights2]})
+            print(flights2)
+            print(flights)
+            return jsonify({"flights": [flight.json_time(Route) for flight in flights] + [flights2.json_time(Route,ret) for flights2 in flights2]})
         return jsonify({"flights": [flight.json_time(Route) for flight in flights]})
     
     except Exception:
