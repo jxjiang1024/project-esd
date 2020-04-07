@@ -114,7 +114,8 @@ def create_ticket(details):
         # data.update(addData2)
         data["ticketID"] = ticketID
         data["today"] = str(today)
-
+        data["template"] = "ticket"
+        
         hostname = "localhost"
         port = 5672
         # # connect to the broker and set up a communication channel in the connection
@@ -122,9 +123,13 @@ def create_ticket(details):
         channel = connection.channel()
         # # set up the exchange if the exchange doesn't exist
         exchangename="booking"
+        
         data = json.dumps(data, default=str)
-        channel.basic_publish(exchange=exchangename, routing_key="booking.info", body=data)
-
+        channel.queue_declare(queue='monitor', durable=True) # make sure the queue used by Shipping exist and durable
+        channel.queue_bind(exchange=exchangename, queue='monitor', routing_key='booking.info')
+        channel.basic_publish(exchange=exchangename, routing_key="booking.info", body=data,
+            properties=pika.BasicProperties(delivery_mode = 2) # make message persistent within the matching queues until it is received by some receiver (the matching queues have to exist and be durable and bound to the exchange)
+        )
         # headers = {'Content-type': 'application/json'}
         # r = requests.post('http://127.0.0.1:8302/ticket/email', json = data, headers=headers)
         # print(r.text)

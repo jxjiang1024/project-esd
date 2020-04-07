@@ -117,7 +117,7 @@ def create_ticketing(data,id, today):
     ticket['booking_id'] = id
     ticket['prefix'] = data['prefix']
     ticket['first_name'] = data['first_name']
-    ticket['last_name'] = data['prefix']
+    ticket['last_name'] = data['last_name']
     ticket['middle_name'] = data['middle_name']
     if(data['suffix'] == "" or data['suffix'] == None):
         ticket['suffix'] = ""
@@ -171,6 +171,9 @@ def check_payment():
             db.session.add(bookingDetails)
             db.session.commit()
             tickets = create_ticketing(data,bookingID,today)
+            tickets["bookingID"] = bookingID
+            tickets["template"] = "booking_success"
+
             hostname = "localhost"
             port = 5672
             # # connect to the broker and set up a communication channel in the connection
@@ -179,6 +182,13 @@ def check_payment():
             # # set up the exchange if the exchange doesn't exist
             exchangename="booking"
             message = json.dumps(tickets, default=str)
+            
+            channel.queue_declare(queue='monitor', durable=True) # make sure the queue used by Shipping exist and durable
+            channel.queue_bind(exchange=exchangename, queue='monitor', routing_key='booking.info')
+            channel.basic_publish(exchange=exchangename, routing_key="booking.info", body=message,
+                properties=pika.BasicProperties(delivery_mode = 2) # make message persistent within the matching queues until it is received by some receiver (the matching queues have to exist and be durable and bound to the exchange)
+            )
+
             channel.queue_declare(queue='ticketing', durable=True) # make sure the queue used by Shipping exist and durable
             channel.queue_bind(exchange=exchangename, queue='ticketing', routing_key='booking.ticketing')
             channel.basic_publish(exchange=exchangename, routing_key="booking.ticketing", body=message,
@@ -186,10 +196,34 @@ def check_payment():
             )
             return jsonify({"result":True,"message":"Ticket will be issued to you shortly"})   
         except Exception:
-             traceback.print_exc()
-             db.session.rollback()
-             db.session.close()
-             return jsonify({"result":False,"message":"booking failed please contact our staff with the following transaction ID","id":result['id']})
+            traceback.print_exc()
+            db.session.rollback()
+            db.session.close()
+
+            tickets = dict()
+            tickets['template'] = "booking_failed"
+            tickets['prefix'] = data['prefix']
+            tickets['last_name'] = data['last_name']
+            tickets['transaction_id'] = result['id']
+            tickets['email'] = data['email']
+            message = json.dumps(tickets, default=str)
+            print(message)
+
+            hostname = "localhost"
+            port = 5672
+            # # connect to the broker and set up a communication channel in the connection
+            connection = pika.BlockingConnection(pika.ConnectionParameters(host=hostname, port=port))
+            channel = connection.channel()
+            # # set up the exchange if the exchange doesn't exist
+            exchangename="booking"
+            message = json.dumps(tickets, default=str)
+            
+            channel.queue_declare(queue='monitor', durable=True) # make sure the queue used by Shipping exist and durable
+            channel.queue_bind(exchange=exchangename, queue='monitor', routing_key='booking.info')
+            channel.basic_publish(exchange=exchangename, routing_key="booking.info", body=message,
+                properties=pika.BasicProperties(delivery_mode = 2) # make message persistent within the matching queues until it is received by some receiver (the matching queues have to exist and be durable and bound to the exchange)
+            )
+            return jsonify({"result":False,"message":"booking failed please contact our staff with the following transaction ID","id":result['id']})
     else:
         return jsonify({"result":False,"message":"Payment Failed"})
    

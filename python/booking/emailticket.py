@@ -31,6 +31,7 @@ app.config['MAIL_ASCII_ATTACHMENTS'] = False
 mail = Mail(app)
 # CORS(app)
 
+##################### AMQP #######################
 def receiveBookingLog():
     hostname = "localhost" # default host
     port = 5672 # default port
@@ -43,7 +44,7 @@ def receiveBookingLog():
     channel.exchange_declare(exchange=exchangename, exchange_type='direct')
 
     # prepare a queue for receiving messages
-    channelqueue = channel.queue_declare(queue='', exclusive=True) # '' indicates a random unique queue name; 'exclusive' indicates the queue is used only by this receiver and will be deleted if the receiver disconnects.
+    channelqueue = channel.queue_declare(queue='monitor', durable=True) # '' indicates a random unique queue name; 'exclusive' indicates the queue is used only by this receiver and will be deleted if the receiver disconnects.
         # If no need durability of the messages, no need durable queues, and can use such temp random queues.
     queue_name = channelqueue.method.queue
     channel.queue_bind(exchange=exchangename, queue=queue_name, routing_key='booking.info') # bind the queue to the exchange via the key
@@ -71,10 +72,22 @@ def sendmsg(data):
         # print(request.is_json)
         # print('got data:',data)
         data = json.loads(data)
-        subject = 'Ticket issue #'+str(data['ticketID'])
+
+
         with app.app_context():
-            msg = Message(subject,recipients=[data['email']])
-            msg.html = render_template('msg.html', prefix=data['prefix'], last_name=data['last_name'], ticket_id=data['ticketID'], issue_date=data['today'], first_name=data['first_name'], middle_name=data['middle_name'], flight_no=data['flight_no'], dep_airport_name=data['departureAirport'], dep_date=data['departDate'], departure_time=data['departureTime'], arr_airport_name=data['arrivalAirport'], arrival_time=data['arrivalTime'])
+            if data['template'] == 'ticket':
+                subject = 'Ticket issue #'+str(data['ticketID'])
+                msg = Message(subject,recipients=[data['email']])
+                msg.html = render_template(data['template']+'_msg.html', prefix=data['prefix'], last_name=data['last_name'], ticket_id=data['ticketID'], issue_date=data['today'], first_name=data['first_name'], middle_name=data['middle_name'], flight_no=data['flight_no'], dep_airport_name=data['departureAirport'], dep_date=data['departDate'], departure_time=data['departureTime'], arr_airport_name=data['arrivalAirport'], arrival_time=data['arrivalTime'])
+            elif data['template'] == 'booking_success':
+                subject = 'Booking confirmation #'+str(data['bookingID'])
+                msg = Message(subject,recipients=[data['email']])
+                msg.html = render_template(data['template']+'_msg.html', prefix=data['prefix'], last_name=data['last_name'], bookingID=data['bookingID'], first_name=data['first_name'], middle_name=data['middle_name'], flight_no=data['flight_no'], dep_airport_name=data['departureAirport'], dep_date=data['departDate'], departure_time=data['departureTime'], arr_airport_name=data['arrivalAirport'], arrival_time=data['arrivalTime'])
+            else:
+                subject = 'Failed booking #'+str(data['transaction_id'])
+                msg = Message(subject,recipients=[data['email']])
+                msg.html = render_template(data['template']+'_msg.html', prefix=data['prefix'], last_name=data['last_name'], transaction_id=data['transaction_id'])
+            
             mail.send(msg)
         return {"result":True, "message":"Email sent successfully"}
     except Exception:
