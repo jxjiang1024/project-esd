@@ -171,6 +171,9 @@ def check_payment():
             db.session.add(bookingDetails)
             db.session.commit()
             tickets = create_ticketing(data,bookingID,today)
+            tickets["bookingID"] = bookingID
+            tickets["template"] = "booking_success"
+
             hostname = "localhost"
             port = 5672
             # # connect to the broker and set up a communication channel in the connection
@@ -179,6 +182,9 @@ def check_payment():
             # # set up the exchange if the exchange doesn't exist
             exchangename="booking"
             message = json.dumps(tickets, default=str)
+            
+            channel.basic_publish(exchange=exchangename, routing_key="booking.info", body=message)
+
             channel.queue_declare(queue='ticketing', durable=True) # make sure the queue used by Shipping exist and durable
             channel.queue_bind(exchange=exchangename, queue='ticketing', routing_key='booking.ticketing')
             channel.basic_publish(exchange=exchangename, routing_key="booking.ticketing", body=message,

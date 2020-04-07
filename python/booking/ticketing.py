@@ -114,7 +114,8 @@ def create_ticket(details):
         # data.update(addData2)
         data["ticketID"] = ticketID
         data["today"] = str(today)
-
+        data["template"] = "ticket"
+        
         hostname = "localhost"
         port = 5672
         # # connect to the broker and set up a communication channel in the connection
@@ -122,6 +123,7 @@ def create_ticket(details):
         channel = connection.channel()
         # # set up the exchange if the exchange doesn't exist
         exchangename="booking"
+        
         data = json.dumps(data, default=str)
         channel.basic_publish(exchange=exchangename, routing_key="booking.info", body=data)
 
