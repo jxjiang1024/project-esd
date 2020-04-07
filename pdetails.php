@@ -78,8 +78,18 @@ if (!isset($_GET['check'])) {
 </head>
 <body>
 <div class="colorlib-loader"></div>
+<div>
+    <form method="GET" action="checkout.php" id="p_data">
+        <input type="hidden" name="departureAirport" value="<?php echo $_GET["departure_airport"]; ?>"/>
+        <input type="hidden" name="arrivalAirport" value="<?php echo $_GET["arrival_airport"]; ?>"/>
+        <input type="hidden" name="departureDate" value="<?php echo $_GET["departure_date"]; ?>"/>
+        <input type="hidden" name="check" value="<?php echo $_GET['check']; ?>"/>
+
+    </form>
+</div>
 
 <div id="personal_details">
+ 
     <aside id="colorlib-hero">
         <div class="flexslider">
             <ul class="slides">
@@ -274,7 +284,7 @@ if (!isset($_GET['check'])) {
                                     <div class="form-group">
                                         <label for="fname">First Name:</label>
                                         <div class="form-field">
-                                            <input type="text" name="fname" id="firstname" class="form-control"
+                                            <input type="text" name="firstname" id="firstname" class="form-control"
                                                    placeholder="First Name">
                                         </div>
                                     </div>
@@ -328,7 +338,7 @@ if (!isset($_GET['check'])) {
                                     <div class="form-group">
                                         <label for="street">Street Address:</label>
                                         <div class="form-field">
-                                            <input type="text" id="street" class="form-control"
+                                            <input type="text" id="street" name="street" class="form-control"
                                                    placeholder="Street Name">
                                         </div>
                                     </div>
@@ -337,7 +347,7 @@ if (!isset($_GET['check'])) {
                                     <div class="form-group">
                                         <label for="town">Town/City:</label>
                                         <div class="form-field">
-                                            <input type="text" id="town" class="form-control"
+                                            <input type="text" id="town" name="town" class="form-control"
                                                    placeholder="Town/City">
                                         </div>
                                     </div>
@@ -346,7 +356,7 @@ if (!isset($_GET['check'])) {
                                     <div class="form-group">
                                         <label for="country">Country:</label>
                                         <div class="form-field">
-                                            <input type="text" id="country" class="form-control"
+                                            <input type="text" id="country" name="country" class="form-control"
                                                    placeholder="Country">
                                         </div>
                                     </div>
@@ -355,7 +365,7 @@ if (!isset($_GET['check'])) {
                                     <div class="form-group">
                                         <label for="state">Zip/State Code:</label>
                                         <div class="form-field">
-                                            <input type="text" id="zip" class="form-control"
+                                            <input type="text" id="zip" name="zip" class="form-control"
                                                    placeholder="Zip/State Code">
                                         </div>
                                     </div>

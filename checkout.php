@@ -234,7 +234,17 @@
         let firstname = "<?php echo $_POST['firstname']?>";
         let midname = "<?php echo $_POST['midname']?>";
         let lastname = "<?php echo $_POST['lastname']?>";
+        let birthday = "<?php echo $_POST['birthday']?>";
         let email1 = "<?php echo $_POST['email']?>";
+        let street = "<?php echo $_POST['street']?>";
+        let town = "<?php echo $_POST['town']?>";
+        let country = "<?php echo $_POST['country']?>";
+        let zip = "<?php echo $_POST['zip']?>";
+        let departureAirport ="<?php echo $_GET['departureAirport']?>";
+        let arrivalAirport ="<?php echo $_GET['arrivalAirport']?>";
+        let departureDate ="<?php echo $_GET['departureDate']?>";
+        let check = "<?php echo $_GET['check']?>";
+
 
         });
 
