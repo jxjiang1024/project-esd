@@ -247,7 +247,7 @@
             let midname = "<?php echo $_GET['midname']?>";
             let lastname = "<?php echo $_GET['lastname']?>";
             let birthday = "<?php echo $_GET['birthday']?>";
-            let email1 = "<?php echo $_GET['email']?>";
+            let email = "<?php echo $_GET['email']?>";
             let street = "<?php echo $_GET['street']?>";
             let town = "<?php echo $_GET['town']?>";
             let country = "<?php echo $_GET['country']?>";
