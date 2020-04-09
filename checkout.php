@@ -280,7 +280,7 @@
     });
 
     async function check_payment(serviceURL, amount,payment, title, firstname, midname, lastname, baddress, email, lastfour,
-                                 departureAirport, arrivalAirport, departureDate, check, flight_details_id, return_flight_id, transactiondate, cname,
+                                 departureAirport, arrivalAirport, departureDate,check, flight_details_id, return_flight_id, transactiondate, cname,
                                  edate,atime,dtime) {
         try {
             const response =
@@ -311,7 +311,7 @@
                             flight_no: "",
                             departureAirport: departureAirport,
                             arrivalAirport: arrivalAirport,
-                            departDate: departDate,
+                            departDate: departureDate,
                             arrivalTime: atime,
                             departureTime: dtime,
                             check: check,
