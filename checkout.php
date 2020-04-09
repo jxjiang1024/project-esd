@@ -270,7 +270,7 @@
             }?>";
             let ID = flight_details_id + " " + return_flight_id;
 
-            check_payment(serviceURL, amount,payment, title, firstname, midname, lastname, baddress, email, email, lastfour,
+            check_payment(serviceURL, amount,payment, title, firstname, midname, lastname, baddress, email, lastfour,
                 departureAirport, arrivalAirport, departureDate, check, flight_details_id, return_flight_id, transactiondate, cname,
                 edate,departureDate,atime,dtime);
 
@@ -279,9 +279,9 @@
 
     });
 
-    async function check_payment(serviceURL, amount,payment, title, firstname, midname, lastname, baddress, email, email, lastfour,
-                                 departureAirport, arrivalAirport, departureDate, check, flight_details_id, return_flight_id, transactiondate, cname,
-                                 edate,departureDate,atime,dtime) {
+    async function check_payment(serviceURL, amount,payment, title, firstname, midname, lastname, baddress, email, lastfour,
+                                 departureAirport, arrivalAirport, departureDate,check, flight_details_id, return_flight_id, transactiondate, cname,
+                                 edate,atime,dtime) {
         try {
             const response =
                 await fetch(
@@ -311,7 +311,7 @@
                             flight_no: "",
                             departureAirport: departureAirport,
                             arrivalAirport: arrivalAirport,
-                            departDate: departDate,
+                            departDate: departureDate,
                             arrivalTime: atime,
                             departureTime: dtime,
                             check: check,
