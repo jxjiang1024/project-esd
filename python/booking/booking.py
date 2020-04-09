@@ -31,7 +31,6 @@ class Booking(db.Model):
     __tablename__ = 'booking'
 
     booking_id = db.Column(db.String(255), primary_key=True, nullable=False)
-    flight_details_id = db.Column(db.Integer, primary_key=True, nullable=False)
     booking_date = db.Column(db.Date, nullable=False)
     payment_id = db.Column(db.Integer, primary_key=True, nullable=False)
     prefix = db.Column(db.String(4), nullable=False)
@@ -43,11 +42,10 @@ class Booking(db.Model):
     staff_id = db.Column(db.Integer)
     comments = db.Column(db.Text)
 
-    def __init__(self, booking_id, flight_details_id, booking_date, payment_id,
+    def __init__(self, booking_id, booking_date, payment_id,
     prefix, first_name, suffix, last_name, middle_name,
     email, staff_id, comments):
         self.booking_id = booking_id
-        self.flight_details_id = flight_details_id
         self.booking_date = booking_date
         self.payment_id = payment_id
         self.prefix = prefix
@@ -60,7 +58,7 @@ class Booking(db.Model):
         self.comments = comments
 
     def json(self):
-        return {"booking_id": self.booking_id, "flight_details_id": self.flight_details_id,
+        return {"booking_id": self.booking_id,
         "booking_date": jsonTimeConverter(self.booking_date), "payment_id": self.payment_id,
         "prefix": self.prefix, "first_name": self.first_name,
         "suffix": self.suffix, "last_name": self.last_name,
@@ -103,7 +101,7 @@ def add_booking():
     try:
         data = request.get_json()
         size = len(Booking.query.all())
-        booking = Booking(str(size+1),int(data['flight_details_id']),datetime.strptime(data['booking_date'], '%Y-%m-%d'), size+1, str(data['prefix']),str(data['first_name']), str(data['suffix']),str(data['last_name']), str(data['middle_name']),str(data['email']), int(data['staff_id']),str(data['comments']))
+        booking = Booking(str(size+1),datetime.strptime(data['booking_date'], '%Y-%m-%d'), size+1, str(data['prefix']),str(data['first_name']), str(data['suffix']),str(data['last_name']), str(data['middle_name']),str(data['email']), int(data['staff_id']),str(data['comments']))
 
         db.session.add(booking)
         db.session.commit()
@@ -167,7 +165,7 @@ def check_payment():
                 bookingID = ccode+str(day)+str(month)+str(year)+bookingID
             if (data['staff_id'] == ""):
                 staff_id = None
-            bookingDetails = Booking(bookingID,data['flight_details_id'],str(today),result['id'],data['prefix'],data['first_name'],data['suffix'],data['last_name'],data['middle_name'],data['email'],staff_id,data['comments'])
+            bookingDetails = Booking(bookingID,str(today),result['id'],data['prefix'],data['first_name'],data['suffix'],data['last_name'],data['middle_name'],data['email'],staff_id,data['comments'])
             db.session.add(bookingDetails)
             db.session.commit()
             tickets = create_ticketing(data,bookingID,today)

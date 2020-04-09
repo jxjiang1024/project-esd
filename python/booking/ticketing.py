@@ -26,6 +26,7 @@ class Ticket(db.Model):
 
     ticket_id = db.Column(db.String(25), primary_key=True, nullable=False)
     booking_id = db.Column(db.String(255), nullable=False)
+    flight_details_id = db.Column(db.Integer, primary_key=True, nullable=False)
     prefix = db.Column(db.String(4), nullable=False)
     first_name = db.Column(db.String(255), nullable=False)
     last_name = db.Column(db.String(255), nullable=False)
@@ -34,9 +35,10 @@ class Ticket(db.Model):
     ff_id = db.Column(db.String(10))
     issued_date = db.Column(db.Date, nullable=False)
 
-    def __init__(self, ticket_id, booking_id, prefix, first_name, last_name, middle_name, suffix, ff_id,issued_date):
+    def __init__(self, ticket_id, booking_id, flight_details_id, prefix, first_name, last_name, middle_name, suffix, ff_id,issued_date):
         self.ticket_id = ticket_id
         self.booking_id = booking_id
+        self.flight_details_id = flight_details_id
         self.prefix = prefix
         self.first_name = first_name
         self.last_name = last_name
@@ -47,7 +49,7 @@ class Ticket(db.Model):
 
     
     def json(self):
-        return {"ticket_id": self.ticket_id, "booking_id": self.booking_id, 
+        return {"ticket_id": self.ticket_id, "booking_id": self.booking_id, "flight_details_id": self.flight_details_id,
             "prefix": self.prefix, "first_name": self.first_name, 
             "last_name": self.last_name, "middle_name": self.middle_name, 
             "suffix": self.suffix, "ff_id": self.ff_id,"issued_date":self.issued_date}
@@ -104,7 +106,7 @@ def create_ticket(details):
             ticketID = 1
             ticketID = str(ticketID).zfill(5)
             ticketID = tickCode+flight_details_id+str(day)+str(month)+str(year)+ticketID
-        ticketDetails = Ticket(ticketID,data['booking_id'],data['prefix'],data['first_name'],data['last_name'],data['middle_name'],data['suffix'],data['ff_id'],str(today))
+        ticketDetails = Ticket(ticketID,data['booking_id'],int(data['flight_details_id']),data['prefix'],data['first_name'],data['last_name'],data['middle_name'],data['suffix'],data['ff_id'],str(today))
         db.session.add(ticketDetails)
         db.session.commit()
         db.session.close()

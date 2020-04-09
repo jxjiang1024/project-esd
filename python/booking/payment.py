@@ -2,6 +2,7 @@ from flask import Flask,request,jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from os import environ
+from datetime import datetime, date
 import requests
 import traceback
 import pika
@@ -32,9 +33,12 @@ class Payment(db.Model):
     amount = db.Column(db.Float(precision=2), nullable=False)
     status = db.Column(db.String(10), nullable=False)
     last_4_digit = db.Column(db.Integer, nullable=False)
+    billing_address = db.Column(db.String(255), nullable=False)
+    expiration_date = db.Column(db.Text, nullable=False)
+    transaction_date = db.Column(db.Date, nullable=False)
 
     def __init__(self,payment_id, payment_type, prefix, first_name,
-    last_name, middle_name, amount, status, last_4_digit):
+    last_name, middle_name, amount, status, last_4_digit, billing_address, expiration_date, transaction_date):
         self.payment_id = payment_id
         self.payment_type = payment_type
         self.prefix = prefix
@@ -44,13 +48,18 @@ class Payment(db.Model):
         self.amount = amount
         self.status = status
         self.last_4_digit = last_4_digit
+        self.billing_address = billing_address
+        self.expiration_date = expiration_date
+        self.transaction_date = transaction_date
+
         
     def json(self):
         return {"payment_id": self.payment_id, "payment_type": self.payment_type,
         "prefix": self.prefix, "first_name": self.first_name,
         "last_name": self.last_name, "middle_name": self.middle_name,
         "amount": self.amount, "status": self.status,
-        "last_4_digit": self.last_4_digit}
+        "last_4_digit": self.last_4_digit, "billing_address": self.billing_address,
+        "expiration_date": self.expiration_date, "transaction_date": self.transaction_date}
 
 
 # # TEST FUNCTION: returns JSON list of all payments
@@ -139,11 +148,12 @@ def add_transaction(payment):
     try:
         data = payment
         size = len(Payment.query.all())
+        today = date.today()
         if(size == None or size == 0):
             size = 1
         else:
             size+=1
-        transaction = Payment(size,str(data['payment_type']),str(data['prefix']),str(data['first_name']),str(data['last_name']),str(data['middle_name']),float(data['amount']),str(data['status']),int(data['last_4_digit']))
+        transaction = Payment(size,str(data['payment_type']),str(data['prefix']),str(data['first_name']),str(data['last_name']),str(data['middle_name']),float(data['amount']),str(data['status']),int(data['last_4_digit']), str(data['billing_address']), str(data['expiration_date']), str(today))
 
         db.session.add(transaction)
         db.session.commit()
