@@ -302,7 +302,6 @@
                             last_name: lastname,
                             middle_name: midname,
                             staff_id: "",
-                            flight_details_id: "",
                             suffix: "",
                             email: email,
                             comments: "",
