@@ -79,7 +79,7 @@ if (!isset($_GET['check'])) {
 <body>
 <div class="colorlib-loader"></div>
 
-<form method="GET" action="checkout.php" id="p_data">
+<form method="GET" action="checkout.php">
     <input type="hidden" name="departureAirport" value="<?php echo $_GET["departure_airport"]; ?>"/>
     <input type="hidden" name="arrivalAirport" value="<?php echo $_GET["arrival_airport"]; ?>"/>
     <input type="hidden" name="departureDate" value="<?php echo $_GET["departure_date"]; ?>"/>
