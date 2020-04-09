@@ -84,6 +84,9 @@ if (!isset($_GET['check'])) {
     <input type="hidden" name="arrivalAirport" value="<?php echo $_GET["arrival_airport"]; ?>"/>
     <input type="hidden" name="departureDate" value="<?php echo $_GET["departure_date"]; ?>"/>
     <input type="hidden" name="check" value="<?php echo $_GET['check']; ?>"/>
+    <input type="hidden" name="amount" id="amount"/>
+    <input type="hidden" name="dep_time" id="dep_time"/>
+    <input type="hidden" name="arr_time" id="arr_time">
 
     <div id="personal_details">
 
@@ -156,7 +159,7 @@ if (!isset($_GET['check'])) {
                                 <div class="form-group">
                                     <label for="depart_date">Departure Time:</label>
                                     <div class="form-field">
-                                        <p><b id="departure_time"name="departure_time"></b></p>
+                                        <p><b id="departure_time" name="departure_time"></b></p>
                                     </div>
                                 </div>
                             </div>
@@ -208,7 +211,7 @@ if (!isset($_GET['check'])) {
                                 <div class="form-group">
                                     <label for="arrival_Date">Arrival Time:</label>
                                     <div class="form-field">
-                                        <p><b id="arrival_time"name="arrival_time"></b></p>
+                                        <p><b id="arrival_time" name="arrival_time"></b></p>
                                     </div>
                                 </div>
                             </div>
@@ -244,7 +247,7 @@ if (!isset($_GET['check'])) {
                                 <div class="form-group">
                                     <label for="price">Total Ticket Price:</label>
                                     <div class="form-field">
-                                        <p><b id="ticket_price"name="ticket_price"></b></p>
+                                        <p><b id="ticket_price" name="ticket_price"></b></p>
                                     </div>
                                 </div>
                             </div>
@@ -464,7 +467,9 @@ if (!isset($_GET['check'])) {
                 if (flight.return == false && flight.flight_details_id == flight_details_id.toString()) {
                     $("#flight_number").text(flight.flight_no.toString());
                     $("#departure_time").text(flight.departure_time.toString());
+                    $("#dep_time").val(flight.departure_time.toString());
                     $("#arrival_time").text(flight.arrival_time.toString());
+                    $("#arr_time").val(flight.arrival_time.toString());
                     ticket_price = ticket_price + flight.econ_stnd_price;
                     arrival_date = new Date(flight.flight_arrival);
                     let end_month = arrival_date.getMonth() + 1;
@@ -494,6 +499,7 @@ if (!isset($_GET['check'])) {
                 }
             }
             $("#ticket_price").text("S$ " + ticket_price.toString());
+            $("#amount").val(ticket_price);
         } catch (e) {
 
         }
