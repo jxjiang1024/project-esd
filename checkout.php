@@ -195,7 +195,7 @@
                             </div>
                         </div>
                         <div class="col-md-2">
-                            <input type="button" onclick="showalert()" name="checkout" id="checkout "
+                            <input type="button" name="checkout" id="checkout "
                                    class="btn btn-primary btn-block" value="Confirm booking!">
                         </div>
                     </div>
@@ -231,6 +231,7 @@
 </body>
 <script>
     $(document).ready(function () {
+        $("#checkout").click(function () {
         let serviceURL = "http://127.0.0.1:8300/payment/check";
         let payment = $("#payment").val();
         let ctype = $("#type").val();
@@ -321,7 +322,8 @@
         } catch (e) {
             console.log(e);
         }
-    };
+    }
+    });
 
 
 </script>
