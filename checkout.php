@@ -230,10 +230,6 @@
             <script src="js/main.js"></script>
 </body>
 <script>
-    function showalert() {
-    }
-</script>
-<script>
     $(document).ready(function () {
         let serviceURL = "http://127.0.0.1:8300/payment/check";
         let payment = $("#payment").val();
@@ -261,49 +257,57 @@
         let check = "<?php echo $_GET['check']?>";
         let baddress = street + " " + town + " " + country + " " + zip;
 
+        check_payment(serviceURL,payment,title,firstname,midname,lastname,baddress,email,email,lastfour,
+      departureAirport,arrivalAirport,departureDate,check,flight_details_id);
 
     });
 
-    async function check_payment(serviceURL, payment, title, firstname, midname, lastname, baddress, email, email, lastfour,
-                                 departureAirport, arrivalAirport,) {
+      async function check_payment(serviceURL,payment,title,firstname,midname,lastname,baddress,email,email,lastfour,
+      departureAirport,arrivalAirport,departureDate,check,flight_details_id){
         try {
-            const response =
-                await fetch(
-                    serviceURL, {
-                        headers: {"Content-Type": "application/json"},
-                        method: 'POST',
-                        mode: 'cors',
-                        body: JSON.stringify({
-                            payment_type: payment,
-                            prefix: title,
-                            first_name: firstname,
-                            last_name: lastname,
-                            middle_name: midname
-                            billing_address: baddress,
-                            expiration_date: edate,
-                            last_4_digit: lastfour,
-                            staff_id: "",
-                            flight_details_id: "",
-                            email: email,
-                            comments: "",
-                            ff_id: "",
-                            departureAirport: departureAirport,
-                            arrivalAirport: arrivalAirport,
-                            departDate: departDate,
-                            isReturn:
+          const response =
+            await fetch(
+              serviceURL, {
+              headers: {"Content-Type": "application/json"},
+						  method: 'POST',
+						  mode: 'cors',
+						  body: JSON.stringify({
+              payment_type: payment,
+              prefix: title, 
+              first_name: firstname,
+              last_name: lastname, 
+              middle_name: midname
+              billing_address:baddress,
+              expiration_date:edate,
+              last_4_digit: lastfour,
+              staff_id: "",
+              flight_details_id: "",
+              email: email,
+              comments: "",
+              ff_id: "",
+              departureAirport: departureAirport,
+              arrivalAirport:arrivalAirport,
+              departDate:departDate,  
+              flight_details_id:ID
+              })
+              }
 
-                        })
-                    }
-                );
-            const data = await response.json();
-            let details = data.details;
-            console.log(details);
-        } catch (e) {
-            console.log(e);
-        }
-    };
+            );
+      const data = await response.json();
+      let details=data.details;
+      
 
-</script>
+      console.log(details);
+      }
+      
+			catch (e) {
+				console.log(e);
+      }
+      };
+      
+		
+  </script>
+
 
 </html>
 
