@@ -229,42 +229,41 @@
 </body>
 <script>
  function showalert() {
-  var $cname=$("#cname").val();
-  var $cno=$("#cno").val();
-  var $date=$("#edate-month").val();
-  var $year=$("#edate-year").val();
-  var $cvv=$("#cvv").val();
-
-  if ($cname=="" || $cno=="" || $date=="" || $year=="" || $cvv=="" ){
-    window.location.href = "payment_failiure.html";
-  }
-  if($cname!="" && $cno!="" &&  $date!="" && $year!="" && $cvv!="" ) {
-    window.location.href = "payment_success.html";
-  }
-  }
+ }
 </script>
 <script>
     $(document).ready(function () {
         let serviceURL = "http://127.0.0.1:8300/payment/check";
-        let title = "<?php echo $_POST['title']?>";
-        let firstname = "<?php echo $_POST['firstname']?>";
-        let midname = "<?php echo $_POST['midname']?>";
-        let lastname = "<?php echo $_POST['lastname']?>";
-        let birthday = "<?php echo $_POST['birthday']?>";
-        let email1 = "<?php echo $_POST['email']?>";
-        let street = "<?php echo $_POST['street']?>";
-        let town = "<?php echo $_POST['town']?>";
-        let country = "<?php echo $_POST['country']?>";
-        let zip = "<?php echo $_POST['zip']?>";
+        let payment=$("#payment").val();
+        let ctype=$("#type").val();
+        let cname=$("#cname").val();
+        let cno=$("#cno").val();
+        let lastfour=cno.slice(13,17);
+        let date=$("#edate-month").val();
+        let year=$("#edate-year").val();
+        let edate=date+"/"+year;
+        let cvv=$("#cvv").val();
+        let title = "<?php echo $_GET['title']?>";
+        let firstname = "<?php echo $_GET['firstname']?>";
+        let midname = "<?php echo $_GET['midname']?>";
+        let lastname = "<?php echo $_GET['lastname']?>";
+        let birthday = "<?php echo $_GET['birthday']?>";
+        let email1 = "<?php echo $_GET['email']?>";
+        let street = "<?php echo $_GET['street']?>";
+        let town = "<?php echo $_GET['town']?>";
+        let country = "<?php echo $_GET['country']?>";
+        let zip = "<?php echo $_GET['zip']?>";
         let departureAirport ="<?php echo $_GET['departureAirport']?>";
         let arrivalAirport ="<?php echo $_GET['arrivalAirport']?>";
         let departureDate ="<?php echo $_GET['departureDate']?>";
         let check = "<?php echo $_GET['check']?>";
+        let baddress=street+" "+town+" "+country+" "+zip;
 
 
         });
 
-      async function check_payment(serviceURL,title,firstname,midname,lastname,email){
+      async function check_payment(serviceURL,payment,title,firstname,midname,lastname,baddress,email,email,lastfour,
+      departureAirport,arrivalAirport,){
         try {
           const response =
             await fetch(
@@ -273,11 +272,23 @@
 						  method: 'POST',
 						  mode: 'cors',
 						  body: JSON.stringify({
-                prefix: title,
-                first_name:firstname,
-                mid_name:midname,
-                last_name:lastname,
-                email:email1              
+              payment_type: payment,
+              prefix: title, 
+              first_name: firstname,
+              last_name: lastname, 
+              middle_name: midname
+              billing_address:baddress,
+              expiration_date:edate,
+              last_4_digit: lastfour,
+              staff_id: "",
+              flight_details_id: "",
+              email: email,
+              comments: "",
+              ff_id: "",
+              departureAirport: departureAirport,
+              arrivalAirport:arrivalAirport,
+              departDate:departDate,
+              isReturn:             
                 
               })
               }
