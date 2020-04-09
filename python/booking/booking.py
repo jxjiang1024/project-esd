@@ -108,6 +108,7 @@ def create_ticketing(data,id, today):
     ticket["departureTime"] = data['departureTime']
     ticket["arrivalAirport"] = data['arrivalAirport']
     ticket["arrivalTime"] = data['arrivalTime']
+    ticket["check"] = data['check']
 
     return ticket
 
