@@ -84,7 +84,6 @@ if (!isset($_GET['check'])) {
         <input type="hidden" name="arrivalAirport" value="<?php echo $_GET["arrival_airport"]; ?>"/>
         <input type="hidden" name="departureDate" value="<?php echo $_GET["departure_date"]; ?>"/>
         <input type="hidden" name="check" value="<?php echo $_GET['check']; ?>"/>
-
     </form>
 </div>
 
