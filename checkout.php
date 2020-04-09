@@ -263,7 +263,7 @@
         let transactiondate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
         let flight_details_id = "<?php echo $_GET['dep_flight_id'];?>";
         let return_flight_id = "<?php if ($_GET['check'] == 1) {
-            echo " ";
+            echo "None";
         } else {
             echo $_GET['return_flight_id'];
         }?>";
