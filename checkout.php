@@ -227,10 +227,7 @@
 	<!-- Main -->
 	<script src="js/main.js"></script>
 </body>
-<script>
- function showalert() {
- }
-</script>
+
 <script>
     $(document).ready(function () {
         let serviceURL = "http://127.0.0.1:8300/payment/check";
@@ -258,12 +255,21 @@
         let departureDate ="<?php echo $_GET['departureDate']?>";
         let check = "<?php echo $_GET['check']?>";
         let baddress=street+" "+town+" "+country+" "+zip;
+        let flight_details_id = "<?php echo $_GET['flight_id'];?>";
+        let return_flight_id = "<?php if ($_GET['check'] == 1) {
+            echo " ";
+        } else {
+            echo $_GET['return_flight_id'];
+        }?>";
+        let ID=flight_details_id+" "+return_flight_id;
 
+        check_payment(serviceURL,payment,title,firstname,midname,lastname,baddress,email,email,lastfour,
+      departureAirport,arrivalAirport,departureDate,check);
 
-        });
+    });
 
       async function check_payment(serviceURL,payment,title,firstname,midname,lastname,baddress,email,email,lastfour,
-      departureAirport,arrivalAirport,){
+      departureAirport,arrivalAirport,departureDate,check){
         try {
           const response =
             await fetch(
@@ -287,15 +293,16 @@
               ff_id: "",
               departureAirport: departureAirport,
               arrivalAirport:arrivalAirport,
-              departDate:departDate,
-              isReturn:             
-                
+              departDate:departDate,  
+              flight_details_id:ID
               })
               }
 
             );
       const data = await response.json();
       let details=data.details;
+      
+
       console.log(details);
       }
       
@@ -303,8 +310,10 @@
 				console.log(e);
       }
       };
+      
 		
   </script>
+
 
 </html>
 
