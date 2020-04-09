@@ -255,15 +255,25 @@
         let arrivalAirport = "<?php echo $_GET['arrivalAirport']?>";
         let departureDate = "<?php echo $_GET['departureDate']?>";
         let check = "<?php echo $_GET['check']?>";
+        let baddress=street+" "+town+" "+country+" "+zip;
+        let today = new Date();
+        let transactiondate= today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        let flight_details_id = "<?php echo $_GET['flight_id'];?>";
+        let return_flight_id = "<?php if ($_GET['check'] == 1) {
+            echo " ";
+        } else {
+            echo $_GET['return_flight_id'];
+        }?>";
+        let ID=flight_details_id+" "+return_flight_id;
         let baddress = street + " " + town + " " + country + " " + zip;
 
         check_payment(serviceURL,payment,title,firstname,midname,lastname,baddress,email,email,lastfour,
-      departureAirport,arrivalAirport,departureDate,check,flight_details_id);
+      departureAirport,arrivalAirport,departureDate,check,flight_details_id,return_flight_id,transactiondate,cname);
 
     });
 
       async function check_payment(serviceURL,payment,title,firstname,midname,lastname,baddress,email,email,lastfour,
-      departureAirport,arrivalAirport,departureDate,check,flight_details_id){
+      departureAirport,arrivalAirport,departureDate,check,flight_details_id,return_flight_id,transactiondate,cname){
         try {
           const response =
             await fetch(
@@ -279,6 +289,8 @@
               middle_name: midname
               billing_address:baddress,
               expiration_date:edate,
+              transaction_date:transactiondate,
+              name_card:cname,
               last_4_digit: lastfour,
               staff_id: "",
               flight_details_id: "",
@@ -288,7 +300,8 @@
               departureAirport: departureAirport,
               arrivalAirport:arrivalAirport,
               departDate:departDate,  
-              flight_details_id:ID
+              flight_details_id:flight_details_id,
+              return_flight_id:return_flight_id
               })
               }
 
