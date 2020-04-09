@@ -232,6 +232,7 @@
 <script>
     $(document).ready(function () {
         $("#checkout").click(function () {
+            alert("po");
             let serviceURL = "http://127.0.0.1:8300/payment/check";
             let payment = $("#payment").val();
             let ctype = $("#type").val();
@@ -271,7 +272,8 @@
             let ID = flight_details_id + " " + return_flight_id;
 
             check_payment(serviceURL, payment, title, firstname, midname, lastname, baddress, email, email, lastfour,
-                departureAirport, arrivalAirport, departureDate, check, flight_details_id, return_flight_id, transactiondate, cname);
+                departureAirport, arrivalAirport, departureDate, check, flight_details_id, return_flight_id, transactiondate, cname,
+                edate,departureDate,atime,dtime);
 
         });
 
@@ -279,7 +281,8 @@
     });
 
     async function check_payment(serviceURL, payment, title, firstname, midname, lastname, baddress, email, email, lastfour,
-                                 departureAirport, arrivalAirport, departureDate, check, flight_details_id, return_flight_id, transactiondate, cname) {
+                                 departureAirport, arrivalAirport, departureDate, check, flight_details_id, return_flight_id, transactiondate, cname,
+                                 edate,departureDate,atime,dtime) {
         try {
             const response =
                 await fetch(
