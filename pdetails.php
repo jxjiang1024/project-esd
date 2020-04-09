@@ -156,7 +156,7 @@ if (!isset($_GET['check'])) {
                                 <div class="form-group">
                                     <label for="depart_date">Departure Time:</label>
                                     <div class="form-field">
-                                        <p><b id="departure_time" name="departure_time"></b></p>
+                                        <p><b id="departure_time"></b></p>
                                     </div>
                                 </div>
                             </div>
@@ -208,7 +208,7 @@ if (!isset($_GET['check'])) {
                                 <div class="form-group">
                                     <label for="arrival_Date">Arrival Time:</label>
                                     <div class="form-field">
-                                        <p><b id="arrival_time" name="arrival_time"></b></p>
+                                        <p><b id="arrival_time"></b></p>
                                     </div>
                                 </div>
                             </div>
