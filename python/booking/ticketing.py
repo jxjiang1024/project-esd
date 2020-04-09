@@ -25,8 +25,8 @@ class Ticket(db.Model):
     __tablename__ = 'ticket'
 
     ticket_id = db.Column(db.String(25), primary_key=True, nullable=False)
-    booking_id = db.Column(db.String(255), nullable=False)
-    flight_details_id = db.Column(db.Integer, primary_key=True, nullable=False)
+    booking_id = db.Column(db.String(255), primary_key=True, nullable=False)
+    flight_details_id = db.Column(db.Integer, nullable=False)
     prefix = db.Column(db.String(4), nullable=False)
     first_name = db.Column(db.String(255), nullable=False)
     last_name = db.Column(db.String(255), nullable=False)
@@ -116,8 +116,11 @@ def create_ticket(details):
         data["ticketID"] = ticketID
         data["today"] = str(today)
         data["template"] = "ticket"
-        data['flight_details_id'] = data['flight_details_id'][0] + ', ' + data['flight_details_id'][1]
-        
+        if data['check'] == "0":
+            data['flight_details_id'] = data['flight_details_id'][0] + ', ' + data['flight_details_id'][1]
+        else:
+            data['flight_details_id'] = data['flight_details_id'][0]
+
         hostname = "localhost"
         port = 5672
         # # connect to the broker and set up a communication channel in the connection
