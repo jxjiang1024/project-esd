@@ -264,12 +264,12 @@
         let ID=flight_details_id+" "+return_flight_id;
 
         check_payment(serviceURL,payment,title,firstname,midname,lastname,baddress,email,email,lastfour,
-      departureAirport,arrivalAirport,departureDate,check);
+      departureAirport,arrivalAirport,departureDate,check,flight_details_id);
 
     });
 
       async function check_payment(serviceURL,payment,title,firstname,midname,lastname,baddress,email,email,lastfour,
-      departureAirport,arrivalAirport,departureDate,check){
+      departureAirport,arrivalAirport,departureDate,check,flight_details_id){
         try {
           const response =
             await fetch(
