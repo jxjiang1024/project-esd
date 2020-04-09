@@ -254,8 +254,11 @@
         let departureAirport = "<?php echo $_GET['departureAirport']?>";
         let arrivalAirport = "<?php echo $_GET['arrivalAirport']?>";
         let departureDate = "<?php echo $_GET['departureDate']?>";
+        let amount = "<?php echo $_GET['ticket_price']?>";
         let check = "<?php echo $_GET['check']?>";
         let baddress=street+" "+town+" "+country+" "+zip;
+        let dtime = "<?php echo $_GET['departure_time']?>";
+        let atime = "<?php echo $_GET['arrival_time']?>";
         let today = new Date();
         let transactiondate= today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         let flight_details_id = "<?php echo $_GET['flight_id'];?>";
@@ -282,26 +285,34 @@
 						  method: 'POST',
 						  mode: 'cors',
 						  body: JSON.stringify({
-              payment_type: payment,
-              prefix: title, 
-              first_name: firstname,
-              last_name: lastname, 
-              middle_name: midname
-              billing_address:baddress,
-              expiration_date:edate,
-              transaction_date:transactiondate,
-              name_card:cname,
-              last_4_digit: lastfour,
-              staff_id: "",
-              flight_details_id: "",
-              email: email,
-              comments: "",
-              ff_id: "",
-              departureAirport: departureAirport,
-              arrivalAirport:arrivalAirport,
-              departDate:departDate,  
-              flight_details_id:flight_details_id,
-              return_flight_id:return_flight_id
+                            payment_type: payment,
+                            name_card:cname,
+                            billing_address:baddress,
+                            amount:,
+                            status:"",
+                            expiration_date:edate,
+                            last_4_digit: lastfour,
+                            prefix: title, 
+                            first_name: firstname,
+                            last_name: lastname, 
+                            middle_name: midname,
+                            staff_id: "",
+                            flight_details_id: "",
+                            suffix:"",
+                            email: email,
+                            comments: "",
+                            ff_id: "",
+                            isReturn:"",
+                            flight_no:"",
+                            departureAirport: departureAirport,
+                            arrivalAirport:arrivalAirport,
+                            departDate:departDate,  
+                            arrivalTime:atime,
+                            departureTime:dtime,
+                            check:check,
+                            transaction_date:transactiondate,
+                            flight_details_id:flight_details_id,
+                            return_flight_id:return_flight_id
               })
               }
 
