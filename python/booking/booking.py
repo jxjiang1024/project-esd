@@ -13,7 +13,7 @@ import payment
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["SQLALCHEMY_POOL_RECYCLE"] = 299
 app.config['CONN_MAX_AGE'] = None
@@ -44,7 +44,7 @@ class Booking(db.Model):
 
     def __init__(self, booking_id, booking_date, payment_id,
     prefix, first_name, suffix, last_name, middle_name,
-    email, staff_id, comments):
+    email, staff_id, comments=None):
         self.booking_id = booking_id
         self.booking_date = booking_date
         self.payment_id = payment_id
@@ -66,42 +66,12 @@ class Booking(db.Model):
         "staff_id": self.staff_id, "comments": self.comments}
 
 
-# Ticket class
-class Ticket(db.Model):
-    __tablename__ = 'ticket'
-
-    ticket_id = db.Column(db.String(25), primary_key=True, nullable=False)
-    booking_id = db.Column(db.String(255), nullable=False)
-    prefix = db.Column(db.String(4), nullable=False)
-    first_name = db.Column(db.String(255), nullable=False)
-    last_name = db.Column(db.String(255), nullable=False)
-    middle_name = db.Column(db.String(45))
-    suffix = db.Column(db.String(45))
-    ff_id = db.Column(db.String(10))
-
-    def __init__(self, ticket_id, booking_id, prefix, first_name, last_name, middle_name, suffix, ff_id,comments):
-        self.ticket_id = ticket_id
-        self.booking_id = booking_id
-        self.prefix = prefix
-        self.first_name = first_name
-        self.last_name = last_name
-        self.middle_name = middle_name
-        self.suffix = suffix
-        self.ff_id = ff_id
-
-    
-    def json(self):
-        return {"ticket_id": self.ticket_id, "booking_id": self.booking_id, 
-            "prefix": self.prefix, "first_name": self.first_name, 
-            "last_name": self.last_name, "middle_name": self.middle_name, 
-            "suffix": self.suffix, "ff_id": self.ff_id}
-
 @app.route("/booking/add", methods=['POST'])
 def add_booking():
     try:
         data = request.get_json()
         size = len(Booking.query.all())
-        booking = Booking(str(size+1),datetime.strptime(data['booking_date'], '%Y-%m-%d'), size+1, str(data['prefix']),str(data['first_name']), str(data['suffix']),str(data['last_name']), str(data['middle_name']),str(data['email']), int(data['staff_id']),str(data['comments']))
+        booking = Booking(size+1,datetime.strptime(data['booking_date'], '%Y-%m-%d'), size+1, data['prefix'],data['first_name'], data['suffix'],data['last_name'], data['middle_name'],data['email'], int(data['staff_id']))
 
         db.session.add(booking)
         db.session.commit()
@@ -165,7 +135,7 @@ def check_payment():
                 bookingID = ccode+str(day)+str(month)+str(year)+bookingID
             if (data['staff_id'] == ""):
                 staff_id = None
-            bookingDetails = Booking(bookingID,str(today),result['id'],data['prefix'],data['first_name'],data['suffix'],data['last_name'],data['middle_name'],data['email'],staff_id,data['comments'])
+            bookingDetails = Booking(bookingID,str(today),str(result['id']),str(data['prefix']),str(data['first_name']),str(data['suffix']),str(data['last_name']),str(data['middle_name']),str(data['email']),staff_id,str(data['comments']))
             db.session.add(bookingDetails)
             db.session.commit()
             tickets = create_ticketing(data,bookingID,today)

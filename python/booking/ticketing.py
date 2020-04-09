@@ -15,7 +15,7 @@ import booking
 import requests
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://esd@esd:456852@esd.mysql.database.azure.com:3306/fms'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["SQLALCHEMY_POOL_RECYCLE"] = 299
 app.config['CONN_MAX_AGE'] = None
@@ -110,10 +110,6 @@ def create_ticket(details):
         db.session.add(ticketDetails)
         db.session.commit()
         db.session.close()
-        # addData1 = {"ticketID": ticketID}
-        # addData2 = {"today": str(today)}
-        # data.update(addData1)
-        # data.update(addData2)
         data["ticketID"] = ticketID
         data["today"] = str(today)
         data["template"] = "ticket"
