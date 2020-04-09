@@ -317,8 +317,6 @@
                 );
             const data = await response.json();
             let details = data.details;
-
-
             console.log(details);
         } catch (e) {
             console.log(e);
