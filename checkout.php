@@ -232,46 +232,49 @@
 <script>
     $(document).ready(function () {
         $("#checkout").click(function () {
-        let serviceURL = "http://127.0.0.1:8300/payment/check";
-        let payment = $("#payment").val();
-        let ctype = $("#type").val();
-        let cname = $("#cname").val();
-        let cno = $("#cno").val();
-        let lastfour = cno.slice(13, 17);
-        let date = $("#edate-month").val();
-        let year = $("#edate-year").val();
-        let edate = date + "/" + year;
-        let cvv = $("#cvv").val();
-        let title = "<?php echo $_GET['title']?>";
-        let firstname = "<?php echo $_GET['firstname']?>";
-        let midname = "<?php echo $_GET['midname']?>";
-        let lastname = "<?php echo $_GET['lastname']?>";
-        let birthday = "<?php echo $_GET['birthday']?>";
-        let email1 = "<?php echo $_GET['email']?>";
-        let street = "<?php echo $_GET['street']?>";
-        let town = "<?php echo $_GET['town']?>";
-        let country = "<?php echo $_GET['country']?>";
-        let zip = "<?php echo $_GET['zip']?>";
-        let departureAirport = "<?php echo $_GET['departureAirport']?>";
-        let arrivalAirport = "<?php echo $_GET['arrivalAirport']?>";
-        let departureDate = "<?php echo $_GET['departureDate']?>";
-        let amount = "<?php echo $_GET['amount']?>";
-        let check = "<?php echo $_GET['check']?>";
-        let baddress = street + " " + town + " " + country + " " + zip;
-        let dtime = "<?php echo $_GET['dep_time']?>";
-        let atime = "<?php echo $_GET['arr_time']?>";
-        let today = new Date();
-        let transactiondate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-        let flight_details_id = "<?php echo $_GET['dep_flight_id'];?>";
-        let return_flight_id = "<?php if ($_GET['check'] == 1) {
-            echo "None";
-        } else {
-            echo $_GET['return_flight_id'];
-        }?>";
-        let ID = flight_details_id + " " + return_flight_id;
+            let serviceURL = "http://127.0.0.1:8300/payment/check";
+            let payment = $("#payment").val();
+            let ctype = $("#type").val();
+            let cname = $("#cname").val();
+            let cno = $("#cno").val();
+            let lastfour = cno.slice(13, 17);
+            let date = $("#edate-month").val();
+            let year = $("#edate-year").val();
+            let edate = date + "/" + year;
+            let cvv = $("#cvv").val();
+            let title = "<?php echo $_GET['title']?>";
+            let firstname = "<?php echo $_GET['firstname']?>";
+            let midname = "<?php echo $_GET['midname']?>";
+            let lastname = "<?php echo $_GET['lastname']?>";
+            let birthday = "<?php echo $_GET['birthday']?>";
+            let email1 = "<?php echo $_GET['email']?>";
+            let street = "<?php echo $_GET['street']?>";
+            let town = "<?php echo $_GET['town']?>";
+            let country = "<?php echo $_GET['country']?>";
+            let zip = "<?php echo $_GET['zip']?>";
+            let departureAirport = "<?php echo $_GET['departureAirport']?>";
+            let arrivalAirport = "<?php echo $_GET['arrivalAirport']?>";
+            let departureDate = "<?php echo $_GET['departureDate']?>";
+            let amount = "<?php echo $_GET['amount']?>";
+            let check = "<?php echo $_GET['check']?>";
+            let baddress = street + " " + town + " " + country + " " + zip;
+            let dtime = "<?php echo $_GET['dep_time']?>";
+            let atime = "<?php echo $_GET['arr_time']?>";
+            let today = new Date();
+            let transactiondate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+            let flight_details_id = "<?php echo $_GET['dep_flight_id'];?>";
+            let return_flight_id = "<?php if ($_GET['check'] == 1) {
+                echo "None";
+            } else {
+                echo $_GET['return_flight_id'];
+            }?>";
+            let ID = flight_details_id + " " + return_flight_id;
 
-        check_payment(serviceURL, payment, title, firstname, midname, lastname, baddress, email, email, lastfour,
-            departureAirport, arrivalAirport, departureDate, check, flight_details_id, return_flight_id, transactiondate, cname);
+            check_payment(serviceURL, payment, title, firstname, midname, lastname, baddress, email, email, lastfour,
+                departureAirport, arrivalAirport, departureDate, check, flight_details_id, return_flight_id, transactiondate, cname);
+
+        });
+
 
     });
 
@@ -323,7 +326,6 @@
             console.log(e);
         }
     }
-    });
 
 
 </script>
