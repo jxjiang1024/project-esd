@@ -270,18 +270,18 @@
             }?>";
             let ID = flight_details_id + " " + return_flight_id;
 
-            check_payment(serviceURL, amount,payment, title, firstname, midname, lastname, baddress, email, email, lastfour,
+            check_payment(serviceURL, amount,payment, title, firstname, midname, lastname, baddress, email, lastfour,
                 departureAirport, arrivalAirport, departureDate, check, flight_details_id, return_flight_id, transactiondate, cname,
-                edate,departureDate,atime,dtime);
+                edate,atime,dtime);
 
         });
 
 
     });
 
-    async function check_payment(serviceURL, amount,payment, title, firstname, midname, lastname, baddress, email, email, lastfour,
+    async function check_payment(serviceURL, amount,payment, title, firstname, midname, lastname, baddress, email, lastfour,
                                  departureAirport, arrivalAirport, departureDate, check, flight_details_id, return_flight_id, transactiondate, cname,
-                                 edate,departureDate,atime,dtime) {
+                                 edate,atime,dtime) {
         try {
             const response =
                 await fetch(
