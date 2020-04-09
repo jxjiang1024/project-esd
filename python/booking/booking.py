@@ -96,7 +96,10 @@ def create_ticketing(data,id, today):
         ticket['ff_id'] = ""
     else:
         ticket['ff_id'] = data['ff_id']
-    ticket["flight_details_id"] = data['flight_details_id']
+    if data['check'] == '0':
+        ticket["flight_details_id"] = data['flight_details_id']+ ', ' + data['return_flight_id']
+    else:
+        ticket["flight_details_id"] = data['flight_details_id']
     ticket["email"] = data['email']
     ticket["today"] = str(today)
     ticket["flight_no"] = data['flight_no']
@@ -105,6 +108,7 @@ def create_ticketing(data,id, today):
     ticket["departureTime"] = data['departureTime']
     ticket["arrivalAirport"] = data['arrivalAirport']
     ticket["arrivalTime"] = data['arrivalTime']
+
     return ticket
 
 
