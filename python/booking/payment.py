@@ -77,7 +77,7 @@ def add_transaction(payment):
             size = 1
         else:
             size+=1
-        transaction = Payment(size,str(data['payment_type']),str(data['p_name']),float(data['amount']),str(data['status']),int(data['last_4_digit']), str(data['billing_address']), str(data['expiration_date']))
+        transaction = Payment(size,str(data['payment_type']),str(data['name_card']),float(data['amount']),str(data['status']),int(data['last_4_digit']), str(data['billing_address']), str(data['expiration_date']))
 
         db.session.add(transaction)
         db.session.commit()

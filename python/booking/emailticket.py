@@ -78,7 +78,7 @@ def sendmsg(data):
             if data['template'] == 'ticket':
                 subject = 'Ticket issue #'+str(data['ticketID'])
                 msg = Message(subject,recipients=[data['email']])
-                msg.html = render_template(data['template']+'_msg.html', prefix=data['prefix'], last_name=data['last_name'], ticket_id=data['ticketID'], issue_date=data['today'], first_name=data['first_name'], middle_name=data['middle_name'], flight_no=data['flight_no'], flight_details_id=['flight_details_id'], dep_airport_name=data['departureAirport'], dep_date=data['departDate'], departure_time=data['departureTime'], arr_airport_name=data['arrivalAirport'], arrival_time=data['arrivalTime'])
+                msg.html = render_template(data['template']+'_msg.html', prefix=data['prefix'], last_name=data['last_name'], ticket_id=data['ticketID'], issue_date=data['today'], first_name=data['first_name'], middle_name=data['middle_name'], flight_no=data['flight_no'], flight_details_id=data['flight_details_id'], dep_airport_name=data['departureAirport'], dep_date=data['departDate'], departure_time=data['departureTime'], arr_airport_name=data['arrivalAirport'], arrival_time=data['arrivalTime'])
             elif data['template'] == 'booking_success':
                 subject = 'Booking confirmation #'+str(data['bookingID'])
                 msg = Message(subject,recipients=[data['email']])

@@ -85,34 +85,38 @@ def callback(channel, method, properties, body): # required signature for the ca
 
 def create_ticket(details):
     try:
-        tickCode = "SA"
         data = json.loads(details)
-        flight_details_id = data['flight_details_id']
-        flight_details_id = str(flight_details_id).zfill(3)
-        today = date.today()
-        year = today.year
-        month = today.month
-        if(month < 10):
-            month = "0"+str(month)
-        day = today.day
-        day = str(day).zfill(2)
-        last_tickets = Ticket.query.filter(Ticket.issued_date == today).order_by(Ticket.ticket_id.desc()).first()
-        if(last_tickets != None):
-            ticketID = last_tickets.booking_id[10:]
-            ticketID = int(ticketID)+1
-            ticketID = str(ticketID).zfill(5)
-            ticketID = tickCode+flight_details_id+str(day)+str(month)+str(year)+ticketID
-        else:
-            ticketID = 1
-            ticketID = str(ticketID).zfill(5)
-            ticketID = tickCode+flight_details_id+str(day)+str(month)+str(year)+ticketID
-        ticketDetails = Ticket(ticketID,data['booking_id'],int(data['flight_details_id']),data['prefix'],data['first_name'],data['last_name'],data['middle_name'],data['suffix'],data['ff_id'],str(today))
-        db.session.add(ticketDetails)
-        db.session.commit()
-        db.session.close()
+        for i in data['flight_details_id']:
+            tickCode = "SA"
+            flight_details_id = i
+            flight_details_id = str(flight_details_id).zfill(3)
+            today = date.today()
+            year = today.year
+            month = today.month
+            if(month < 10):
+                month = "0"+str(month)
+            day = today.day
+            day = str(day).zfill(2)
+            last_tickets = Ticket.query.filter(Ticket.issued_date == today).order_by(Ticket.ticket_id.desc()).first()
+            if(last_tickets != None):
+                ticketID = last_tickets.booking_id[10:]
+                ticketID = int(ticketID)+1
+                ticketID = str(ticketID).zfill(5)
+                ticketID = tickCode+flight_details_id+str(day)+str(month)+str(year)+ticketID
+            else:
+                ticketID = 1
+                ticketID = str(ticketID).zfill(5)
+                ticketID = tickCode+flight_details_id+str(day)+str(month)+str(year)+ticketID
+            ticketDetails = Ticket(ticketID,data['booking_id'],
+                int(i),data['prefix'],data['first_name'],data['last_name'],
+                data['middle_name'],data['suffix'],data['ff_id'],str(today))
+            db.session.add(ticketDetails)
+            db.session.commit()
+            db.session.close()
         data["ticketID"] = ticketID
         data["today"] = str(today)
         data["template"] = "ticket"
+        data['flight_details_id'] = data['flight_details_id'][0] + ', ' + data['flight_details_id'][1]
         
         hostname = "localhost"
         port = 5672
