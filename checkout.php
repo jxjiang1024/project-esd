@@ -291,7 +291,7 @@
                             payment_type: payment,
                             name_card: cname,
                             billing_address: baddress,
-                            amount:amount,
+                            amount: amount,
                             status: "",
                             expiration_date: edate,
                             last_4_digit: lastfour,
