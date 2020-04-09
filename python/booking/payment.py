@@ -45,7 +45,7 @@ class Payment(db.Model):
 
         
     def json(self):
-        return {"payment_id": self.payment_id, "payment_type": self.payment_type,"name_card":self.name_card
+        return {"payment_id": self.payment_id, "payment_type": self.payment_type,"name_card":self.name_card,
         "amount": self.amount, "status": self.status,
         "last_4_digit": self.last_4_digit, "billing_address": self.billing_address,
         "expiration_date": self.expiration_date}
@@ -77,7 +77,7 @@ def add_transaction(payment):
             size = 1
         else:
             size+=1
-        transaction = Payment(size,str(data['payment_type']),str(data['p_prefix']),str(data['p_first_name']),str(data['p_last_name']),str(data['p_middle_name']),float(data['amount']),str(data['status']),int(data['last_4_digit']), str(data['billing_address']), str(data['expiration_date']))
+        transaction = Payment(size,str(data['payment_type']),str(data['p_name']),float(data['amount']),str(data['status']),int(data['last_4_digit']), str(data['billing_address']), str(data['expiration_date']))
 
         db.session.add(transaction)
         db.session.commit()
