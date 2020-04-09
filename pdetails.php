@@ -78,145 +78,67 @@ if (!isset($_GET['check'])) {
 </head>
 <body>
 <div class="colorlib-loader"></div>
-<div>
-    <form method="GET" action="checkout.php" id="p_data">
-        <input type="hidden" name="departureAirport" value="<?php echo $_GET["departure_airport"]; ?>"/>
-        <input type="hidden" name="arrivalAirport" value="<?php echo $_GET["arrival_airport"]; ?>"/>
-        <input type="hidden" name="departureDate" value="<?php echo $_GET["departure_date"]; ?>"/>
-        <input type="hidden" name="check" value="<?php echo $_GET['check']; ?>"/>
-</div>
 
-<div id="personal_details">
- 
-    <aside id="colorlib-hero">
-        <div class="flexslider">
-            <ul class="slides">
-                <li style="background-image: url(images/img_bg_1.jpg);">
-                    <div class="overlay"></div>
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12 slider-text">
-                                <div class="slider-text-inner text-center">
-                                    <h2>Thank you for booking with us!</h2>
-                                    <h1>Enter Personal Details</h1>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </aside>
+<form method="GET" action="checkout.php" id="p_data">
+    <input type="hidden" name="departureAirport" value="<?php echo $_GET["departure_airport"]; ?>"/>
+    <input type="hidden" name="arrivalAirport" value="<?php echo $_GET["arrival_airport"]; ?>"/>
+    <input type="hidden" name="departureDate" value="<?php echo $_GET["departure_date"]; ?>"/>
+    <input type="hidden" name="check" value="<?php echo $_GET['check']; ?>"/>
 
-    <div id="colorlib-reservation">
-        <div class="tab-content">
-            <div id="title" class="colorlib-form">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12"><h2 style="color: white">Tickets Details</h2></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="flight_number"> Flight Number:</label>
-                                <div class="form-field">
-                                    <p><b id="flight_number"></b></p>
-                                </div>
-                            </div>
-                        </div>
-                        <?php if ($_GET['check'] == "0") { ?>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="flight_number">Return Flight Number:</label>
-                                    <div class="form-field">
-                                        <p><b id="return_flight_number"></b></p>
+    <div id="personal_details">
+
+        <aside id="colorlib-hero">
+            <div class="flexslider">
+                <ul class="slides">
+                    <li style="background-image: url(images/img_bg_1.jpg);">
+                        <div class="overlay"></div>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12 slider-text">
+                                    <div class="slider-text-inner text-center">
+                                        <h2>Thank you for booking with us!</h2>
+                                        <h1>Enter Personal Details</h1>
                                     </div>
                                 </div>
                             </div>
-                        <?php } ?>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </aside>
 
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label for="depart_date">Departure Airport:</label>
-                                <div class="form-field">
-                                    <p><b><?php echo $_GET['departure_airport']; ?></b></p>
+        <div id="colorlib-reservation">
+            <div class="tab-content">
+                <div id="title" class="colorlib-form">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12"><h2 style="color: white">Tickets Details</h2></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="flight_number"> Flight Number:</label>
+                                    <div class="form-field">
+                                        <p><b id="flight_number"></b></p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label for="depart_date">Departure Date:</label>
-                                <div class="form-field">
-                                    <p><b><?php echo $_GET['departure_date']; ?></b></p>
+                            <?php if ($_GET['check'] == "0") { ?>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="flight_number">Return Flight Number:</label>
+                                        <div class="form-field">
+                                            <p><b id="return_flight_number"></b></p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            <?php } ?>
+
                         </div>
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label for="depart_date">Departure Time:</label>
-                                <div class="form-field">
-                                    <p><b id="departure_time"></b></p>
-                                </div>
-                            </div>
-                        </div>
-                        <?php if ($_GET['check'] == "0") { ?>
+                        <div class="row">
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="depart_date">Departure Airport:</label>
-                                    <div class="form-field">
-                                        <p><b><?php echo $_GET['arrival_airport']; ?></b></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label for="depart_date">Departure Date:</label>
-                                    <div class="form-field">
-                                        <p><b id="return_departure_date"></b></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label for="depart_date">Departure Time:</label>
-                                    <div class="form-field">
-                                        <p><b id="return_departure_time"></b></p>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php } ?>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label for="arrival_Date">Arrival Airport:</label>
-                                <div class="form-field">
-                                    <p><b><?php echo $_GET['arrival_airport']; ?></b></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label for="arrival_Date">Arrival Date:</label>
-                                <div class="form-field">
-                                    <p><b id="arrival_date"></b></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label for="arrival_Date">Arrival Time:</label>
-                                <div class="form-field">
-                                    <p><b id="arrival_time"></b></p>
-                                </div>
-                            </div>
-                        </div>
-                        <?php if ($_GET['check'] == "0") { ?>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label for="arrival_Date">Arrival Airport:</label>
                                     <div class="form-field">
                                         <p><b><?php echo $_GET['departure_airport']; ?></b></p>
                                     </div>
@@ -224,9 +146,61 @@ if (!isset($_GET['check'])) {
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
+                                    <label for="depart_date">Departure Date:</label>
+                                    <div class="form-field">
+                                        <p><b><?php echo $_GET['departure_date']; ?></b></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="depart_date">Departure Time:</label>
+                                    <div class="form-field">
+                                        <p><b id="departure_time"></b></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php if ($_GET['check'] == "0") { ?>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="depart_date">Departure Airport:</label>
+                                        <div class="form-field">
+                                            <p><b><?php echo $_GET['arrival_airport']; ?></b></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="depart_date">Departure Date:</label>
+                                        <div class="form-field">
+                                            <p><b id="return_departure_date"></b></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="depart_date">Departure Time:</label>
+                                        <div class="form-field">
+                                            <p><b id="return_departure_time"></b></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="arrival_Date">Arrival Airport:</label>
+                                    <div class="form-field">
+                                        <p><b><?php echo $_GET['arrival_airport']; ?></b></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
                                     <label for="arrival_Date">Arrival Date:</label>
                                     <div class="form-field">
-                                        <p><b id="return_arrival_date"></b></p>
+                                        <p><b id="arrival_date"></b></p>
                                     </div>
                                 </div>
                             </div>
@@ -234,26 +208,51 @@ if (!isset($_GET['check'])) {
                                 <div class="form-group">
                                     <label for="arrival_Date">Arrival Time:</label>
                                     <div class="form-field">
-                                        <p><b id="return_arrival_time"></b></p>
+                                        <p><b id="arrival_time"></b></p>
                                     </div>
                                 </div>
                             </div>
-                        <?php } ?>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="price">Total Ticket Price:</label>
-                                <div class="form-field">
-                                    <p><b id="ticket_price"></b></p>
+                            <?php if ($_GET['check'] == "0") { ?>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="arrival_Date">Arrival Airport:</label>
+                                        <div class="form-field">
+                                            <p><b><?php echo $_GET['departure_airport']; ?></b></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="arrival_Date">Arrival Date:</label>
+                                        <div class="form-field">
+                                            <p><b id="return_arrival_date"></b></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="arrival_Date">Arrival Time:</label>
+                                        <div class="form-field">
+                                            <p><b id="return_arrival_time"></b></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="price">Total Ticket Price:</label>
+                                    <div class="form-field">
+                                        <p><b id="ticket_price"></b></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <br/>
-                <br/>
-                <div class="container">
+                    <br/>
+                    <br/>
+                    <div class="container">
                         <input type="hidden" name="dep_flight_id" value="<?php echo $_GET['flight_id']; ?>"/>
                         <?php if ($_GET['check'] == "0") { ?>
                             <input type="hidden" name="return_flight_id"
@@ -375,13 +374,7 @@ if (!isset($_GET['check'])) {
                                 </div>
                             </div>
                         </div>
-                    </form>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+</form>
 
 
 <div class="gototop js-top">
