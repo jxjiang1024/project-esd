@@ -98,7 +98,7 @@
         <div class="tab-content">
 
             <div id="title" class="colorlib-form">
-                <div class="hide">
+                <div id="hideContent">
                     <div class="container h-100">
                         <div class="row  h-100 justify-content-center align-items-center">
                             <div class="col-md-4"></div>
@@ -109,7 +109,7 @@
                         <div class="row  h-100 justify-content-center align-items-center">
                             <div class="col-md-4"></div>
                             <div class="col-md-8">
-                                <p style="color: red"></p>
+                                <p id="erroMsg" style="color: red"></p>
                             </div>
                         </div>
                     </div>
@@ -225,7 +225,7 @@
                 </div>
                 </form>
             </div>
-            <div class="hide">
+            <div id="spinner_load">
                 <center>
                     <div class="sk-chase">
                         <div class="sk-chase-dot"></div>
@@ -265,17 +265,9 @@
 </body>
 <script>
     $(document).ready(function () {
-        $('.hide').hide();
-        let serviceURL = "http://127.0.0.1:8300/payment/check";
-        let payment = $("#payment").val();
-        let ctype = $("#type").val();
-        let cname = $("#cname").val();
-        let cno = $("#cno").val();
-        let lastfour = cno.slice(13, 17);
-        let date = $("#edate-month").val();
-        let year = $("#edate-year").val();
-        let edate = date + "/" + year;
-        let cvv = $("#cvv").val();
+        $('#hideContent').hide();
+        $('#spinner_load').hide();
+
         let title = "<?php echo $_GET['title']?>";
         let firstname = "<?php echo $_GET['firstname']?>";
         let midname = "<?php echo $_GET['midname']?>";
@@ -303,6 +295,18 @@
             echo $_GET['return_flight_id'];
         }?>";
         $("#checkout").click(function () {
+            $('#loader_hide').hide();
+            $('#spinner_load').show();
+            let serviceURL = "http://127.0.0.1:8300/payment/check";
+            let payment = $("#payment").val();
+            let ctype = $("#type").val();
+            let cname = $("#cname").val();
+            let cno = $("#cno").val();
+            let lastfour = cno.slice(13, 17);
+            let date = $("#edate-month").val();
+            let year = $("#edate-year").val();
+            let edate = date + "/" + year;
+            let cvv = $("#cvv").val();
             check_payment(serviceURL, amount, payment, title, firstname, midname, lastname, baddress, email, lastfour,
                 departureAirport, arrivalAirport, departureDate, check, flight_details_id, return_flight_id, transactiondate, cname,
                 edate, atime, dtime);
@@ -352,6 +356,13 @@
                 );
             const data = await response.json();
             console.log(data.result);
+            console.log(data.message);
+            if (data.result == false) {
+                let message = data.message;
+                $('#erroMsg').text(message.toString());
+                $('#spinner_load').hide();
+
+            }
         } catch (e) {
             console.log(e);
         }
