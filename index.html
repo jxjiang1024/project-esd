@@ -187,16 +187,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="guests">Number of Guest(s):</label>
-
-                                        <div class="form-field">
-                                            <input type="number" class="form-control" id="travellers" name="travellers">
-
-                                        </div>
-                                    </div>
-                                </div>
+                                <input type="hidden" class="form-control" id="travellers" name="travellers" value="1">
                                 <div class="col-md-2">
                                     <input type="submit" name="submit" id="two-way-submit" value="Find Flights"
                                            class="btn btn-primary btn-block">
@@ -240,17 +231,9 @@
                                     <input type="hidden" name="end_date" value="">
                                 </div>
 
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="guests">Number of Guest(s):</label>
-                                        <!-- number of travellers may abandon 								 -->
-                                        <div class="form-field">
-                                            <input type="number" class="form-control" id="one-way-NoTravellers"
-                                                   name="travellers">
 
-                                        </div>
-                                    </div>
-                                </div>
+                                <input type="hidden" class="form-control" id="one-way-NoTravellers"
+                                       name="travellers" value="1">
                                 <div class="col-md-2">
                                     <input type="submit" name="submit" id="one-way-submit" value="Find Flights"
                                            class="btn btn-primary btn-block">
