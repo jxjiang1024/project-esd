@@ -297,7 +297,7 @@
         let departureAirport = "<?php echo $_GET['departureAirport']?>";
         let arrivalAirport = "<?php echo $_GET['arrivalAirport']?>";
         let departureDate = "<?php echo $_GET['departureDate']?>";
-        let amount = "<?php echo $_GET['amount']?>";
+        let amount = parseInt("<?php echo $_GET['amount']?>");
         let check = "<?php echo $_GET['check']?>";
         let baddress = street + " " + town + " " + country + " " + zip;
         let dtime = "<?php echo $_GET['dep_time']?>";
@@ -318,7 +318,7 @@
             let ctype = $("#type").val();
             let cname = $("#cname").val();
             let cno = $("#cno").val();
-            let lastfour = cno.slice(13, 17);
+            let lastfour = parseInt(cno.slice(13, 17));
             let date = $("#edate-month").val();
             let year = $("#edate-year").val();
             let edate = date + "/" + year;
