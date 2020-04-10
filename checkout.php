@@ -47,12 +47,16 @@
     <!-- Theme style  -->
     <link rel="stylesheet" href="css/style.css">
 
+    <!-- Spinner -->
+    <link rel="stylesheet" href="css/spinner.css">
+
     <!-- Modernizr JS -->
     <script src="js/modernizr-2.6.2.min.js"></script>
     <!-- FOR IE9 below -->
     <!--[if lt IE 9]>
     <script src="js/respond.min.js"></script>
     <![endif]-->
+
 
     <!-- Latest compiled and minified JavaScript -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -92,117 +96,147 @@
     <div id="colorlib-reservation">
 
         <div class="tab-content">
+
             <div id="title" class="colorlib-form">
-                <form method="post" action="checkout.php">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="payment"> Choose Payment Method:</label>
-                                    <div class="form-field">
-                                        <select name="payment" id="payment" class="form-control">
-                                            <option style="color:black;" value="CC">Credit Card</option>
-                                            <option style="color:black;" value="Paypal">PayPal</option>
-                                            <option style="color:black;" value="Voucher">Voucher</option>
-                                        </select>
+                <div class="hide">
+                    <div class="container h-100">
+                        <div class="row  h-100 justify-content-center align-items-center">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-8">
+                                <h3 style="color: red">Error</h3>
+                            </div>
+                        </div>
+                        <div class="row  h-100 justify-content-center align-items-center">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-8">
+                                <p style="color: red"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="loader_hide">
+                    <form method="post" action="checkout.php">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="payment"> Choose Payment Method:</label>
+                                        <div class="form-field">
+                                            <select name="payment" id="payment" class="form-control">
+                                                <option style="color:black;" value="CC">Credit Card</option>
+                                                <option style="color:black;" value="Paypal">PayPal</option>
+                                                <option style="color:black;" value="Voucher">Voucher</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="ctype"> Choose Card Type:</label>
+                                        <div class="form-field">
+                                            <select name="ctype" id="ctype" class="form-control">
+                                                <option style="color:black;" value="Visa">VISA</option>
+                                                <option style="color:black;" value="mastercard">MasterCard</option>
+                                                <option style="color:black;" value="aexpress">American Express</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="lname">Name on Card:</label>
+                                        <div class="form-field">
+                                            <input type="text" name="cname" id="cname" class="form-control"
+                                                   placeholder="Enter Name">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!--Card Number-->
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        &nbsp;&nbsp;<label for="cno"> Card Number:</label>
+                                        <div class="form-field">
+                                            <input type="text" id="cno" name="cno"
+                                                   class="form-control" placeholder="Enter Card.No">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--date/cvv-->
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="cvv"> Expiration Date:</label>
+                                        <div class="form-inline">
+                                            <select id="edate-month" name="edate-month" class="form-control">
+                                                <option selected hidden>MM</option>
+                                                <option style="color:black;" value="1">01</option>
+                                                <option style="color:black;" value="2">02</option>
+                                                <option style="color:black;" value="3">03</option>
+                                                <option style="color:black;" value="4">04</option>
+                                                <option style="color:black;" value="5">05</option>
+                                                <option style="color:black;" value="6">06</option>
+                                                <option style="color:black;" value="7">07</option>
+                                                <option style="color:black;" value="8">08</option>
+                                                <option style="color:black;" value="9">09</option>
+                                                <option style="color:black;" value="10">10</option>
+                                                <option style="color:black;" value="11">11</option>
+                                                <option style="color:black;" value="12">12</option>
+                                            </select> /
+                                            <select id="edate-year" name="edate-year" class="form-control"
+                                                    placeholder="YY">
+                                                <option selected hidden>YYYY</option>
+                                                <option style="color:black;" value="2020">2020</option>
+                                                <option style="color:black;" value="2021">2021</option>
+                                                <option style="color:black;" value="2022">2022</option>
+                                                <option style="color:black;" value="2023">2023</option>
+                                                <option style="color:black;" value="2024">2024</option>
+                                                <option style="color:black;" value="2025">2025</option>
+                                                <option style="color:black;" value="2026">2026</option>
+                                                <option style="color:black;" value="2027">2027</option>
+                                                <option style="color:black;" value="2028">2028</option>
+                                                <option style="color:black;" value="2029">2029</option>
+                                                <option style="color:black;" value="2030">2030</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="cvv"> CVV:</label>
+                                        <div class="form-field">
+                                            <input type="text" id="cvv" name="cvv"
+                                                   class="form-control" placeholder="Enter CVV">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-2">
-                                <div class="form-group">
-                                    <label for="ctype"> Choose Card Type:</label>
-                                    <div class="form-field">
-                                        <select name="ctype" id="ctype" class="form-control">
-                                            <option style="color:black;" value="Visa">VISA</option>
-                                            <option style="color:black;" value="mastercard">MasterCard</option>
-                                            <option style="color:black;" value="aexpress">American Express</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="lname">Name on Card:</label>
-                                    <div class="form-field">
-                                        <input type="text" name="cname" id="cname" class="form-control"
-                                               placeholder="Enter Name">
-                                    </div>
-                                </div>
+                                <input type="button" name="checkout" id="checkout"
+                                       class="btn btn-primary btn-block" value="Confirm booking!">
                             </div>
                         </div>
-
-
-                        <!--Card Number-->
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    &nbsp;&nbsp;<label for="cno"> Card Number:</label>
-                                    <div class="form-field">
-                                        <input type="text" id="cno" name="cno"
-                                               class="form-control" placeholder="Enter Card.No">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--date/cvv-->
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="cvv"> Expiration Date:</label>
-                                    <div class="form-inline">
-                                        <select id="edate-month" name="edate-month" class="form-control">
-                                            <option selected hidden>MM</option>
-                                            <option style="color:black;" value="1">01</option>
-                                            <option style="color:black;" value="2">02</option>
-                                            <option style="color:black;" value="3">03</option>
-                                            <option style="color:black;" value="4">04</option>
-                                            <option style="color:black;" value="5">05</option>
-                                            <option style="color:black;" value="6">06</option>
-                                            <option style="color:black;" value="7">07</option>
-                                            <option style="color:black;" value="8">08</option>
-                                            <option style="color:black;" value="9">09</option>
-                                            <option style="color:black;" value="10">10</option>
-                                            <option style="color:black;" value="11">11</option>
-                                            <option style="color:black;" value="12">12</option>
-                                        </select> /
-                                        <select id="edate-year" name="edate-year" class="form-control" placeholder="YY">
-                                            <option selected hidden>YYYY</option>
-                                            <option style="color:black;" value="2020">2020</option>
-                                            <option style="color:black;" value="2021">2021</option>
-                                            <option style="color:black;" value="2022">2022</option>
-                                            <option style="color:black;" value="2023">2023</option>
-                                            <option style="color:black;" value="2024">2024</option>
-                                            <option style="color:black;" value="2025">2025</option>
-                                            <option style="color:black;" value="2026">2026</option>
-                                            <option style="color:black;" value="2027">2027</option>
-                                            <option style="color:black;" value="2028">2028</option>
-                                            <option style="color:black;" value="2029">2029</option>
-                                            <option style="color:black;" value="2030">2030</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="cvv"> CVV:</label>
-                                    <div class="form-field">
-                                        <input type="text" id="cvv" name="cvv"
-                                               class="form-control" placeholder="Enter CVV">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <input type="button" name="checkout" id="checkout"
-                                   class="btn btn-primary btn-block" value="Confirm booking!">
-                        </div>
-                    </div>
+                </div>
                 </form>
             </div>
-
-
+            <div class="hide">
+                <center>
+                    <div class="sk-chase">
+                        <div class="sk-chase-dot"></div>
+                        <div class="sk-chase-dot"></div>
+                        <div class="sk-chase-dot"></div>
+                        <div class="sk-chase-dot"></div>
+                        <div class="sk-chase-dot"></div>
+                        <div class="sk-chase-dot"></div>
+                    </div>
+                </center>
+            </div>
             <div class="gototop js-top">
                 <a href="#" class="js-gotop"><i class="icon-arrow-up2"></i></a>
             </div>
@@ -231,6 +265,7 @@
 </body>
 <script>
     $(document).ready(function () {
+        $('.hide').hide();
         let serviceURL = "http://127.0.0.1:8300/payment/check";
         let payment = $("#payment").val();
         let ctype = $("#type").val();
