@@ -118,7 +118,7 @@
                             <div class="row  h-100 justify-content-center align-items-center">
                                 <div class="col-md-4"></div>
                                 <div class="col-md-8">
-                                    <h3 style="color: green">Error</h3>
+                                    <h3 style="color: green">Success</h3>
                                 </div>
                             </div>
                             <div class="row  h-100 justify-content-center align-items-center">
