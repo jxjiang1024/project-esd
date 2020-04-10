@@ -100,16 +100,32 @@
             <div id="title" class="colorlib-form">
                 <div id="hideContent">
                     <div class="container h-100">
-                        <div class="row  h-100 justify-content-center align-items-center">
-                            <div class="col-md-4"></div>
-                            <div class="col-md-8">
-                                <h3 style="color: red">Error</h3>
+                        <div id="error">
+                            <div class="row  h-100 justify-content-center align-items-center">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-8">
+                                    <h3 style="color: red">Error</h3>
+                                </div>
+                            </div>
+                            <div class="row  h-100 justify-content-center align-items-center">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-8">
+                                    <p id="erroMsg" style="color: red"></p>
+                                </div>
                             </div>
                         </div>
-                        <div class="row  h-100 justify-content-center align-items-center">
-                            <div class="col-md-4"></div>
-                            <div class="col-md-8">
-                                <p id="erroMsg" style="color: red"></p>
+                        <div id="success">
+                            <div class="row  h-100 justify-content-center align-items-center">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-8">
+                                    <h3 style="color: green">Error</h3>
+                                </div>
+                            </div>
+                            <div class="row  h-100 justify-content-center align-items-center">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-8">
+                                    <p id="sucMsg" style="color: green"></p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -361,7 +377,14 @@
                 let message = data.message;
                 $('#erroMsg').text(message.toString());
                 $('#spinner_load').hide();
-
+                $('#hideContent').show();
+                $('#success').hide();
+            } else {
+                let message = data.message;
+                $('#sucMsg').text(message);
+                $('#spinner_load').hide();
+                $('#hideContent').show();
+                $('#error').hide();
             }
         } catch (e) {
             console.log(e);
