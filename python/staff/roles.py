@@ -19,7 +19,6 @@ class Roles(db.Model):
         return{"role_id":self.role_id,"type":self.type}
 
 def userRoles(role_id):
-    db = SQLAlchemy(app)
     try:
         role_type =Roles.query.filter(Roles.role_id == role_id).first()
         return jsonify({"role_id":role_type.role_id,"type":role_type.type,"result":True})
