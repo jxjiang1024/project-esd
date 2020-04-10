@@ -63,9 +63,10 @@ def processPayment(payment):
     else:
         print("OK payment.")
         transaction_r = add_transaction(json.loads(json.dumps(payment)))
-        if not transaction_r:
+        if not transaction_r['result']:
             return {"result":False,"message":"Payment Failed"}
         else:
+            print(transaction_r['id'])
             return {"result":True,"message":"Payment Success","id":transaction_r['id']}
 
 def add_transaction(payment):
